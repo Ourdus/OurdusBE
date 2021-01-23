@@ -12,6 +12,7 @@ public class MemberController {
     @Autowired
     public MemberController(MemberService memberService)
     {
+        int a=0;
         this.memberService=memberService;
     }
 }
