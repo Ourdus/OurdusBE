@@ -1,5 +1,24 @@
 package com.ourdus.protoourdus.user.controller;
 
 public class LoginRequest {
-    //TODO LoginReuqest param 작성 필요
+    private String userEmail;
+    private String userPw;
+
+    public LoginRequest() { }
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public String getUserPw() {
+        return userPw;
+    }
+
+    @Override
+    public String toString() {
+        return "LoginRequest{" +
+                "userEmail='" + userEmail + '\'' +
+                ", userPw='" + userPw + '\'' +
+                '}';
+    }
 }
