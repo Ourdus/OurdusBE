@@ -12,7 +12,7 @@ public interface UserRepository{
 
     User save(User user);
     Optional<User> findByEmail(String email);
-    String findPassword(String email);
+//    String findPassword(String email);
 //    public User findByEmailAndPassword(String email, String password);
 
 }

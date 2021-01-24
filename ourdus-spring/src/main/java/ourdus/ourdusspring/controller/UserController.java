@@ -21,11 +21,14 @@ public class UserController {
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/user/login")
-    public String login(String email, String password){
+    @ResponseBody
+    public String login(@RequestBody UserDTO loginUser){
+        String email = loginUser.getEmail();
+        String password = loginUser.getPassword();
         Optional<User> user1 = userRepository.findByEmail(email);
         if(user1.isPresent()){
-            String result = userRepository.findPassword(email);
-            if(result.equals(password)){
+            User result = user1.get();
+            if(result.getPassword().equals(password)){
                 return "login success";
             }
         }
@@ -47,8 +50,8 @@ public class UserController {
         user.setUsername(username);
         user.setPassword(password);
         user.setTel(tel);
-
-        if(userRepository.findByEmail(email).isPresent()){
+        Optional<User> result = userRepository.findByEmail(email);
+        if(result.isPresent()){
             return "failed";
         }
         userRepository.save(user);

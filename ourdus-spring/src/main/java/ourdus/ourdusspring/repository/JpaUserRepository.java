@@ -28,11 +28,11 @@ public class JpaUserRepository implements UserRepository {
     }
 
 
-    @Override
-    public String findPassword(String email) {
-        Query query = em.createQuery("select m.password from User m where m.email = :email", User.class)
-                .setParameter("email", email);
-        String result = query.getSingleResult().toString();
-        return result;
-    }
+//    @Override
+//    public String findPassword(String email) {
+//        Query query = em.createQuery("select m.password from User m where m.email = :email", User.class)
+//                .setParameter("email", email);
+//        String result = query.getSingleResult().toString();
+//        return result;
+//    }
 }
