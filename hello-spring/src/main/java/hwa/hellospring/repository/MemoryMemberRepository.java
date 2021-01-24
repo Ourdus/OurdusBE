@@ -13,14 +13,14 @@ public class MemoryMemberRepository implements MemberRepository{
 
     @Override
     public Member save(Member member) {
-        member.setId(++sequence);
-        store.put(member.getId(),member);
+        member.setSeq(++sequence);
+        store.put(member.getSeq(),member);
         return member;
     }
 
     @Override
-    public Optional<Member> findById(Long id) {
-        return Optional.ofNullable(store.get(id));
+    public Optional<Member> findById(String user_id) {
+        return Optional.ofNullable(store.get(user_id));
     }
 
     @Override

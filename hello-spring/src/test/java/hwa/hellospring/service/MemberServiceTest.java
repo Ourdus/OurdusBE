@@ -34,7 +34,7 @@ class MemberServiceTest {
        member.setName("spring");
 
        //when
-        Long saveId=memberService.join(member);
+        String saveId=memberService.join(member);
 
         //then
         Member findMember=memberService.findOne(saveId).get();

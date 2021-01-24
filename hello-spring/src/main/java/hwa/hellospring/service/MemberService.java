@@ -1,6 +1,7 @@
 package hwa.hellospring.service;
 
 import hwa.hellospring.domain.Member;
+import hwa.hellospring.repository.JdbcMemberRepository;
 import hwa.hellospring.repository.MemberRepository;
 import hwa.hellospring.repository.MemoryMemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,18 +22,16 @@ public class MemberService {
     }
 
 
-    public Long join(Member member)
+    public String join(Member member)
     {
-        validateDuplicateMember(member);//같은 이름이 있는 중복 회원 불가능
+        validateDuplicateMember(member.getUser_id());//같은 이름이 있는 중복 회원 불가능
         memberRepository.save(member);
-        return member.getId();
+        return member.getUser_id();
     }
 
-    private void validateDuplicateMember(Member member) {//이름이 중복되는 회원이 있는 경우
-        memberRepository.findByName(member.getName())
-        .ifPresent(m->{
-            throw new IllegalStateException("이미 존재하는 회원 입니다");
-        });
+    public String validateDuplicateMember(String user_id) {//이름이 중복되는 회원이 있는 경우
+        memberRepository.findById(user_id);
+        return "hello";
     }
 
     public List<Member> findMembers()
@@ -40,7 +39,7 @@ public class MemberService {
         return memberRepository.findAll();
     }
 
-    public Optional<Member> findOne(Long memberId)
+    public Optional<Member> findOne(String memberId)
     {
         return memberRepository.findById(memberId);
     }

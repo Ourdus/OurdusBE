@@ -18,7 +18,7 @@ public class JdbcMemberRepository implements MemberRepository{
     }
     @Override
     public Member save(Member member) {
-        String sql = "insert into member(name) values(?)";
+        String sql = "insert into user(user_id,user_pw,name) values(?,?,?)";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -26,11 +26,13 @@ public class JdbcMemberRepository implements MemberRepository{
             conn = getConnection();
             pstmt = conn.prepareStatement(sql,
                     Statement.RETURN_GENERATED_KEYS);
-            pstmt.setString(1, member.getName());
+            pstmt.setString(3, member.getName());
+            pstmt.setString(2, member.getPassword());
+            pstmt.setString(1, member.getUser_id());
             pstmt.executeUpdate();
             rs = pstmt.getGeneratedKeys();
             if (rs.next()) {
-                member.setId(rs.getLong(1));
+                member.setUser_id(rs.getString(1));
             } else {
                 throw new SQLException("id 조회 실패");
             }
@@ -42,19 +44,19 @@ public class JdbcMemberRepository implements MemberRepository{
         }
     }
     @Override
-    public Optional<Member> findById(Long id) {
-        String sql = "select * from member where id = ?";
+    public Optional<Member> findById(String user_id) {
+        String sql = "select * from user where user_id = ?";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
             conn = getConnection();
             pstmt = conn.prepareStatement(sql);
-            pstmt.setLong(1, id);
+            pstmt.setString(1, user_id);
             rs = pstmt.executeQuery();
             if(rs.next()) {
                 Member member = new Member();
-                member.setId(rs.getLong("id"));
+                member.setUser_id(rs.getString("id"));
                 member.setName(rs.getString("name"));
                 return Optional.of(member);
             } else {
@@ -68,7 +70,7 @@ public class JdbcMemberRepository implements MemberRepository{
     }
     @Override
     public List<Member> findAll() {
-        String sql = "select * from member";
+        String sql = "select * from user";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -79,7 +81,7 @@ public class JdbcMemberRepository implements MemberRepository{
             List<Member> members = new ArrayList<>();
             while(rs.next()) {
                 Member member = new Member();
-                member.setId(rs.getLong("id"));
+                member.setUser_id(rs.getString("id"));
                 member.setName(rs.getString("name"));
                 members.add(member);
             }
@@ -92,7 +94,7 @@ public class JdbcMemberRepository implements MemberRepository{
     }
     @Override
     public Optional<Member> findByName(String name) {
-        String sql = "select * from member where name = ?";
+        String sql = "select * from user where user_id = ?";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -103,7 +105,7 @@ public class JdbcMemberRepository implements MemberRepository{
             rs = pstmt.executeQuery();
             if(rs.next()) {
                 Member member = new Member();
-                member.setId(rs.getLong("id"));
+                member.setUser_id(rs.getString("id"));
                 member.setName(rs.getString("name"));
                 return Optional.of(member);
             }
