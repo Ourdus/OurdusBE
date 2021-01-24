@@ -8,7 +8,7 @@ CREATE TABLE user
     user_tel    varchar(20) NOT NULL,
     reg_date    datetime    NOT NULL DEFAULT CURRENT_TIMESTAMP(),
     user_point  bigint      NOT NULL DEFAULT 0,
-    writer_flag boolean     NOT NULL DEFAULT false,
+    writer_flag TINYINT(1)  NOT NULL DEFAULT false,
     PRIMARY KEY (user_id),
     CONSTRAINT unique_user_email UNIQUE (user_email)
 --     CONSTRAINT fk_user_status FOREIGN KEY (user_status) REFERENCES status (status) ON DELETE RESTRICT ON UPDATE RESTRICT
