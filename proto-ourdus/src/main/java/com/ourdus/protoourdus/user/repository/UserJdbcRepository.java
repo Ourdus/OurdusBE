@@ -48,11 +48,12 @@ public class UserJdbcRepository implements UserRepository{
             userVo.getUserPw(),
             userVo.getUserName(),
             userVo.getUserTel(),
-            userVo.getUserPoint(),
-            userVo.getWriterFlag(),
+            userVo.getUserPoint().orElse(0L),
+            userVo.getWriterFlag().orElse(false),
             userVo.getUserEmail()
             );
     }
+
 
     @Override
     public Optional<UserVo> findByEmail(String userEmail) {
@@ -62,6 +63,14 @@ public class UserJdbcRepository implements UserRepository{
                 userEmail
         );
         return ofNullable(results.isEmpty() ? null : results.get(0));
+    }
+
+    @Override
+    public void deleteByEmail(String userEmail) {
+        jdbcTemplate.update(
+                "DELETE FROM user WHERE user_email=?",
+                userEmail
+        );
     }
 
 

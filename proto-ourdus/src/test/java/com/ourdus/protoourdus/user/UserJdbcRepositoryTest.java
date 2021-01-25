@@ -36,7 +36,7 @@ class UserJdbcRepositoryTest {
     }
 
     @Test
-    public void 이메일로유저찾기를_테스트(){
+    public void 이메일로유저찾기_테스트(){
         UserVo getVo = userJdbcRepository.findByEmail(userVo.getUserEmail()).orElse(null);
         // Assertions.assertThat(getVo).isEqualTo(insertVo); (insertVo에는 위에서처럼 default 값이 null로 저장되어있어서 객체끼리 isEqualTo 비교는 못함)
         assertThat(getVo.getUserId()).isEqualTo(insertVo.getUserId());
@@ -53,4 +53,10 @@ class UserJdbcRepositoryTest {
         assertThat(getVo.getUserName()).isEqualTo(changeName);
     }
 
+    @Test
+    public void 이메일로유저삭제_테스트(){
+        userJdbcRepository.deleteByEmail(insertVo.getUserEmail());
+        UserVo findVo = userJdbcRepository.findByEmail(insertVo.getUserEmail()).orElse(null);
+        assertThat(findVo).isNull();
+    }
 }
