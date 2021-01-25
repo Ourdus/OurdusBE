@@ -25,13 +25,29 @@ public class MemberService {
     public String join(Member member)
     {
         validateDuplicateMember(member.getUser_id());//같은 이름이 있는 중복 회원 불가능
-        memberRepository.save(member);
+        memberRepository.join(member);
         return member.getUser_id();
     }
 
-    public String validateDuplicateMember(String user_id) {//이름이 중복되는 회원이 있는 경우
-        memberRepository.findById(user_id);
-        return "hello";
+    public boolean login(String user_id,String password)
+    {
+        return memberRepository.login(user_id, password).isEmpty();
+    }
+
+    public Boolean findInfo(String user_id)
+    {
+        return memberRepository.findByInfo(user_id).isEmpty();
+    }
+
+    public Boolean userDelete(String user_id,String user_pw)
+    {
+        return memberRepository.userDelete(user_id,user_pw);
+    }
+
+    public boolean validateDuplicateMember(String user_id) {//이름이 중복되는 회원이 있는 경우
+        Boolean checker;
+        checker=memberRepository.findById(user_id).isEmpty();
+        return checker;
     }
 
     public List<Member> findMembers()

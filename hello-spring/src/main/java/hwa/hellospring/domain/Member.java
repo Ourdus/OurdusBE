@@ -7,6 +7,33 @@ public class Member {
     private String name;
     private String password;
     private Long seq;
+    private String user_email;
+    private String user_tel;
+    private int user_point;
+
+    public String getUser_email() {
+        return user_email;
+    }
+
+    public void setUser_email(String user_email) {
+        this.user_email = user_email;
+    }
+
+    public String getUser_tel() {
+        return user_tel;
+    }
+
+    public void setUser_tel(String user_tel) {
+        this.user_tel = user_tel;
+    }
+
+    public int getUser_point() {
+        return user_point;
+    }
+
+    public void setUser_point(int user_point) {
+        this.user_point = user_point;
+    }
 
     public Long getSeq() {
         return seq;

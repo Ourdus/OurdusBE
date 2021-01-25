@@ -12,10 +12,22 @@ public class MemoryMemberRepository implements MemberRepository{
     private static long sequence =0L;
 
     @Override
-    public Member save(Member member) {
+    public Member join(Member member) {
         member.setSeq(++sequence);
         store.put(member.getSeq(),member);
         return member;
+    }
+
+    @Override
+    public Optional<Member> login(String user_id,String password)
+    {
+        return Optional.ofNullable(store.get(user_id));
+    }
+
+    @Override
+    public Boolean userDelete(String user_id,String user_pw)
+    {
+        return true;
     }
 
     @Override
@@ -24,9 +36,9 @@ public class MemoryMemberRepository implements MemberRepository{
     }
 
     @Override
-    public Optional<Member> findByName(String name) {
+    public Optional<Member> findByInfo(String user_id) {
         return store.values().stream()
-                .filter(member->member.getName().equals(name))
+                .filter(member->member.getName().equals(user_id))
                 .findAny();
     }
 
