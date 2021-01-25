@@ -7,20 +7,20 @@ import java.util.Objects;
 @Entity
 public class User {
 
-    @Id @GeneratedValue
-    private Long seq;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String email;
     private String username;
     private String password;
     private String tel;
 
-    public Long getSeq() {
-        return seq;
+    public Long getId() {
+        return id;
     }
 
-    public void setSeq(Long seq) {
-        this.seq = seq;
+    public void setId(Long seq) {
+        this.id = seq;
     }
 
     public String getEmail() {

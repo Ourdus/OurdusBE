@@ -1,34 +1,18 @@
-package dto;
-
-import ourdus.ourdusspring.domain.User;
-
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import java.time.LocalDate;
+package ourdus.ourdusspring.dto;
 
 public class UserDTO {
-
-    private Long seq;
+    private Long id;
     private String email;
     private String username;
     private String password;
     private String tel;
 
-    public Long getSeq() {
-        return seq;
+    public Long getId() {
+        return id;
     }
 
-    public void setSeq(Long seq) {
-        this.seq = seq;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getUsername() {
@@ -55,4 +39,11 @@ public class UserDTO {
         this.tel = tel;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }

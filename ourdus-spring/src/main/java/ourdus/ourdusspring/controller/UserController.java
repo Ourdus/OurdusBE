@@ -1,61 +1,33 @@
 package ourdus.ourdusspring.controller;
 
-import dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import ourdus.ourdusspring.domain.User;
-import ourdus.ourdusspring.repository.UserRepository;
-
-import java.util.Optional;
+import ourdus.ourdusspring.dto.UserDTO;
+import ourdus.ourdusspring.service.UserService;
 
 @Controller
 public class UserController {
 
-   @Autowired
-    private UserRepository userRepository;
+    private final UserService userService;
 
-    public UserController(UserRepository userRepository){
-        this.userRepository=userRepository;
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/user/login")
     @ResponseBody
     public String login(@RequestBody UserDTO loginUser){
-        String email = loginUser.getEmail();
-        String password = loginUser.getPassword();
-        Optional<User> user1 = userRepository.findByEmail(email);
-        if(user1.isPresent()){
-            User result = user1.get();
-            if(result.getPassword().equals(password)){
-                return "login success";
-            }
-        }
-        return "login fail";
+        return userService.login(loginUser);
     }
-
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/user/join")
     @ResponseBody
     public String join(@RequestBody UserDTO newUser){
-
-        String email = newUser.getEmail();
-        String username = newUser.getUsername();
-        String password = newUser.getPassword();
-        String tel = newUser.getTel();
-        User user = new User();
-        user.setEmail(email);
-        user.setUsername(username);
-        user.setPassword(password);
-        user.setTel(tel);
-        Optional<User> result = userRepository.findByEmail(email);
-        if(result.isPresent()){
-            return "failed";
-        }
-        userRepository.save(user);
-        return "success";
+        return userService.join(newUser);
     }
 
 
