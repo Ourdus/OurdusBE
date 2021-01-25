@@ -2,6 +2,9 @@ package com.ourdus.protoourdus.user.model;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.Optional;
+
+import static java.util.Optional.ofNullable;
 
 public class UserVo {
     private final Long userId;
@@ -54,16 +57,16 @@ public class UserVo {
         return userTel;
     }
 
-    public LocalDateTime getRegDate() {
-        return regDate;
+    public Optional<LocalDateTime> getRegDate() {
+        return ofNullable(regDate);
     }
 
-    public Long getUserPoint() {
-        return userPoint;
+    public Optional<Long> getUserPoint() {
+        return ofNullable(userPoint);
     }
 
-    public Boolean getWriterFlag() {
-        return writerFlag;
+    public Optional<Boolean> getWriterFlag() {
+        return ofNullable(writerFlag);
     }
 
     @Override
@@ -112,9 +115,9 @@ public class UserVo {
             this.userPw = userVo.getUserPw();
             this.userName = userVo.getUserName();
             this.userTel = userVo.getUserTel();
-            this.regDate = userVo.getRegDate();
-            this.userPoint = userVo.getUserPoint();
-            this.writerFlag = userVo.getWriterFlag();
+            this.regDate = userVo.getRegDate().orElse(null);
+            this.userPoint = userVo.getUserPoint().orElse(0L);
+            this.writerFlag = userVo.getWriterFlag().orElse(false);
         }
 
         public static Builder anUserVo() {

@@ -21,9 +21,9 @@ public class UserDto {
         this.userPw = userVo.getUserPw();
         this.userName = userVo.getUserName();
         this.userTel = userVo.getUserTel();
-        this.regDate = userVo.getRegDate();
-        this.userPoint = userVo.getUserPoint();
-        this.writerFlag = userVo.getWriterFlag();
+        this.regDate = userVo.getRegDate().orElse(null);
+        this.userPoint = userVo.getUserPoint().orElse(0L);
+        this.writerFlag = userVo.getWriterFlag().orElse(false);
     }
 
     public Long getUserId() {
