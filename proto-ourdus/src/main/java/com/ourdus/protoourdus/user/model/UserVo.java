@@ -7,7 +7,7 @@ public class UserVo {
     private final Long userId;
     private final String userEmail;
     private String userPw;
-    private final String userName;
+    private String userName;
     private String userTel;
     private final LocalDateTime regDate;
     private Long userPoint;

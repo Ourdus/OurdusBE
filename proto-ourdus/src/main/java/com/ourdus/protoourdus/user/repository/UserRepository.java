@@ -6,6 +6,7 @@ import java.util.Optional;
 
 public interface UserRepository {
     UserVo insert(UserVo userVo);
+    void update(UserVo userVo);
 
     Optional<UserVo> findByEmail(String userEmail);
     //TODO repository login, join 구현 - jdbc, JPA 둘다
