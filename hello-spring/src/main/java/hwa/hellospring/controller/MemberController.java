@@ -76,7 +76,7 @@ public class MemberController {
     }
 
     @ResponseBody
-    @DeleteMapping("/user/{user_id}")
+    @PostMapping("/user/{user_id}")
     public String userDelete(@RequestBody Member member){
 
         String user_id=member.getUser_id();
@@ -85,10 +85,10 @@ public class MemberController {
         m.setUser_id(user_id);
         m.setPassword(user_pw);
 
-        if(memberService.userDelete(user_id,user_pw)==true){
-            return "info_fail";
+        if(memberService.userDelete(user_id,user_pw)==false){
+            return "user_delete_fail";
         }
-        return "info_success";
+        return "user_delete_success";
     }
 
 }

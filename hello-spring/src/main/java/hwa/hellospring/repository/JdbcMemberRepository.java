@@ -77,29 +77,36 @@ public class JdbcMemberRepository implements MemberRepository{
     @Override
     public Boolean userDelete(String user_id,String user_pw)
     {
-        String sql = "delete from user where user_id = ? and user_pw=?";
         Connection conn = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
+        PreparedStatement pstmt=null;
+        String sql = "delete from user where user_id = ? and user_pw=? ";
+        int rs = 0;
         try {
-            conn = getConnection();
+            conn = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/test", "sa", "");
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, user_id);
-            pstmt.setString(2, user_pw);
-            rs = pstmt.executeQuery();
-            if(rs.next()) {
-                Member member = new Member();
-                member.setUser_id(rs.getString("user_id"));
-                member.setPassword(rs.getString("user_pw"));
+            pstmt.setString(1,"user_id");
+            pstmt.setString(2,"user_pw");
+            rs = pstmt.executeUpdate();
+            if(rs>0) {
                 return true;
             } else {
                 return false;
             }
+
         } catch (Exception e) {
             throw new IllegalStateException(e);
-        } finally {
-            close(conn, pstmt, rs);
         }
+        finally
+        {
+            try {
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        }
+
     }
 
     @Override
