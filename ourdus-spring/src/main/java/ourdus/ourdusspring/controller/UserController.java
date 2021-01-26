@@ -31,6 +31,16 @@ public class UserController {
     }
 
 
+    @DeleteMapping("/user/{id}")
+    @ResponseBody
+    public String delete(@PathVariable("id") Long id){
+        return userService.delete(id);
+    }
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @PostMapping("/user/{id}")
+    @ResponseBody
+    public String update(@RequestBody UserDTO user){return userService.update(user);}
 
 
 }

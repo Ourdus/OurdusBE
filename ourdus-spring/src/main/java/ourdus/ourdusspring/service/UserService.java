@@ -1,11 +1,15 @@
 package ourdus.ourdusspring.service;
 
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ourdus.ourdusspring.domain.User;
 import ourdus.ourdusspring.dto.UserDTO;
+//import ourdus.ourdusspring.repository.SpringDataJpaUserRepository;
 import ourdus.ourdusspring.repository.UserRepository;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
 @Service
@@ -49,4 +53,27 @@ public class UserService {
         return "join success";
     }
 
+    public String delete(Long id){
+        userRepository.deleteById(id);
+        return "delete success";
+
+//        userRepository.findById(id)
+//                .ifPresent(M->{
+//                   throw new IllegalStateException("delete fail");
+//                });
+//        userRepository.deleteById(id);
+//        return "delete success";
+    }
+
+    public String update(UserDTO updateUser){
+        String password = updateUser.getPassword();
+        String tel = updateUser.getTel();
+        String email = updateUser.getEmail();
+        Optional<User> findUser = userRepository.findByEmail(email);
+        User user = findUser.get();
+        user.setPassword(password);
+        user.setTel(tel);
+        userRepository.save(user);
+        return "update success";
+    }
 }

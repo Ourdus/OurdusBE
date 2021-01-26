@@ -9,9 +9,9 @@ import ourdus.ourdusspring.domain.User;
 import java.util.List;
 import java.util.Optional;
 
-public interface UserRepository{
-
-    User save(User user);
+public interface UserRepository extends JpaRepository<User,Long>{
+//
+//    User save(User user);
     Optional<User> findByEmail(String email);
 
 }
