@@ -3,7 +3,7 @@ package hwa.hellospring.service;
 import hwa.hellospring.domain.Member;
 import hwa.hellospring.repository.JdbcMemberRepository;
 import hwa.hellospring.repository.MemberRepository;
-import hwa.hellospring.repository.MemoryMemberRepository;
+//import hwa.hellospring.repository.MemoryMemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
