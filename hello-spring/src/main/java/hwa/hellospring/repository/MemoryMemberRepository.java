@@ -31,6 +31,12 @@ public class MemoryMemberRepository implements MemberRepository{
     }
 
     @Override
+    public Boolean userModifying(Member member)
+    {
+        return true;
+    }
+
+    @Override
     public Optional<Member> findById(String user_id) {
         return Optional.ofNullable(store.get(user_id));
     }

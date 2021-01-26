@@ -12,10 +12,10 @@ import java.util.Optional;
 public class JdbcMemberRepository implements MemberRepository{
     private final DataSource dataSource;
 
-
     public JdbcMemberRepository(DataSource dataSource) {
         this.dataSource = dataSource;
     }
+
     @Override
     public Member join(Member member) {
         String sql = "insert into user(user_id,user_pw,name,user_tel,user_email,user_point) values(?,?,?,?,?,?)";
@@ -84,8 +84,8 @@ public class JdbcMemberRepository implements MemberRepository{
         try {
             conn = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/test", "sa", "");
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1,"user_id");
-            pstmt.setString(2,"user_pw");
+            pstmt.setString(1,user_id);
+            pstmt.setString(2,user_pw);
             rs = pstmt.executeUpdate();
             if(rs>0) {
                 return true;
@@ -107,6 +107,43 @@ public class JdbcMemberRepository implements MemberRepository{
 
         }
 
+    }
+
+    @Override
+    public Boolean userModifying(Member member)
+    {
+        Connection conn = null;
+        PreparedStatement pstmt=null;
+        String sql = " update user set user_tel=?,user_email=?, name=?  where user_id = ? and user_pw=? ";
+        int rs = 0;
+        try {
+            conn = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/test", "sa", "");
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1,member.getUser_tel());
+            pstmt.setString(2,member.getUser_email());
+            pstmt.setString(3,member.getName());
+            pstmt.setString(4,member.getUser_id());
+            pstmt.setString(5,member.getPassword());
+
+            rs = pstmt.executeUpdate();
+            if(rs>0) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        }
+        finally
+        {
+            try {
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override

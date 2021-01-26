@@ -12,4 +12,5 @@ public interface MemberRepository {
     List<Member> findAll();
     Optional<Member> login(String user_id, String password);
     Boolean userDelete(String user_id,String user_pw);
+    Boolean userModifying(Member member);
 }

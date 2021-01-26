@@ -44,6 +44,11 @@ public class MemberService {
         return memberRepository.userDelete(user_id,user_pw);
     }
 
+    public Boolean userModifying(Member member)
+    {
+        return memberRepository.userModifying(member);
+    }
+
     public boolean validateDuplicateMember(String user_id) {//이름이 중복되는 회원이 있는 경우
         Boolean checker;
         checker=memberRepository.findById(user_id).isEmpty();
