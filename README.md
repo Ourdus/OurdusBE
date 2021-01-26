@@ -1,8 +1,4 @@
 # OurdusBE
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/proto/user#1_ksy
 2021-01-20~2021-01-24  
 User 등록, 로그인 구현해보기
   
@@ -25,10 +21,4 @@ git push origin proto/user#1_이름
 ~~~
   
 이후로는 각자 브랜치에서 틈틈이 commit 하고 일요일까지 push
-<<<<<<< HEAD
-=======
-BackEnd of Ourdus
 
->>>>>>> origin/proto/user#1_hg
-=======
->>>>>>> origin/proto/user#1_ksy
