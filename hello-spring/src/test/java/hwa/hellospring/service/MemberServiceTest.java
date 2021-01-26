@@ -1,7 +1,7 @@
 package hwa.hellospring.service;
 
 import hwa.hellospring.domain.Member;
-import hwa.hellospring.repository.MemoryMemberRepository;
+//import hwa.hellospring.repository.MemoryMemberRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MemberServiceTest {
 
-    MemberService memberService;
+   /* MemberService memberService;
     MemoryMemberRepository memberRepository;
 
     @BeforeEach
@@ -64,5 +64,5 @@ class MemberServiceTest {
 
     @Test
     void findOne() {
-    }
+    }*/
 }

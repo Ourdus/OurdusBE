@@ -12,13 +12,13 @@ import java.util.Optional;
 public class JdbcMemberRepository implements MemberRepository{
     private final DataSource dataSource;
 
-
     public JdbcMemberRepository(DataSource dataSource) {
         this.dataSource = dataSource;
     }
+
     @Override
-    public Member save(Member member) {
-        String sql = "insert into user(user_id,user_pw,name) values(?,?,?)";
+    public Member join(Member member) {
+        String sql = "insert into user(user_id,user_pw,name,user_tel,user_email,user_point) values(?,?,?,?,?,?)";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -29,6 +29,9 @@ public class JdbcMemberRepository implements MemberRepository{
             pstmt.setString(3, member.getName());
             pstmt.setString(2, member.getPassword());
             pstmt.setString(1, member.getUser_id());
+            pstmt.setString(4, member.getUser_tel());
+            pstmt.setString(5, member.getUser_email());
+            pstmt.setInt(6, member.getUser_point());
             pstmt.executeUpdate();
             rs = pstmt.getGeneratedKeys();
             if (rs.next()) {
@@ -43,6 +46,106 @@ public class JdbcMemberRepository implements MemberRepository{
             close(conn, pstmt, rs);
         }
     }
+
+    @Override
+    public Optional<Member> login(String user_id,String password) {
+        String sql = "select * from user where user_id = ? and user_pw=?";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            conn = getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, user_id);
+            pstmt.setString(2, password);
+            rs = pstmt.executeQuery();
+            if(rs.next()) {
+                Member member = new Member();
+                member.setUser_id(rs.getString("user_id"));
+                 member.setPassword(rs.getString("user_pw"));
+                return Optional.of(member);
+            } else {
+                return Optional.empty();
+            }
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        } finally {
+            close(conn, pstmt, rs);
+        }
+    }
+
+    @Override
+    public Boolean userDelete(String user_id,String user_pw)
+    {
+        Connection conn = null;
+        PreparedStatement pstmt=null;
+        String sql = "delete from user where user_id = ? and user_pw=? ";
+        int rs = 0;
+        try {
+            conn = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/test", "sa", "");
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1,user_id);
+            pstmt.setString(2,user_pw);
+            rs = pstmt.executeUpdate();
+            if(rs>0) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        }
+        finally
+        {
+            try {
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+    }
+
+    @Override
+    public Boolean userModifying(Member member)
+    {
+        Connection conn = null;
+        PreparedStatement pstmt=null;
+        String sql = " update user set user_tel=?,user_email=?, name=?  where user_id = ? and user_pw=? ";
+        int rs = 0;
+        try {
+            conn = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/test", "sa", "");
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1,member.getUser_tel());
+            pstmt.setString(2,member.getUser_email());
+            pstmt.setString(3,member.getName());
+            pstmt.setString(4,member.getUser_id());
+            pstmt.setString(5,member.getPassword());
+
+            rs = pstmt.executeUpdate();
+            if(rs>0) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        }
+        finally
+        {
+            try {
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     @Override
     public Optional<Member> findById(String user_id) {
         String sql = "select * from user where user_id = ?";
@@ -56,8 +159,7 @@ public class JdbcMemberRepository implements MemberRepository{
             rs = pstmt.executeQuery();
             if(rs.next()) {
                 Member member = new Member();
-                member.setUser_id(rs.getString("id"));
-                member.setName(rs.getString("name"));
+                member.setUser_id(rs.getString("user_id"));
                 return Optional.of(member);
             } else {
                 return Optional.empty();
@@ -93,7 +195,7 @@ public class JdbcMemberRepository implements MemberRepository{
         }
     }
     @Override
-    public Optional<Member> findByName(String name) {
+    public Optional<Member> findByInfo(String user_id) {
         String sql = "select * from user where user_id = ?";
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -101,11 +203,14 @@ public class JdbcMemberRepository implements MemberRepository{
         try {
             conn = getConnection();
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, name);
+            pstmt.setString(1, user_id);
             rs = pstmt.executeQuery();
             if(rs.next()) {
                 Member member = new Member();
-                member.setUser_id(rs.getString("id"));
+                member.setUser_id(rs.getString("user_id"));
+                member.setUser_tel(rs.getString("user_tel"));
+                member.setUser_email(rs.getString("user_email"));
+                member.setUser_point(rs.getInt("user_point"));
                 member.setName(rs.getString("name"));
                 return Optional.of(member);
             }
