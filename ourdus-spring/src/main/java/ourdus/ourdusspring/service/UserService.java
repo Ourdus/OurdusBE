@@ -59,10 +59,12 @@ public class UserService {
 
 //        userRepository.findById(id)
 //                .ifPresent(M->{
-//                   throw new IllegalStateException("delete fail");
+//                    userRepository.deleteById(id);
+//                    return "delete success";
 //                });
-//        userRepository.deleteById(id);
-//        return "delete success";
+//        return "delete fail";
+//        throw new IllegalStateException("delete fail");
+
     }
 
     public String update(UserDTO updateUser){
