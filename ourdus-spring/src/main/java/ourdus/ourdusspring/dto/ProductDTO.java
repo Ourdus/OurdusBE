@@ -1,32 +1,31 @@
-package ourdus.ourdusspring.domain;
+package ourdus.ourdusspring.dto;
+
+import ourdus.ourdusspring.domain.Category;
+import ourdus.ourdusspring.domain.Product;
 
 import javax.persistence.*;
 
-@Entity
-@Table (name="PRODUCT")
-public class Product {
+public class ProductDTO {
 
-    @Id @GeneratedValue
-    @Column(name="PRODUCT_ID")
     private Long id;
-    @Column(name="PRODUCT_NAME")
-    private String name;
-    @Column(name="PRODUCT_PRICE")
+    private String productname;
     private int price;
-    @Column(name="PRODUCT_RATE")
     private int rate;
-    @Column(name="PRODUCT_REVIEW")
     private int review;
-    @Column(name="PRODUCT_HIT")
     private int hit;
-    @Column(name="PRODUCT_PURCHASE")
     private int purchase;
+    private String categoryname;
 
-    @ManyToOne
-    @JoinColumn(name="CATEGORY_ID")
-    private Category category;
-
-
+    public ProductDTO(Product product) {
+        this.id = product.getId();
+        this.productname = product.getName();
+        this.price = product.getPrice();
+        this.rate = product.getRate();
+        this.review = product.getReview();
+        this.hit = product.getHit();
+        this.purchase = product.getPurchase();
+        this.categoryname = product.getCategory().getName();
+    }
 
     public Long getId() {
         return id;
@@ -36,12 +35,12 @@ public class Product {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getProductname() {
+        return productname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setProductname(String productname) {
+        this.productname = productname;
     }
 
     public int getPrice() {
@@ -84,11 +83,11 @@ public class Product {
         this.purchase = purchase;
     }
 
-    public Category getCategory() {
-        return category;
+    public String getCategoryname() {
+        return categoryname;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategoryname(String categoryname) {
+        this.categoryname = categoryname;
     }
 }
