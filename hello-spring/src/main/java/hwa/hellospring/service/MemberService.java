@@ -3,7 +3,6 @@ package hwa.hellospring.service;
 import hwa.hellospring.domain.Member;
 import hwa.hellospring.repository.JdbcMemberRepository;
 import hwa.hellospring.repository.MemberRepository;
-//import hwa.hellospring.repository.MemoryMemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,9 +49,7 @@ public class MemberService {
     }
 
     public boolean validateDuplicateMember(String user_id) {//이름이 중복되는 회원이 있는 경우
-        Boolean checker;
-        checker=memberRepository.findById(user_id).isEmpty();
-        return checker;
+        return memberRepository.findById(user_id).isEmpty();
     }
 
     public List<Member> findMembers()
