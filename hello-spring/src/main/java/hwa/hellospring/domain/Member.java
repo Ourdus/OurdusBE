@@ -2,14 +2,13 @@ package hwa.hellospring.domain;
 
 public class Member {
 
-
     private String user_id;
     private String name;
     private String password;
-    private Long seq;
     private String user_email;
     private String user_tel;
     private int user_point;
+
 
     public String getUser_email() {
         return user_email;
@@ -35,13 +34,6 @@ public class Member {
         this.user_point = user_point;
     }
 
-    public Long getSeq() {
-        return seq;
-    }
-
-    public void setSeq(Long seq) {
-        this.seq = seq;
-    }
 
     //getter setter
     public String getPassword() {
@@ -68,6 +60,9 @@ public class Member {
     public void setUser_id(String user_id) {
         this.user_id = user_id;
     }
+
+
+
 
 }
 
