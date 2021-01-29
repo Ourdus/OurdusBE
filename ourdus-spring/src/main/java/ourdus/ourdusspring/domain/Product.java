@@ -26,7 +26,9 @@ public class Product {
     @JoinColumn(name="CATEGORY_ID")
     private Category category;
 
-
+    @ManyToOne
+    @JoinColumn(name="USER_ID")
+    private User user;
 
     public Long getId() {
         return id;
@@ -90,5 +92,13 @@ public class Product {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

@@ -10,6 +10,7 @@ import ourdus.ourdusspring.dto.UserDTO;
 import ourdus.ourdusspring.repository.UserRepository;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -36,16 +37,14 @@ public class UserService {
     }
 
     public String join(UserDTO newUser){
-        String email = newUser.getEmail();
-        String username = newUser.getUsername();
-        String password = newUser.getPassword();
-        String tel = newUser.getTel();
         User user = new User();
-        user.setEmail(email);
-        user.setUsername(username);
-        user.setPassword(password);
-        user.setTel(tel);
-        Optional<User> result = userRepository.findByEmail(email);
+        user.setEmail(newUser.getEmail());
+        user.setUsername(newUser.getUsername());
+        user.setPassword(newUser.getPassword());
+        user.setTel(newUser.getTel());
+//        user.setRegDate(newUser.getRegDate());
+        user.setWriterFlag(newUser.getWriterFlag());
+        Optional<User> result = userRepository.findByEmail(newUser.getEmail());
         if(result.isPresent()){
             return "join failed";
         }

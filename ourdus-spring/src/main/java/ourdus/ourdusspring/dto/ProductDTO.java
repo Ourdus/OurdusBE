@@ -8,23 +8,27 @@ import javax.persistence.*;
 public class ProductDTO {
 
     private Long id;
-    private String productname;
+    private String productName;
     private int price;
     private int rate;
     private int review;
     private int hit;
     private int purchase;
-    private String categoryname;
+    private String categoryName;
+    private Long authorId;
+    private String authorName;
 
     public ProductDTO(Product product) {
         this.id = product.getId();
-        this.productname = product.getName();
+        this.productName = product.getName();
         this.price = product.getPrice();
         this.rate = product.getRate();
         this.review = product.getReview();
         this.hit = product.getHit();
         this.purchase = product.getPurchase();
-        this.categoryname = product.getCategory().getName();
+        this.categoryName = product.getCategory().getName();
+        this.authorId = product.getUser().getId();
+        this.authorName = product.getUser().getUsername();
     }
 
     public Long getId() {
@@ -35,12 +39,12 @@ public class ProductDTO {
         this.id = id;
     }
 
-    public String getProductname() {
-        return productname;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setProductname(String productname) {
-        this.productname = productname;
+    public void setProductName(String productname) {
+        this.productName = productname;
     }
 
     public int getPrice() {
@@ -83,11 +87,11 @@ public class ProductDTO {
         this.purchase = purchase;
     }
 
-    public String getCategoryname() {
-        return categoryname;
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public void setCategoryname(String categoryname) {
-        this.categoryname = categoryname;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 }
