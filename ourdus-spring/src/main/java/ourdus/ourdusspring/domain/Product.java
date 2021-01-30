@@ -21,6 +21,8 @@ public class Product {
     private int hit;
     @Column(name="PRODUCT_PURCHASE")
     private int purchase;
+    @Column(name="PRODUCT_OPTION_NUM")
+    private int optionNum;
 
     @ManyToOne
     @JoinColumn(name="CATEGORY_ID")
@@ -100,5 +102,13 @@ public class Product {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public int getOptionNum() {
+        return optionNum;
+    }
+
+    public void setOptionNum(int optionNum) {
+        this.optionNum = optionNum;
     }
 }

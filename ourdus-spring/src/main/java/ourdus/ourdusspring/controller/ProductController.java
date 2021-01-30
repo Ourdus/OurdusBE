@@ -11,8 +11,10 @@ import ourdus.ourdusspring.dto.ProductDTO;
 import ourdus.ourdusspring.repository.ProductRepository;
 import ourdus.ourdusspring.service.ProductService;
 
+import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class ProductController {
@@ -32,6 +34,7 @@ public class ProductController {
                 productDTOList.add(new ProductDTO(product));
             });
             model.addAttribute("productList",productDTOList);
+            System.out.println(productDTOList);
             return "작품 전체 조회 성공";
         }else{
             return "작품 전체 조회 실패";
@@ -40,10 +43,10 @@ public class ProductController {
 
     @GetMapping("/w/category/{category_id}")
     public String viewAllProductList(Model model, @PathVariable("category_id") Long categoryId){
-        List<Product> productByCategory = productService.findAllByCategory(categoryId);
-        if(productByCategory!=null){
+        Optional<List<Product>> productByCategory = productService.findAllByCategory(categoryId);
+        if(productByCategory.isPresent()){
             List<ProductDTO> productDTOList= new ArrayList<ProductDTO>();
-            productByCategory.stream().forEach(product -> {
+            productByCategory.get().stream().forEach(product -> {
                 productDTOList.add(new ProductDTO(product));
             });
             model.addAttribute("productByCategory",productDTOList);
@@ -55,9 +58,9 @@ public class ProductController {
 
     @GetMapping("/w/product/{product_id}")
     public String viewProduct(Model model, @PathVariable("product_id") Long productId){
-        Product product= productService.findOne(productId);
-        ProductDTO productDTO = new ProductDTO(product);
-        if (productDTO!=null){
+        Optional<Product> product = productService.findOne(productId);
+        if(product.isPresent()){
+            ProductDTO productDTO = new ProductDTO(product.get());
             model.addAttribute("product",productDTO);
             return "작품 조회 성공";
         }else{

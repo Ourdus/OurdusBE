@@ -14,15 +14,16 @@ public class UserDTO {
 //    private LocalDateTime regDate;
     private Boolean writerFlag;
 
-    public UserDTO(User user){
-        this.id = user.getId();
-        this.email = user.getEmail();
-        this.username = user.getEmail();
-        this.password = user.getPassword();
-        this.tel = user.getTel();
-//        this.regDate = user.getRegDate().orElse(null);
-        this.writerFlag = user.getWriterFlag().orElse(false);
-    }
+
+//    public UserDTO(User user){
+//        this.id = user.getId();
+//        this.email = user.getEmail();
+//        this.username = user.getEmail();
+//        this.password = user.getPassword();
+//        this.tel = user.getTel();
+////        this.regDate = user.getRegDate().orElse(null);
+//        this.writerFlag = user.getWriterFlag().orElse(false);
+//    }
 
     public Long getId() {
         return id;

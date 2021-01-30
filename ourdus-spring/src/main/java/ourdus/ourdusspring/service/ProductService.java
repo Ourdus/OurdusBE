@@ -5,7 +5,9 @@ import org.springframework.stereotype.Service;
 import ourdus.ourdusspring.domain.Product;
 import ourdus.ourdusspring.repository.ProductRepository;
 
+import javax.swing.text.html.Option;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -20,12 +22,12 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public Product findOne(Long productId){
-        Product product = productRepository.findOneById(productId);
+    public Optional<Product> findOne(Long productId){
+        Optional<Product> product = productRepository.findOneById(productId);
         return product;
     }
 
-    public List<Product> findAllByCategory(Long categoryId){
+    public Optional<List<Product>> findAllByCategory(Long categoryId){
         return productRepository.findAllByCategoryId(categoryId);
     }
 

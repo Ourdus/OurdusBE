@@ -77,4 +77,8 @@ public class UserService {
         userRepository.save(user);
         return "update success";
     }
+
+    public Optional<User> info(Long id){
+        return userRepository.findById(id);
+    }
 }

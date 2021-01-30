@@ -17,6 +17,7 @@ public class ProductDTO {
     private String categoryName;
     private Long authorId;
     private String authorName;
+    private int optionNum;
 
     public ProductDTO(Product product) {
         this.id = product.getId();
@@ -29,6 +30,15 @@ public class ProductDTO {
         this.categoryName = product.getCategory().getName();
         this.authorId = product.getUser().getId();
         this.authorName = product.getUser().getUsername();
+        this.optionNum = product.getOptionNum();
+    }
+
+    public int getOptionNum() {
+        return optionNum;
+    }
+
+    public void setOptionNum(int optionNum) {
+        this.optionNum = optionNum;
     }
 
     public Long getId() {

@@ -15,7 +15,7 @@ public class Product_Option {
     private int price;
 
     @ManyToOne
-    @JoinColumn(name="PROUDCT_ID")
+    @JoinColumn(name="PRODUCT_ID")
     private Product product;
 
     public Long getId() {
