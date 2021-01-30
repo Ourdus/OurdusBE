@@ -3,8 +3,10 @@ package hwa.hellospring.controller;
 import hwa.hellospring.domain.Member;
 import hwa.hellospring.domain.Product;
 import hwa.hellospring.service.ProductService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,13 +25,16 @@ public class ProductController {
 
     @ResponseBody
     @PostMapping("/category")
-    public String list (){
+    public String list (Model model){
 
         List all=productService.productList();
         if(all.isEmpty()==true)
             return "카테고리 호출 실패";
-        else
+        else {
+
+            model.addAttribute("product_list",all);
             return "카테고리 호출";
+        }
 
     }
 }

@@ -64,7 +64,7 @@ class JdbcMemberRepositoryTest {
         member.setUser_tel("010-1111-1111");
 
         //when
-        Boolean saveId=memberService.login(member.getUser_id(),member.getPassword());
+       // Boolean saveId=memberService.login(member,session);
 
         //then
         Member findMember=memberService.findOne(member.getUser_id()).get();
