@@ -2,9 +2,17 @@ package hwa.hellospring.controller;
 
 import hwa.hellospring.domain.Member;
 import hwa.hellospring.service.MemberService;
+import io.swagger.models.Model;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 
 @Controller
 @RequestMapping(value="api",method = RequestMethod.POST)
@@ -46,7 +54,7 @@ public class MemberController {
 
     @ResponseBody
     @PostMapping("/login")
-    public String login(@RequestBody Member member){
+    public String login(@RequestBody Member member, RedirectAttributes rttr, Model model){
 
         String user_id=member.getUser_id();
         String user_password=member.getPassword();
@@ -55,10 +63,14 @@ public class MemberController {
         m.setPassword(user_password);
         m.setUser_id(user_id);
 
-        if(memberService.login(user_id,user_password)==true){
+        if(memberService.login(member,model)==true){
             return "login_fail";
         }
-        return "login_success";
+        else {
+            rttr.addFlashAttribute("User", member);
+            memberService.login(member, model);
+            return "login_success";
+        }
     }
 
     @ResponseBody

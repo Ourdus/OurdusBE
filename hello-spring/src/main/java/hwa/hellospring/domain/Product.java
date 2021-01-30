@@ -8,9 +8,9 @@ import javax.persistence.Id;
 @Entity
 public class Product {
 
-
+   @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
-   @Id private int product_id;
+   private int product_id;
    private String author_id;
    private int category_id;
    private String product_name ;
