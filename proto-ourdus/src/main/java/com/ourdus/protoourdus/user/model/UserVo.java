@@ -1,5 +1,7 @@
 package com.ourdus.protoourdus.user.model;
 
+import com.ourdus.protoourdus.user.controller.UserDto;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Optional;
@@ -118,6 +120,17 @@ public class UserVo {
             this.regDate = userVo.getRegDate().orElse(null);
             this.userPoint = userVo.getUserPoint().orElse(0L);
             this.writerFlag = userVo.getWriterFlag().orElse(false);
+        }
+
+        public Builder(UserDto userDto){
+            this.userId = userDto.getUserId();
+            this.userEmail = userDto.getUserEmail();
+            this.userPw = userDto.getUserPw();
+            this.userName = userDto.getUserName();
+            this.userTel = userDto.getUserTel();
+            this.regDate = userDto.getRegDate();
+            this.userPoint = userDto.getUserPoint();
+            this.writerFlag = userDto.getWriterFlag();
         }
 
         public static Builder anUserVo() {

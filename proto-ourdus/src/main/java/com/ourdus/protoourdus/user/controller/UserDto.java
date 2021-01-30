@@ -14,6 +14,7 @@ public class UserDto {
     private Long userPoint;
     private Boolean writerFlag;
 
+    public UserDto(){}
 
     public UserDto(UserVo userVo) {
         this.userId = userVo.getUserId();
