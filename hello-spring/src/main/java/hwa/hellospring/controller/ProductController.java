@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@Controller
+@RestController
 @RequestMapping(value="w",method = RequestMethod.POST)
 public class ProductController {
 
@@ -24,7 +24,6 @@ public class ProductController {
         this.productService=productService;
     }
 
-    @ResponseBody
     @PostMapping("/product")
     public String list (Model model){
 
@@ -38,7 +37,6 @@ public class ProductController {
 
     }
 
-    @ResponseBody
     @PostMapping("/product/{product_id}")
     public String product_search (@PathVariable("product_id") int product_Id){
 
@@ -51,7 +49,7 @@ public class ProductController {
 
     }
 
-    @ResponseBody
+
     @PostMapping("/product/new")
     public String product_save(@RequestBody Product product){
 
@@ -87,15 +85,26 @@ public class ProductController {
 
     }
 
-    @ResponseBody
+
     @PostMapping("/product/{product_id}/delete")
     public String product_delete (@PathVariable("product_id") int product_Id){
 
-        int row =productService.delete(product_Id);
+      int row =productService.delete(product_Id);
         if(row==0)
-            return "작품 삭제 실패";
+        return "작품 삭제 실패";
         else
             return "작품 삭제";
+    }
+
+
+
+    @PostMapping("/category/{category_id}")
+    public String category_product(@PathVariable("category_id") int category_Id){
+        List productByCategory = productService.findAllByCategory(category_Id);
+        if(productByCategory.isEmpty()==true)
+            return "카테고리별 작품 조회 실패";
+        else
+            return "카테고리별 작품 조회";
     }
 
    /* @ResponseBody

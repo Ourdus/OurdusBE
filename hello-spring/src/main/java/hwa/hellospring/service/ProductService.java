@@ -36,9 +36,14 @@ public class ProductService {
         return product;
     }
 
-    public int delete(int product_id)
+   public int delete(int product_id)
     {
         return productRepository.delete(product_id);
+    }
+
+    public List<Product> findAllByCategory(int category_id)//for all list return
+    {
+        return productRepository.findAllByCategory(category_id);
     }
 
 }

@@ -45,5 +45,14 @@ public class JpaProductRepository implements ProductRepository {
         int result=query.setParameter("product_id", product_id).executeUpdate();
         return result;
     }
+
+    @Override
+    public List<Product> findAllByCategory(int category_id)
+    {
+        return em.createQuery("select p from Product p where p.category_id = :category_id", Product.class)
+                .setParameter("category_id", category_id)
+                .getResultList();
+    }
+
 }
 

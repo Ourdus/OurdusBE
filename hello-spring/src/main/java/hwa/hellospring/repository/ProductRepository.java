@@ -12,4 +12,5 @@ public interface ProductRepository {
     public List<Product> findAll();
     public Optional<Product> findOneById(int product_id);
     public int delete(int product_id);
+    public List<Product> findAllByCategory(int category_id);
 }
