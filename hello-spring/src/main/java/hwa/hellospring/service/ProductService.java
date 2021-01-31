@@ -7,6 +7,7 @@ import hwa.hellospring.repository.ProductRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Transactional
 public class ProductService {
@@ -14,21 +15,30 @@ public class ProductService {
     private final ProductRepository productRepository;
 
 
-    public ProductService(ProductRepository productRepository)
-    {
-        this.productRepository=productRepository;
+    public ProductService(ProductRepository productRepository) {
+        this.productRepository = productRepository;
     }
 
 
-    public int save(Product product)//product info save
+    public Optional<Product> save(Product product)//product info save
     {
-        productRepository.save(product);
-        return product.getProduct_id();
+        Optional<Product> products = productRepository.save(product);
+        return products;
     }
 
-    public List<Product> productList ()//for all list return
+    public List<Product> productList()//for all list return
     {
         return productRepository.findAll();
+    }
+
+    public Optional<Product> findOneById(int productId) {
+        Optional<Product> product = productRepository.findOneById(productId);
+        return product;
+    }
+
+    public int delete(int product_id)
+    {
+        return productRepository.delete(product_id);
     }
 
 }

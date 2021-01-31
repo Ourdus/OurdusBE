@@ -35,7 +35,7 @@ class JdbcMemberRepositoryTest {
     void join() {
         //given
         Member member=new Member();
-        member.setName("spring");
+        member.setUser_name("spring");
         member.setPassword("1234");
         member.setUser_id("qq");
         member.setUser_email("ddd@naver.com");
@@ -56,7 +56,7 @@ class JdbcMemberRepositoryTest {
 
         //given
         Member member=new Member();
-        member.setName("spring");
+        member.setUser_name("spring");
         member.setPassword("1234");
         member.setUser_id("qq");
         member.setUser_email("ddd@naver.com");

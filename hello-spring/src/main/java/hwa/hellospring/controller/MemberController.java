@@ -32,7 +32,7 @@ public class MemberController {
 
         String user_id=member.getUser_id();
         String user_password=member.getPassword();
-        String user_name=member.getUser_name();
+        String name=member.getUser_name();
         String email=member.getUser_email();
         String user_tel=member.getUser_tel();
         int point=member.getUser_point();
@@ -40,7 +40,7 @@ public class MemberController {
         Member m=new Member();
         m.setPassword(user_password);
         m.setUser_id(user_id);
-        m.setUser_name(user_name);
+        m.setUser_name(name);
         m.setUser_email(email);
         m.setUser_point(point);
         m.setUser_tel(user_tel);
@@ -83,7 +83,7 @@ public class MemberController {
 
         String user_id=member.getUser_id();
         String user_password=member.getPassword();
-        String user_name=member.getUser_name();
+        String name=member.getUser_name();
         String email=member.getUser_email();
         String user_tel=member.getUser_tel();
         int point=member.getUser_point();
@@ -91,7 +91,7 @@ public class MemberController {
         Member m=new Member();
         m.setPassword(user_password);
         m.setUser_id(user_id);
-        m.setUser_name(user_name);
+        m.setUser_name(name);
         m.setUser_email(email);
         m.setUser_point(point);
         m.setUser_tel(user_tel);

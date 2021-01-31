@@ -7,20 +7,25 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
+@Entity
+@Table(name="User")
 @Component
 @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class Member implements Serializable {
 
+    @Id @GeneratedValue
     private String user_id;
     private String user_name;
+    @Column(name="user_pw")
     private String password;
     private String user_email;
     private String user_tel;
     private int user_point;
     private String user_status;
-    private int writer_flag;
+   // private int writer_flag;
 
     public String getUser_id() {
         return user_id;
@@ -78,13 +83,13 @@ public class Member implements Serializable {
         this.user_status = user_status;
     }
 
-    public int getWriter_flag() {
+ /*   public int getWriter_flag() {
         return writer_flag;
     }
 
     public void setWriter_flag(int writer_flag) {
         this.writer_flag = writer_flag;
-    }
+    }*/
 
 }
 
