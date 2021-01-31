@@ -1,16 +1,13 @@
 package hwa.hellospring.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table (name="PRODUCT")
 public class Product {
 
-   @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
-   private int product_id;
+   @Id private int product_id;
    private String author_id;
    private int category_id;
    private String product_name ;
@@ -20,6 +17,14 @@ public class Product {
    private int product_hit;
    private int product_purchase;
    private int product_option;
+
+   /*@ManyToOne
+   @JoinColumn(name="CATEGORY_ID",insertable=false, updatable=false)
+   private Category category;*/
+
+   @ManyToOne
+   @JoinColumn(name="USER_ID")
+   private Member member;
 
    //getter and setter
 

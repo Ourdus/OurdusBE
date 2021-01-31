@@ -8,13 +8,14 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="hello-spring.hello-spring.main" />
+    <orderEntry type="module" module-name="hello-spring.hello-spring.main~1" />
     <orderEntry type="library" name="Gradle: io.springfox:springfox-swagger2:2.9.2" level="project" />
     <orderEntry type="library" name="Gradle: io.springfox:springfox-swagger-ui:2.9.2" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-data-jpa:2.4.2" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-jdbc:2.4.2" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-thymeleaf:2.4.2" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-web:2.4.2" level="project" />
+    <orderEntry type="library" name="Gradle: org.springframework.session:spring-session-core:2.4.1" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-test:2.4.2" level="project" />
     <orderEntry type="library" name="Gradle: io.springfox:springfox-swagger-common:2.9.2" level="project" />
     <orderEntry type="library" name="Gradle: io.swagger:swagger-models:1.5.20" level="project" />
@@ -43,9 +44,12 @@
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-tomcat:2.4.2" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework:spring-webmvc:5.3.3" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework:spring-web:5.3.3" level="project" />
+    <orderEntry type="library" name="Gradle: org.springframework:spring-jcl:5.3.3" level="project" />
     <orderEntry type="library" name="Gradle: com.jayway.jsonpath:json-path:2.4.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.springframework:spring-test:5.3.3" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-test-autoconfigure:2.4.2" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-test:2.4.2" level="project" />
+    <orderEntry type="library" name="Gradle: org.springframework:spring-core:5.3.3" level="project" />
     <orderEntry type="library" name="Gradle: jakarta.xml.bind:jakarta.xml.bind-api:2.3.3" level="project" />
     <orderEntry type="library" name="Gradle: org.assertj:assertj-core:3.18.1" level="project" />
     <orderEntry type="library" name="Gradle: org.hamcrest:hamcrest:2.2" level="project" />
@@ -53,8 +57,6 @@
     <orderEntry type="library" name="Gradle: org.mockito:mockito-junit-jupiter:3.6.28" level="project" />
     <orderEntry type="library" name="Gradle: org.mockito:mockito-core:3.6.28" level="project" />
     <orderEntry type="library" name="Gradle: org.skyscreamer:jsonassert:1.5.0" level="project" />
-    <orderEntry type="library" name="Gradle: org.springframework:spring-test:5.3.3" level="project" />
-    <orderEntry type="library" name="Gradle: org.springframework:spring-core:5.3.3" level="project" />
     <orderEntry type="library" name="Gradle: org.xmlunit:xmlunit-core:2.7.0" level="project" />
     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.11.4" level="project" />
     <orderEntry type="library" name="Gradle: io.springfox:springfox-core:2.9.2" level="project" />
@@ -94,7 +96,6 @@
     <orderEntry type="library" name="Gradle: net.bytebuddy:byte-buddy-agent:1.10.19" level="project" />
     <orderEntry type="library" name="Gradle: org.objenesis:objenesis:3.1" level="project" />
     <orderEntry type="library" name="Gradle: com.vaadin.external.google:android-json:0.0.20131108.vaadin1" level="project" />
-    <orderEntry type="library" name="Gradle: org.springframework:spring-jcl:5.3.3" level="project" />
     <orderEntry type="library" name="Gradle: org.glassfish.jaxb:txw2:2.3.3" level="project" />
     <orderEntry type="library" name="Gradle: com.sun.istack:istack-commons-runtime:3.0.11" level="project" />
     <orderEntry type="library" name="Gradle: ch.qos.logback:logback-classic:1.2.3" level="project" />
@@ -115,4 +116,5 @@
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.sun.activation:jakarta.activation:1.2.2" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.junit.platform:junit-platform-engine:1.7.0" level="project" />
   </component>
+  <component name="TestModuleProperties" production-module="hello-spring.main" />
 </module>
