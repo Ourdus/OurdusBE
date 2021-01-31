@@ -14,12 +14,37 @@ import java.io.Serializable;
 public class Member implements Serializable {
 
     private String user_id;
-    private String name;
+    private String user_name;
     private String password;
     private String user_email;
     private String user_tel;
     private int user_point;
+    private String user_status;
+    private int writer_flag;
 
+    public String getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
+    }
+
+    public String getUser_name() {
+        return user_name;
+    }
+
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public String getUser_email() {
         return user_email;
@@ -45,35 +70,21 @@ public class Member implements Serializable {
         this.user_point = user_point;
     }
 
-
-    //getter setter
-    public String getPassword() {
-        return password;
+    public String getUser_status() {
+        return user_status;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setUser_status(String user_status) {
+        this.user_status = user_status;
     }
 
-    public String getName() {
-        return name;
+    public int getWriter_flag() {
+        return writer_flag;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setWriter_flag(int writer_flag) {
+        this.writer_flag = writer_flag;
     }
-
-
-    public String getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
-    }
-
-
-
 
 }
 

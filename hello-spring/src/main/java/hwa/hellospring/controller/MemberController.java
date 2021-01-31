@@ -32,7 +32,7 @@ public class MemberController {
 
         String user_id=member.getUser_id();
         String user_password=member.getPassword();
-        String name=member.getName();
+        String user_name=member.getUser_name();
         String email=member.getUser_email();
         String user_tel=member.getUser_tel();
         int point=member.getUser_point();
@@ -40,7 +40,7 @@ public class MemberController {
         Member m=new Member();
         m.setPassword(user_password);
         m.setUser_id(user_id);
-        m.setName(name);
+        m.setUser_name(user_name);
         m.setUser_email(email);
         m.setUser_point(point);
         m.setUser_tel(user_tel);
@@ -54,10 +54,13 @@ public class MemberController {
 
     @ResponseBody
     @PostMapping("/login")
-    public String login(@RequestBody Member member, RedirectAttributes rttr, Model model){
+    public String login(@RequestBody Member member, HttpServletRequest req, HttpServletResponse response,RedirectAttributes rttr, Model model){
 
+        HttpSession session = req.getSession();
         String user_id=member.getUser_id();
         String user_password=member.getPassword();
+
+        response.setContentType("text/html; charset=UTF-8");
 
         Member m=new Member();
         m.setPassword(user_password);
@@ -67,7 +70,8 @@ public class MemberController {
             return "login_fail";
         }
         else {
-            rttr.addFlashAttribute("User", member);
+           // rttr.addFlashAttribute("User", member);
+            session.setAttribute("User",member);
             memberService.login(member, model);
             return "login_success";
         }
@@ -79,7 +83,7 @@ public class MemberController {
 
         String user_id=member.getUser_id();
         String user_password=member.getPassword();
-        String name=member.getName();
+        String user_name=member.getUser_name();
         String email=member.getUser_email();
         String user_tel=member.getUser_tel();
         int point=member.getUser_point();
@@ -87,7 +91,7 @@ public class MemberController {
         Member m=new Member();
         m.setPassword(user_password);
         m.setUser_id(user_id);
-        m.setName(name);
+        m.setUser_name(user_name);
         m.setUser_email(email);
         m.setUser_point(point);
         m.setUser_tel(user_tel);
