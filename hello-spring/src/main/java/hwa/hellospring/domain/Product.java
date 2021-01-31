@@ -18,11 +18,11 @@ public class Product {
    private int product_purchase;
    private int product_option;
 
-   /*@ManyToOne
-   @JoinColumn(name="CATEGORY_ID",insertable=false, updatable=false)
-   private Category category;*/
-
    @ManyToOne
+   @JoinColumn(name="CATEGORY_ID",insertable=false, updatable=false)
+   private Category category;
+
+   @ManyToOne(cascade = CascadeType.MERGE)
    @JoinColumn(name="USER_ID")
    private Member member;
 
