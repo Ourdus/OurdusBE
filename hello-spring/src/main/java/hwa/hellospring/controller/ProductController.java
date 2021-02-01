@@ -53,31 +53,7 @@ public class ProductController {
     @PostMapping("/product/new")
     public String product_save(@RequestBody Product product){
 
-         int product_id=product.getProduct_id();
-        String author_id=product.getAuthor_id();
-        int category_id=product.getCategory_id();
-         String product_name =product.getProduct_name();
-        int product_price=product.getProduct_price();
-        int product_rate=product.getProduct_rate();
-        int product_review=product.getProduct_review();
-        int product_hit=product.getProduct_hit();
-         int product_purchase=product.getProduct_purchase();
-         int product_option=product.getProduct_option();
-
-        Product p=new Product();
-
-        p.setProduct_id(product_id);
-        p.setAuthor_id(author_id);
-        p.setCategory_id(category_id);
-        p.setProduct_name(product_name);
-        p.setProduct_price(product_price);
-        p.setProduct_rate(product_rate);
-        p.setProduct_review(product_review);
-        p.setProduct_hit(product_hit);
-        p.setProduct_purchase(product_purchase);
-        p.setProduct_option(product_option);
-
-        if(productService.save(p).isEmpty()==true)
+        if(productService.save(product).isEmpty()==true)
             return "작품생성 실패";
         else {
             return "작품 생성";
@@ -96,7 +72,15 @@ public class ProductController {
             return "작품 삭제";
     }
 
+    @PostMapping("/product/{product_id}/edit")
+    public String product_modify (@PathVariable("product_id") int product_Id){
 
+        int row =productService.modify(product_Id);
+        if(row==0)
+            return "작품 삭제 실패";
+        else
+            return "작품 삭제";
+    }
 
     @PostMapping("/category/{category_id}")
     public String category_product(@PathVariable("category_id") int category_Id){

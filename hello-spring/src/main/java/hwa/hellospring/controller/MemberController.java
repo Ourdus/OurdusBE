@@ -37,18 +37,10 @@ public class MemberController {
         String user_tel=member.getUser_tel();
         int point=member.getUser_point();
 
-        Member m=new Member();
-        m.setPassword(user_password);
-        m.setUser_id(user_id);
-        m.setUser_name(name);
-        m.setUser_email(email);
-        m.setUser_point(point);
-        m.setUser_tel(user_tel);
-
         if(memberService.validateDuplicateMember(user_id)==false){
             return "Join_failed";
         }
-        memberService.join(m);
+        memberService.join(member);
         return "Join_Success";
     }
 
@@ -61,10 +53,6 @@ public class MemberController {
         String user_password=member.getPassword();
 
         response.setContentType("text/html; charset=UTF-8");
-
-        Member m=new Member();
-        m.setPassword(user_password);
-        m.setUser_id(user_id);
 
         if(memberService.login(member,model)==true){
             return "login_fail";
@@ -107,8 +95,6 @@ public class MemberController {
     public String userInfo(@RequestBody Member member){
 
         String user_id=member.getUser_id();
-        Member m=new Member();
-        m.setUser_id(user_id);
 
         if(memberService.findInfo(user_id)==true){
             return "info_fail";
@@ -122,9 +108,6 @@ public class MemberController {
 
         String user_id=member.getUser_id();
         String user_pw=member.getPassword();
-        Member m=new Member();
-        m.setUser_id(user_id);
-        m.setPassword(user_pw);
 
         if(memberService.userDelete(user_id,user_pw)==false){
             return "user_delete_fail";

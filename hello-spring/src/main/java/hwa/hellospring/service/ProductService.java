@@ -40,7 +40,13 @@ public class ProductService {
     {
         return productRepository.delete(product_id);
     }
+    public int modify(int product_id)
+    {
+        Product product = productRepository.findById(product_id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다. id=" + product_id));
 
+        return productRepository.modify(product_id);
+    }
     public List<Product> findAllByCategory(int category_id)//for all list return
     {
         return productRepository.findAllByCategory(category_id);
