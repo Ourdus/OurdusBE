@@ -23,17 +23,21 @@ public class UserService {
     }
 
 
-    public String login(UserDTO loginUser){
+    public User login(UserDTO loginUser){
         String email = loginUser.getEmail();
         String password = loginUser.getPassword();
         Optional<User> user1 = userRepository.findByEmail(email);
         if(user1.isPresent()){
             User result = user1.get();
             if(result.getPassword().equals(password)){
-                return "login success";
+                return result;
+//                return "login success";
+            }else{
+                throw new RuntimeException("비밀번호가 틀렸습니다.");
             }
         }
-        return "login fail";
+//        return "login fail";
+        throw new RuntimeException("아이디가 존재하지 않습니다.");
     }
 
     public String join(UserDTO newUser){
@@ -42,7 +46,6 @@ public class UserService {
         user.setUsername(newUser.getUsername());
         user.setPassword(newUser.getPassword());
         user.setTel(newUser.getTel());
-//        user.setRegDate(newUser.getRegDate());
         user.setWriterFlag(newUser.getWriterFlag());
         Optional<User> result = userRepository.findByEmail(newUser.getEmail());
         if(result.isPresent()){
@@ -50,6 +53,10 @@ public class UserService {
         }
         userRepository.save(user);
         return "join success";
+    }
+
+    public String getServerInfo(){
+        return "made by KSY";
     }
 
     public String delete(Long id){
