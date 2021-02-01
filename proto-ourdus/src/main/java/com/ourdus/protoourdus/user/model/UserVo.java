@@ -133,6 +133,17 @@ public class UserVo {
             this.writerFlag = userDto.getWriterFlag();
         }
 
+        public Builder(User user){
+            this.userId = user.getUserId();
+            this.userEmail = user.getUserEmail();
+            this.userPw = user.getUserPw();
+            this.userName = user.getUserName();
+            this.userTel = user.getUserTel();
+            this.regDate = user.getRegDate();
+            this.userPoint = user.getUserPoint();
+            this.writerFlag = user.isWriterFlag();
+        }
+
         public static Builder anUserVo() {
             return new Builder();
         }

@@ -1,11 +1,14 @@
 package com.ourdus.protoourdus.product.model;
 
 import com.ourdus.protoourdus.user.model.User;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 
 @Entity
+@Getter @Setter //TODO Setter 수정
 public class Product {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,7 +20,7 @@ public class Product {
     private User user;
 
     @ManyToOne
-    @Column(name= "category_id")
+    @JoinColumn(name= "category_id")
     private ProductCategory productCategory;
 
     @Column(name = "product_name")

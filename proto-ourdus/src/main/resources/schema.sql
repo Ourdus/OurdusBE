@@ -23,8 +23,8 @@ CREATE TABLE user
 
 CREATE TABLE product_category
 (
-    category_id   bigint NOT NULL AUTO_INCREMENT,
-    category_name int    NOT NULL,
+    category_id   bigint      NOT NULL AUTO_INCREMENT,
+    category_name varchar(20) NOT NULL,
     PRIMARY KEY (category_id)
 );
 

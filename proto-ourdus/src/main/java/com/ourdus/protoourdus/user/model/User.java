@@ -1,12 +1,17 @@
 package com.ourdus.protoourdus.user.model;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name= "user")
+@Getter
+@Setter //TODO setter 수정
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +27,7 @@ public class User {
     @Column(name = "user_tel")
     private String userTel;
     @Column(name = "reg_date")
-    @Temporal(TemporalType.TIMESTAMP)
+    @CreationTimestamp
     private LocalDateTime regDate;
     @Column(name = "user_point")
     @ColumnDefault("0")
@@ -30,6 +35,8 @@ public class User {
     @Column(name = "writer_flag")
     @ColumnDefault("false")
     private boolean writerFlag;
+
+
 
     public User(UserVo userVo) {
         this.userId = userVo.getUserId();
@@ -42,4 +49,6 @@ public class User {
         this.writerFlag = userVo.getWriterFlag().orElse(false);
     }
 
+    public User() {
+    }
 }
