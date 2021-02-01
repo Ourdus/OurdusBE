@@ -1,7 +1,13 @@
 package com.ourdus.protoourdus.product.service;
 
+import com.ourdus.protoourdus.product.controller.ProductOptionDto;
 import com.ourdus.protoourdus.product.model.Product;
+import com.ourdus.protoourdus.product.model.ProductCategory;
+import com.ourdus.protoourdus.product.model.ProductOption;
+import com.ourdus.protoourdus.product.repository.JpaProductOptionRepository;
 import com.ourdus.protoourdus.product.repository.ProductRepository;
+import com.ourdus.protoourdus.user.model.User;
+import com.ourdus.protoourdus.user.repository.UserJpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,14 +17,33 @@ import java.util.NoSuchElementException;
 @Service
 public class ProductService {
     private final ProductRepository productRepository;
+    private final UserJpaRepository userJpaRepository;
+    private final JpaProductOptionRepository jpaProductOptionRepository;
 
-    public ProductService(ProductRepository productRepository){
+    public ProductService(ProductRepository productRepository, UserJpaRepository userJpaRepository, JpaProductOptionRepository jpaProductOptionRepository){
         this.productRepository = productRepository;
+        this.userJpaRepository = userJpaRepository;
+        this.jpaProductOptionRepository = jpaProductOptionRepository;
     }
 
     @Transactional
-    public Product create(Product product){
-        return productRepository.save(product);
+    public Product create(Long autohorId, Long categoryId, String productName, int productPrice, int productOpitonNum, List<ProductOptionDto> options){
+        User author = userJpaRepository.findById(autohorId).orElseThrow(() -> new NoSuchElementException());
+        ProductCategory category = productRepository.findByCategoryId(categoryId);
+        Product product = new Product(author, category);
+        product.setProductName(productName);
+        product.setProductPrice(productPrice);
+        product.setProductOptionNum(productOpitonNum);
+
+        Product newProduct = productRepository.save(product);
+        for(ProductOptionDto optionDto : options){
+            ProductOption productOption = new ProductOption(newProduct);
+            productOption.setOptionName(optionDto.getOptionName());
+            productOption.setOptionPrice(optionDto.getOptionPrice());
+            jpaProductOptionRepository.save(productOption);
+        }
+
+        return newProduct;
     }
 
     @Transactional

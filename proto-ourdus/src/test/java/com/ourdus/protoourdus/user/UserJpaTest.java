@@ -10,8 +10,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-
 @DataJpaTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class UserJpaTest {
@@ -35,13 +33,13 @@ public class UserJpaTest {
 
     }
 
-    @Test
-    public void 저장및_이메일로유저찾기_테스트(){
-        userJpaRepository.insert(userVo);
-        UserVo getVo = userJpaRepository.findByEmail(userVo.getUserEmail()).orElse(null);
-        assertThat(getVo.getUserName()).isEqualTo(userVo.getUserName());
-
-    }
+//    @Test
+//    public void 저장및_이메일로유저찾기_테스트(){
+//        userJpaRepository.insert(userVo);
+//        UserVo getVo = userJpaRepository.findByEmail(userVo.getUserEmail()).orElse(null);
+//        assertThat(getVo.getUserName()).isEqualTo(userVo.getUserName());
+//
+//    }
 
     @Test
     public void 사용자수정_테스트(){

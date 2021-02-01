@@ -1,6 +1,7 @@
 package com.ourdus.protoourdus.product.repository;
 
 import com.ourdus.protoourdus.product.model.Product;
+import com.ourdus.protoourdus.product.model.ProductCategory;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -28,7 +29,6 @@ public class JpaProductRepository implements ProductRepository{
         return product;
     }
 
-
     @Override
     public Optional<Product> findById(Long productId) {
         Product product = em.find(Product.class, productId);
@@ -46,5 +46,10 @@ public class JpaProductRepository implements ProductRepository{
         em.createQuery("DELETE FROM Product p WHERE p.productId =: id", Product.class)
                 .setParameter("id", productId)
                 .executeUpdate();
+    }
+
+    @Override
+    public ProductCategory findByCategoryId(Long CategoryId) {
+        return em.find(ProductCategory.class, CategoryId);
     }
 }
