@@ -50,23 +50,23 @@ class UserServiceTest {
         assertThat(result).isEqualTo("join failed");
     }
 
-    @Test
-    void login() {
-        //given
-        UserDTO user1 = new UserDTO();
-        user1.setPassword("0000");
-        user1.setEmail("000@naver.com");
-        userService.join(user1);
-
-        UserDTO user2 = new UserDTO();
-        user2.setPassword("1111");
-        user2.setEmail("000@naver.com");
-        //when
-        userService.login(user2);
-        //then
-        String result = userService.login(user2);
-        assertThat(result).isEqualTo("login failed");
-    }
+//    @Test
+//    void login() {
+//        //given
+//        UserDTO user1 = new UserDTO();
+//        user1.setPassword("0000");
+//        user1.setEmail("000@naver.com");
+//        userService.join(user1);
+//
+//        UserDTO user2 = new UserDTO();
+//        user2.setPassword("1111");
+//        user2.setEmail("000@naver.com");
+//        //when
+//        userService.login(user2);
+//        //then
+//        String result = userService.login(user2);
+//        assertThat(result).isEqualTo("login failed");
+//    }
 
 
 }

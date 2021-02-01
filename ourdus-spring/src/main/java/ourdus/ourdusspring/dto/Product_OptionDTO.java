@@ -40,15 +40,8 @@ public class Product_OptionDTO {
         return price;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
     public Long getProductId() {
         return productId;
     }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
-    }
 }
