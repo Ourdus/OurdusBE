@@ -20,9 +20,14 @@ public class JpaProductRepository implements ProductRepository{
 
     @Override
     public Product save(Product product) {
-        em.persist(product);
+        if(product.getProductId() == null){
+            em.persist(product);
+        } else {
+            em.merge(product);
+        }
         return product;
     }
+
 
     @Override
     public Optional<Product> findById(Long productId) {
@@ -32,7 +37,14 @@ public class JpaProductRepository implements ProductRepository{
 
     @Override
     public List<Product> findAll() {
-        return em.createQuery("select m from Product m", Product.class)
+        return em.createQuery("SELECT p FROM Product p", Product.class)
                 .getResultList();
+    }
+
+    @Override
+    public void deleteById(Long productId) {
+        em.createQuery("DELETE FROM Product p WHERE p.productId =: id", Product.class)
+                .setParameter("id", productId)
+                .executeUpdate();
     }
 }

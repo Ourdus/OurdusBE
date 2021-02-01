@@ -50,4 +50,12 @@ public class Product {
     @ColumnDefault("0")
     private int productOptionNum;
 
+    public Product(User user, ProductCategory productCategory) {
+        this.user = user;
+        this.productCategory = productCategory;
+    }
+
+    public Product() {
+
+    }
 }
