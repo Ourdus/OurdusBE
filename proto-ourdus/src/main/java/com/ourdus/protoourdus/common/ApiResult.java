@@ -3,7 +3,7 @@ package com.ourdus.protoourdus.common;
 import org.springframework.http.HttpStatus;
 
 public class ApiResult<T> {
-    //TODO ApiResult 작성 필요
+
     private final boolean success;
 
     private final T response;

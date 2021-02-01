@@ -15,14 +15,14 @@ public class UserVo {
     private String userName;
     private String userTel;
     private final LocalDateTime regDate;
-    private Long userPoint;
+    private Integer userPoint;
     private Boolean writerFlag; //null 값을 넣기 위해선 boolean은 불가능, Boolean 사용
 
     public UserVo(String userEmail, String userPw, String userName, String userTel) {
         this(null, userEmail, userPw, userName, userTel, null, null, null);
     }
 
-    public UserVo(Long userId, String userEmail, String userPw, String userName, String userTel, LocalDateTime regDate, Long userPoint, Boolean writerFlag) {
+    public UserVo(Long userId, String userEmail, String userPw, String userName, String userTel, LocalDateTime regDate, Integer userPoint, Boolean writerFlag) {
         //TODO check logic 필요
 
         this.userId = userId;
@@ -63,7 +63,7 @@ public class UserVo {
         return ofNullable(regDate);
     }
 
-    public Optional<Long> getUserPoint() {
+    public Optional<Integer> getUserPoint() {
         return ofNullable(userPoint);
     }
 
@@ -105,7 +105,7 @@ public class UserVo {
         private String userName;
         private String userTel;
         private LocalDateTime regDate;
-        private Long userPoint;
+        private int userPoint;
         private Boolean writerFlag;
 
         public Builder() {
@@ -118,7 +118,7 @@ public class UserVo {
             this.userName = userVo.getUserName();
             this.userTel = userVo.getUserTel();
             this.regDate = userVo.getRegDate().orElse(null);
-            this.userPoint = userVo.getUserPoint().orElse(0L);
+            this.userPoint = userVo.getUserPoint().orElse(0);
             this.writerFlag = userVo.getWriterFlag().orElse(false);
         }
 
@@ -167,7 +167,7 @@ public class UserVo {
             return this;
         }
 
-        public Builder userPoint(Long userPoint) {
+        public Builder userPoint(int userPoint) {
             this.userPoint = userPoint;
             return this;
         }

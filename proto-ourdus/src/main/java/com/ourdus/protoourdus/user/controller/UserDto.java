@@ -11,7 +11,7 @@ public class UserDto {
     private String userName;
     private String userTel;
     private LocalDateTime regDate;
-    private Long userPoint;
+    private int userPoint;
     private Boolean writerFlag;
 
     public UserDto(){}
@@ -23,7 +23,7 @@ public class UserDto {
         this.userName = userVo.getUserName();
         this.userTel = userVo.getUserTel();
         this.regDate = userVo.getRegDate().orElse(null);
-        this.userPoint = userVo.getUserPoint().orElse(0L);
+        this.userPoint = userVo.getUserPoint().orElse(0);
         this.writerFlag = userVo.getWriterFlag().orElse(false);
     }
 
@@ -75,11 +75,11 @@ public class UserDto {
         this.regDate = regDate;
     }
 
-    public Long getUserPoint() {
+    public int getUserPoint() {
         return userPoint;
     }
 
-    public void setUserPoint(Long userPoint) {
+    public void setUserPoint(int userPoint) {
         this.userPoint = userPoint;
     }
 
