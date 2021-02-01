@@ -33,7 +33,7 @@ public class ProductService {
         Product product = new Product(author, category);
         product.setProductName(productName);
         product.setProductPrice(productPrice);
-        product.setProductOptionNum(productOpitonNum);
+        product.setProductOptionNum(productOpitonNum);  //TODO options의 크기와 num값 비교해서 동일한지 확인 필요
 
         Product newProduct = productRepository.save(product);
         for(ProductOptionDto optionDto : options){
@@ -47,12 +47,12 @@ public class ProductService {
     }
 
     @Transactional
-    public Product update(Long productId, Product param){
+    public Product update(Long productId, String productName, int productPrice, int productReviewNum, int productOptionNum){
         Product findProduct = productRepository.findById(productId).orElseThrow(() -> new NoSuchElementException());
-        findProduct.setProductName(param.getProductName());
-        findProduct.setProductPrice(param.getProductPrice());
-        findProduct.setProductReviewNum(param.getProductReviewNum());
-        findProduct.setProductOptionNum(param.getProductOptionNum());
+        findProduct.setProductName(productName);
+        findProduct.setProductPrice(productPrice);
+        findProduct.setProductReviewNum(productReviewNum);
+        findProduct.setProductOptionNum(productOptionNum);
         return findProduct;
     }
 

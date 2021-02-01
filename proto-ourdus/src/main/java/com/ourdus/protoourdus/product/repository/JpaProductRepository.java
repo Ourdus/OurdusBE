@@ -44,7 +44,7 @@ public class JpaProductRepository implements ProductRepository{
 
     @Override
     public void deleteById(Long productId) {
-        em.createQuery("DELETE FROM Product p WHERE p.productId =: id", Product.class)
+        em.createQuery("DELETE FROM Product p WHERE p.productId =: id")
                 .setParameter("id", productId)
                 .executeUpdate();
     }
