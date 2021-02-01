@@ -27,6 +27,16 @@ public class ProductOption {
     @ColumnDefault("0")
     private int optionPrice;
 
+    @Override
+    public String toString() {
+        return "ProductOption{" +
+                "optionId=" + optionId +
+                ", product=" + product +
+                ", optionName='" + optionName + '\'' +
+                ", optionPrice=" + optionPrice +
+                '}';
+    }
+
     public ProductOption(Product product){
         this.product = product;
     }

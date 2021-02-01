@@ -19,7 +19,7 @@ public class ProductController {
 
     @PostMapping("new")
     public ApiResult<ProductDto> create(@RequestBody ProductDto productDto){
-
+        return null;
     }
 
 }

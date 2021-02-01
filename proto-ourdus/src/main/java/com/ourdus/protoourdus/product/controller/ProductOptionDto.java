@@ -19,4 +19,12 @@ public class ProductOptionDto {
     public void setOptionPrice(int optionPrice) {
         OptionPrice = optionPrice;
     }
+
+    public ProductOptionDto(String optionName, int optionPrice) {
+        OptionName = optionName;
+        OptionPrice = optionPrice;
+    }
+
+    public ProductOptionDto() {
+    }
 }

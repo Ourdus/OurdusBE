@@ -11,6 +11,7 @@ public interface ProductRepository {
     Product save(Product product);
 
     ProductCategory findByCategoryId(Long CategoryId); //category의 CRUD 생성시 추후 수정
+    void saveCategory(ProductCategory category); //category의 CRUD 생성시 추후 수정
     Optional<Product> findById(Long productId);
     List<Product> findAll();
     void deleteById(Long productId);

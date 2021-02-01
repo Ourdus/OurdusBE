@@ -3,6 +3,7 @@ package com.ourdus.protoourdus.product.repository;
 import com.ourdus.protoourdus.product.model.Product;
 import com.ourdus.protoourdus.product.model.ProductCategory;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -51,5 +52,11 @@ public class JpaProductRepository implements ProductRepository{
     @Override
     public ProductCategory findByCategoryId(Long CategoryId) {
         return em.find(ProductCategory.class, CategoryId);
+    }
+
+    @Transactional
+    @Override
+    public void saveCategory(ProductCategory category) {
+        em.persist(category);
     }
 }

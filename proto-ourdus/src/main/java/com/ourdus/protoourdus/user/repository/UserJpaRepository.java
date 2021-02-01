@@ -1,6 +1,7 @@
 package com.ourdus.protoourdus.user.repository;
 
 import com.ourdus.protoourdus.user.model.User;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -9,6 +10,7 @@ import java.util.Optional;
 
 import static java.util.Optional.ofNullable;
 
+@Repository
 public class UserJpaRepository{
     /* Jpa 구조에서 Vo를 사용하면 생기는 문제점
     1. ★★Entity 수정의 변경감지(Dirty Checking)가 어려움

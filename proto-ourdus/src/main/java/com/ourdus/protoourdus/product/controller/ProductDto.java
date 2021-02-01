@@ -1,7 +1,6 @@
 package com.ourdus.protoourdus.product.controller;
 
 import com.ourdus.protoourdus.product.model.Product;
-import com.ourdus.protoourdus.product.model.ProductOption;
 
 import java.util.List;
 
@@ -113,11 +112,11 @@ public class ProductDto {
         this.productOptionNum = productOptionNum;
     }
 
-    public List<ProductOption> getProductOptions() {
+    public List<ProductOptionDto> getProductOptions() {
         return productOptions;
     }
 
-    public void setProductOptions(List<ProductOption> productOptions) {
+    public void setProductOptions(List<ProductOptionDto> productOptions) {
         this.productOptions = productOptions;
     }
 }
