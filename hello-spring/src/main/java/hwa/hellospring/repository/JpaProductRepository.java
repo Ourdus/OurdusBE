@@ -44,7 +44,7 @@ public class JpaProductRepository implements ProductRepository {
 
     @Override
     public int delete(int product_id) {
-        Query query= em.createQuery("delete from Product p where p.product_id = :product_id", Product.class);
+        Query query= em.createQuery("delete from Product p where p.product_id = :product_id");
         int result=query.setParameter("product_id", product_id).executeUpdate();
         return result;
     }
@@ -58,9 +58,11 @@ public class JpaProductRepository implements ProductRepository {
     }
 
     @Override
-    public int modify(int product_id) {
-        Query query= em.createQuery("update Product set p where p.product_id = :product_id", Product.class);
-        int result=query.setParameter("product_id", product_id).executeUpdate();
+    public int modify(Product product,int product_id) {
+        Query query= em.createQuery("update Product p set product_name=?2 where p.product_id = ?1");
+        query.setParameter(1, product_id);
+        query.setParameter(2,product.getProduct_name());
+        int result=query.executeUpdate();
         return result;
     }
 

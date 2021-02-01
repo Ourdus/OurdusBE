@@ -73,13 +73,13 @@ public class ProductController {
     }
 
     @PostMapping("/product/{product_id}/edit")
-    public String product_modify (@PathVariable("product_id") int product_Id){
+    public String product_modify (@RequestBody Product product ,@PathVariable("product_id") int product_Id){
 
-        int row =productService.modify(product_Id);
+        int row =productService.modify(product,product_Id);
         if(row==0)
-            return "작품 삭제 실패";
+            return "작품 수정 실패";
         else
-            return "작품 삭제";
+            return "작품 수정";
     }
 
     @PostMapping("/category/{category_id}")

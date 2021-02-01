@@ -13,6 +13,6 @@ public interface ProductRepository {
     public Optional<Product> findOneById(int product_id);
     public int delete(int product_id);
     public List<Product> findAllByCategory(int category_id);
-    public int modify(int product_id);
+    public int modify(Product product,int product_id);
 
 }
