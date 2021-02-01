@@ -3,17 +3,20 @@ package hwa.hellospring.repository;
 import hwa.hellospring.domain.Product;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
 import java.util.Optional;
 
 public class JpaProductRepository implements ProductRepository {
 
+    @PersistenceContext
     private final EntityManager em;//db랑 통신하고 관리해주는 역할
 
     public JpaProductRepository (EntityManager em)
     {
         this.em=em;
+
     }
 
     @Override
@@ -52,6 +55,13 @@ public class JpaProductRepository implements ProductRepository {
         return em.createQuery("select p from Product p where p.category_id = :category_id", Product.class)
                 .setParameter("category_id", category_id)
                 .getResultList();
+    }
+
+    @Override
+    public int modify(int product_id) {
+        Query query= em.createQuery("update Product set p where p.product_id = :product_id", Product.class);
+        int result=query.setParameter("product_id", product_id).executeUpdate();
+        return result;
     }
 
 }

@@ -18,8 +18,8 @@ public class Product {
    private int product_purchase;
    private int product_option;
 
-   @ManyToOne
-   @JoinColumn(name="CATEGORY_ID",insertable=false, updatable=false)
+   @ManyToOne(cascade = CascadeType.MERGE)
+   @JoinColumn(name="CATEGORY_ID",insertable=false, updatable = false)
    private Category category;
 
    @ManyToOne(cascade = CascadeType.MERGE)
