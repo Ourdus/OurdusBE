@@ -62,7 +62,7 @@ public class JpaProductRepository implements ProductRepository {
         Query query= em.createQuery("update Product p set product_name=?2 where p.product_id = ?1");
         query.setParameter(1, product_id);
         query.setParameter(2,product.getProduct_name());
-        int result=query.executeUpdate();
+        int result=query.executeUpdate();//update
         return result;
     }
 
