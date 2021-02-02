@@ -36,11 +36,13 @@ public class ProductService {
         product.setProductOptionNum(productOpitonNum);  //TODO options의 크기와 num값 비교해서 동일한지 확인 필요
 
         Product newProduct = productRepository.save(product);
-        for(ProductOptionDto optionDto : options){
-            ProductOption productOption = new ProductOption(newProduct);
-            productOption.setOptionName(optionDto.getOptionName());
-            productOption.setOptionPrice(optionDto.getOptionPrice());
-            jpaProductOptionRepository.save(productOption);
+        if(options.size() > 0 && !options.get(0).getOptionName().isEmpty()) {
+            for (ProductOptionDto optionDto : options) {
+                ProductOption productOption = new ProductOption(newProduct);
+                productOption.setOptionName(optionDto.getOptionName());
+                productOption.setOptionPrice(optionDto.getOptionPrice());
+                jpaProductOptionRepository.save(productOption);
+            }
         }
 
         return newProduct;
@@ -48,6 +50,7 @@ public class ProductService {
 
     @Transactional
     public Product update(Long productId, String productName, int productPrice, int productReviewNum, int productOptionNum){
+        //TODO update에 options가 들어오는 경우 추가
         Product findProduct = productRepository.findById(productId).orElseThrow(() -> new NoSuchElementException());
         findProduct.setProductName(productName);
         findProduct.setProductPrice(productPrice);

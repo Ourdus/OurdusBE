@@ -39,17 +39,21 @@ class ProductServiceTest {
     @Autowired
     private UserJpaRepository userJpaRepository;
 
+    private User user;
+    private ProductCategory category;
+
     @BeforeAll
     void setUp(){
-        User user = new User();
+        user = new User();
         user.setUserEmail("testemail@email.com");
+        user.setUserName("유저이름");
         user.setUserPw("1234");
         user.setUserTel("0101234567");
         userJpaRepository.insert(user);
 
-        ProductCategory productCategory= new ProductCategory();
-        productCategory.setCategoryName("카테고리이름");
-        productRepository.saveCategory(productCategory);
+        category= new ProductCategory();
+        category.setCategoryName("카테고리이름");
+        productRepository.saveCategory(category);
 
     }
 
@@ -60,7 +64,7 @@ class ProductServiceTest {
         ProductOptionDto dto2 = new ProductOptionDto("이름2", 100);
         options.add(dto1); options.add(dto2);
 
-        Product createProduct = productService.create(1L, 1L, "작품이름", 10000, 2, options);
+        Product createProduct = productService.create(user.getUserId(), category.getCategoryId(), "작품이름", 10000, 2, options);
         Product findProduct = productRepository.findById(createProduct.getProductId()).orElseThrow();
 
         assertThat(createProduct.getUser(), is(equalTo(findProduct.getUser())));

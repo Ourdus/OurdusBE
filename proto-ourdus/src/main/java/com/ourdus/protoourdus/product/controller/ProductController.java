@@ -28,7 +28,7 @@ public class ProductController {
         return OK(new ProductDto(product));
     }
 
-    @PostMapping("{productId}/edit")
+    @PostMapping("{product_id}/edit")
     public ApiResult<ProductDto> edit(@PathVariable("product_id") Long productId, @RequestBody ProductDto dto){
         Product product = productService.update(productId, dto.getProductName(), dto.getProductPrice(), dto.getProductReviewNum(), dto.getProductOptionNum());
         return OK(new ProductDto(product));

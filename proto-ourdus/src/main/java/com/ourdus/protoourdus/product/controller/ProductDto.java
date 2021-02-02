@@ -18,6 +18,9 @@ public class ProductDto {
     private int productOptionNum;
     private List<ProductOptionDto> productOptions;
 
+    public ProductDto() {
+    }
+
     public ProductDto(Product product){ //TODO Product 반환할때 options도 같이 반환해야하므로, entity에 추가하는 방향으로 refactoring
         this.productId = product.getProductId();
         this.authorId = product.getUser().getUserId();
