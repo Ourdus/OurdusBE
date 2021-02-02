@@ -1,11 +1,17 @@
 package com.ourdus.protoourdus.user.controller;
 
+import com.ourdus.protoourdus.common.ApiResult;
 import com.ourdus.protoourdus.user.model.UserVo;
 import com.ourdus.protoourdus.user.service.UserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import static com.ourdus.protoourdus.common.ApiResult.ERROR;
+import static com.ourdus.protoourdus.common.ApiResult.OK;
 
 @RestController
 @RequestMapping("user")
@@ -18,22 +24,29 @@ public class UserController {
     }
 
     @PostMapping("login")
-    public String login(@RequestBody LoginRequest loginRequest){
-        //카카오 및 외부 api를 통한 로그인이 아닌 아이디어스 이메일로 로그인만 구현
+    public ApiResult<?> login(@RequestBody LoginRequest loginRequest){
         UserVo userVo = userService.login(
                 loginRequest.getUserEmail(), loginRequest.getUserPw()
         );
-        //TODO result type 형태를 ApiResult로 구현
-        if(userVo.getUserId() != null) return userVo.getUserEmail();
-        return "잘못된 값";
+        if(userVo.getUserId() != null) return OK(new UserDto(userVo));
+        return ERROR("잘못된로그인", HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("join")
-    public UserDto join(@RequestBody JoinRequest joinRequest){
-        //카카오 및 외부 api를 통한 가입이 아닌 아이디어스 이메일로 가입만 구현
+    public ResponseEntity<UserDto> join(@RequestBody JoinRequest joinRequest){
         UserVo userVo = userService.join(
                 joinRequest.getUserEmail(), joinRequest.getUserPw(), joinRequest.getUserName(), joinRequest.getUserTel());
-        //TODO result type 형태를 ApiResult로 구현
-        return new UserDto(userVo);
+        return new ResponseEntity<UserDto>(new UserDto(userVo), HttpStatus.OK);
     }
+
+    @PostMapping("edit")
+    public ResponseEntity<UserDto> edit(@RequestBody UserDto userDto){
+        UserVo userVo = userService.modify(
+                new UserVo.Builder(userDto).build());
+        return new ResponseEntity<UserDto>(new UserDto(userVo), HttpStatus.OK);
+
+    }
+
+
+
 }

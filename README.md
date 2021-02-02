@@ -1,4 +1,4 @@
-## OurdusBE
+## OurdusBE_혜진
 2021-01-26~2021-02-02  
 Product CRUD 구현해보기  
 

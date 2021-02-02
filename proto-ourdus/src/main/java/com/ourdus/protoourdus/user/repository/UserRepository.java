@@ -10,5 +10,4 @@ public interface UserRepository {
 
     Optional<UserVo> findByEmail(String userEmail);
     void deleteByEmail(String userEmail);
-    //TODO repository login, join 구현 - jdbc, JPA 둘다
 }

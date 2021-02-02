@@ -48,7 +48,7 @@ public class UserJdbcRepository implements UserRepository{
             userVo.getUserPw(),
             userVo.getUserName(),
             userVo.getUserTel(),
-            userVo.getUserPoint().orElse(0L),
+            userVo.getUserPoint().orElse(0),
             userVo.getWriterFlag().orElse(false),
             userVo.getUserEmail()
             );
@@ -81,7 +81,7 @@ public class UserJdbcRepository implements UserRepository{
             .userName(rs.getString("user_name"))
             .userTel(rs.getString("user_tel"))
             .regDate(rs.getTimestamp("reg_date").toLocalDateTime())
-            .userPoint(rs.getLong("user_point"))
+            .userPoint(rs.getInt("user_point"))
             .writerFlag(rs.getBoolean("writer_flag"))
             .build();
 }
