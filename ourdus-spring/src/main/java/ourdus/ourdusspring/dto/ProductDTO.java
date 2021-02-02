@@ -8,7 +8,7 @@ import javax.persistence.*;
 public class ProductDTO {
 
     private Long id;
-    private String productName;
+    private String name;
     private int price;
     private int rate;
     private int review;

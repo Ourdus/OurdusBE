@@ -3,10 +3,9 @@ package ourdus.ourdusspring.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ourdus.ourdusspring.common.ApiResult;
 import ourdus.ourdusspring.domain.User;
 import ourdus.ourdusspring.dto.UserDTO;
 import ourdus.ourdusspring.service.JwtService;
@@ -17,6 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+
+import static ourdus.ourdusspring.common.ApiResult.OK;
 
 @RestController
 @RequestMapping("/api")
@@ -36,11 +37,13 @@ public class UserController {
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/user/login")
-    public ResponseEntity<Map<String,Object>> login(@RequestBody UserDTO user, HttpServletResponse res){
+    public ApiResult<Map<String,Object>> login(HttpServletResponse res, @RequestBody UserDTO userdto){
         Map<String,Object> resultMap = new HashMap<>();
         HttpStatus status = null;
         try{
-            User loginUser = userService.login(user);
+            User loginUser = userService.login(
+                    new User(userdto)
+            );
             //로그인 성공했다면 토큰을 생성
             String token = jwtService.create(loginUser);
             //토큰 정보는 request헤더로 보내고 나머지는 Map에 담아둠.
@@ -54,14 +57,11 @@ public class UserController {
             resultMap.put("message",e.getMessage());
             status = HttpStatus.INTERNAL_SERVER_ERROR;
         }
-        return new ResponseEntity<Map<String,Object>>(resultMap, status);
+        return OK(resultMap);
     }
-//    public String login(@RequestBody UserDTO loginUser){
-//        return userService.login(loginUser);
-//    }
 
     @PostMapping("/info")
-    public ResponseEntity<Map<String,Object>>getInfo(HttpServletRequest req, @RequestBody UserDTO user){
+    public ApiResult<Map<String,Object>> getInfo(HttpServletRequest req, @RequestBody UserDTO user){
         Map<String, Object> resultMap = new HashMap<>();
         HttpStatus status = null;
         try{
@@ -69,7 +69,6 @@ public class UserController {
             String info = userService.getServerInfo();
             //보너스로 토큰에 담긴 정보도 전달. 서버에서 토큰을 사용하는 방법임을 알수있음
             resultMap.putAll(jwtService.get(req.getHeader("jwt-auth-token")));
-
             resultMap.put("status",true);
             resultMap.put("info",info);
             resultMap.put("request_body",user);
@@ -79,32 +78,32 @@ public class UserController {
             resultMap.put("message",e.getMessage());
             status=HttpStatus.INTERNAL_SERVER_ERROR;
         }
-        return new ResponseEntity<Map<String,Object>>(resultMap,status);
+        return OK(resultMap);
     }
 
     @PostMapping("/user/join")
-    public String join(@RequestBody UserDTO newUser){
-        return userService.join(newUser);
+    public ApiResult<String> join(@RequestBody UserDTO userdto){
+        return OK(userService.join(new User(userdto)));
     }
 
 
     @DeleteMapping("/user/{id}")
-    public String delete(@PathVariable("id") Long id){
-        return userService.delete(id);
+    public ApiResult<String> delete(@PathVariable("id") Long id){
+        return OK(userService.delete(id));
     }
 
     @PostMapping("/user/{id}")
-    public String update(@RequestBody UserDTO user){return userService.update(user);}
+    public ApiResult<String> update(@RequestBody UserDTO userdto){return OK(userService.update(new User(userdto)));}
 
 
-    @GetMapping("/user/{id}")
-    public String info(@PathVariable("id") Long id,Model model) {
-        Optional<User> user = userService.info(id);
-        if(user.isPresent()){
-            model.addAttribute("userInfo" ,user);
-            return "회원 정보 조회 성공";
-        }else{
-            return "회원 정보 조회 실패";
-        }
+//    @GetMapping("/user/{id}")
+//    public ApiResult<String> info(@PathVariable("id") Long id,Model model) {
+//        Optional<User> user = userService.info(id);
+//        if(user.isPresent()){
+//            model.addAttribute("userInfo" ,user);
+//            return OK("회원 정보 조회 성공");
+//        }else{
+//            return OK("회원 정보 조회 실패");
+//        }
     }
 }

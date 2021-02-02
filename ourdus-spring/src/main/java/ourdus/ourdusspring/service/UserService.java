@@ -1,17 +1,14 @@
 package ourdus.ourdusspring.service;
 
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ourdus.ourdusspring.domain.User;
-import ourdus.ourdusspring.dto.UserDTO;
-//import ourdus.ourdusspring.repository.SpringDataJpaUserRepository;
 import ourdus.ourdusspring.repository.UserRepository;
 
-import javax.persistence.EntityNotFoundException;
-import java.time.LocalDateTime;
+import java.util.NoSuchElementException;
 import java.util.Optional;
+
+//import ourdus.ourdusspring.repository.SpringDataJpaUserRepository;
 
 @Service
 @Transactional
@@ -23,7 +20,7 @@ public class UserService {
     }
 
 
-    public User login(UserDTO loginUser){
+    public User login(User loginUser){
         String email = loginUser.getEmail();
         String password = loginUser.getPassword();
         Optional<User> user1 = userRepository.findByEmail(email);
@@ -31,28 +28,18 @@ public class UserService {
             User result = user1.get();
             if(result.getPassword().equals(password)){
                 return result;
-//                return "login success";
             }else{
                 throw new RuntimeException("비밀번호가 틀렸습니다.");
             }
         }
-//        return "login fail";
         throw new RuntimeException("아이디가 존재하지 않습니다.");
     }
 
-    public String join(UserDTO newUser){
-        User user = new User();
-        user.setEmail(newUser.getEmail());
-        user.setUsername(newUser.getUsername());
-        user.setPassword(newUser.getPassword());
-        user.setTel(newUser.getTel());
-        user.setWriterFlag(newUser.getWriterFlag());
-        Optional<User> result = userRepository.findByEmail(newUser.getEmail());
-        if(result.isPresent()){
-            return "join failed";
-        }
+    public String join(User user){
+        Optional<User> result = userRepository.findByEmail(user.getEmail());
+        result.orElseThrow(() -> new IllegalStateException("join failed"));
         userRepository.save(user);
-        return "join success";
+        return "join success";  //TODO token 생성 필요
     }
 
     public String getServerInfo(){
@@ -60,32 +47,21 @@ public class UserService {
     }
 
     public String delete(Long id){
+        if(!userRepository.existsById(id)) new NoSuchElementException("delete failed");
         userRepository.deleteById(id);
         return "delete success";
-
-//        userRepository.findById(id)
-//                .ifPresent(M->{
-//                    userRepository.deleteById(id);
-//                    return "delete success";
-//                });
-//        return "delete fail";
-//        throw new IllegalStateException("delete fail");
-
     }
 
-    public String update(UserDTO updateUser){
-        String password = updateUser.getPassword();
-        String tel = updateUser.getTel();
-        String email = updateUser.getEmail();
-        Optional<User> findUser = userRepository.findByEmail(email);
-        User user = findUser.get();
-        user.setPassword(password);
-        user.setTel(tel);
-        userRepository.save(user);
+    public String update(User user){
+        Optional<User> result = userRepository.findByEmail(user.getEmail());
+        if(!result.isPresent()) new NoSuchElementException("update failed");
+        User findUser = result.get();
+        findUser.setTel(user.getTel());
+        findUser.setName(user.getName());
         return "update success";
     }
 
-    public Optional<User> info(Long id){
-        return userRepository.findById(id);
-    }
+//    public Optional<User> info(Long id){
+//        return userRepository.findById(id);
+//    }
 }
