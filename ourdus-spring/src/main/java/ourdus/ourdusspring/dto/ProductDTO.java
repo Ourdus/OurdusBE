@@ -14,6 +14,7 @@ public class ProductDTO {
     private int review;
     private int hit;
     private int purchase;
+    private Long categoryId;
     private String categoryName;
     private Long authorId;
     private String authorName;
@@ -21,24 +22,17 @@ public class ProductDTO {
 
     public ProductDTO(Product product) {
         this.id = product.getId();
-        this.productName = product.getName();
+        this.name = product.getName();
         this.price = product.getPrice();
         this.rate = product.getRate();
         this.review = product.getReview();
         this.hit = product.getHit();
         this.purchase = product.getPurchase();
+        this.categoryId = product.getCategory().getId();
         this.categoryName = product.getCategory().getName();
         this.authorId = product.getUser().getId();
-        this.authorName = product.getUser().getUsername();
+        this.authorName = product.getUser().getName();
         this.optionNum = product.getOptionNum();
-    }
-
-    public int getOptionNum() {
-        return optionNum;
-    }
-
-    public void setOptionNum(int optionNum) {
-        this.optionNum = optionNum;
     }
 
     public Long getId() {
@@ -49,12 +43,12 @@ public class ProductDTO {
         this.id = id;
     }
 
-    public String getProductName() {
-        return productName;
+    public String getName() {
+        return name;
     }
 
-    public void setProductName(String productname) {
-        this.productName = productname;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getPrice() {
@@ -103,5 +97,37 @@ public class ProductDTO {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+
+    public Long getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(Long authorId) {
+        this.authorId = authorId;
+    }
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
+
+    public int getOptionNum() {
+        return optionNum;
+    }
+
+    public void setOptionNum(int optionNum) {
+        this.optionNum = optionNum;
+    }
+
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 }

@@ -1,5 +1,11 @@
 package ourdus.ourdusspring.domain;
 
+import lombok.Builder;
+import org.springframework.beans.factory.annotation.Autowired;
+import ourdus.ourdusspring.dto.ProductDTO;
+import ourdus.ourdusspring.repository.CategoryRepository;
+import ourdus.ourdusspring.repository.UserRepository;
+
 import javax.persistence.*;
 
 @Entity
@@ -36,79 +42,76 @@ public class Product {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public int getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
     public int getRate() {
         return rate;
-    }
-
-    public void setRate(int rate) {
-        this.rate = rate;
     }
 
     public int getReview() {
         return review;
     }
 
-    public void setReview(int review) {
-        this.review = review;
-    }
-
     public int getHit() {
         return hit;
-    }
-
-    public void setHit(int hit) {
-        this.hit = hit;
     }
 
     public int getPurchase() {
         return purchase;
     }
 
-    public void setPurchase(int purchase) {
-        this.purchase = purchase;
+    public int getOptionNum() {
+        return optionNum;
     }
 
     public Category getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
     public User getUser() {
         return user;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
 
-    public int getOptionNum() {
-        return optionNum;
-    }
+    @Autowired
+    CategoryRepository categoryRepository;
 
-    public void setOptionNum(int optionNum) {
+    @Autowired
+    UserRepository userRepository;
+    @Builder
+    public Product(String name, int price, int optionNum, Long categoryId, Long userId) {
+        this.name = name;
+        this.price = price;
         this.optionNum = optionNum;
+        this.category = findCategory(categoryId);
+        this.user = findUser(userId);
     }
+    @Builder
+    public Product(ProductDTO productDto) {
+        this.id = productDto.getId();
+        this.name = productDto.getName();
+        this.price = productDto.getPrice();
+        this.rate = productDto.getRate();
+        this.review = productDto.getReview();
+        this.hit = productDto.getHit();
+        this.purchase = productDto.getPurchase();
+        this.optionNum = productDto.getOptionNum();
+        this.category = findCategory(productDto.getCategoryId());
+        this.user = findUser(productDto.getId());
+    }
+
+    private Category findCategory(Long categoryId){
+        return categoryRepository.findOneById(categoryId).get();
+    }
+
+    private User findUser(Long userId){
+        return userRepository.findById(userId).get();
+    }
+
 }

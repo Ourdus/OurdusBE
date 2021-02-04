@@ -3,9 +3,11 @@ package ourdus.ourdusspring.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ourdus.ourdusspring.domain.Product;
+import ourdus.ourdusspring.dto.ProductDTO;
 import ourdus.ourdusspring.repository.ProductRepository;
 
 import javax.swing.text.html.Option;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,4 +33,10 @@ public class ProductService {
         return productRepository.findAllByCategoryId(categoryId);
     }
 
+    public Product save(Product product)//product info save
+    {
+        Optional<Product> result = productRepository.save(product);
+        return result
+                .orElseThrow(() -> new IllegalArgumentException());
+    }
 }

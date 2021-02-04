@@ -87,13 +87,13 @@ public class UserController {
 
     @DeleteMapping("/user/delete")
     public ApiResult<String> delete(HttpServletRequest req){
-        Long id = (Long) jwtService.get(req.getHeader("jwt-auth-token")).get("UserId"); //id 받아오기
+        Long id = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId"))); //id 받아오기
         return OK(userService.delete(id));
     }
 
     @PostMapping("/user/edit")
     public ApiResult<String> update(HttpServletRequest req, @RequestBody UserDTO userdto){
-        jwtService.get(req.getHeader("jwt-auth-token")); //id 받아오기
+        //Long id = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId"))); //id 받아오기
         return OK(userService.update(new User(userdto)));
     }
 
