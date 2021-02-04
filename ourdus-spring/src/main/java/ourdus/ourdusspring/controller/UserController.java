@@ -3,7 +3,6 @@ package ourdus.ourdusspring.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ourdus.ourdusspring.common.ApiResult;
 import ourdus.ourdusspring.domain.User;
@@ -15,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 import static ourdus.ourdusspring.common.ApiResult.OK;
 
@@ -87,13 +85,17 @@ public class UserController {
     }
 
 
-    @DeleteMapping("/user/{id}")
-    public ApiResult<String> delete(@PathVariable("id") Long id){
+    @DeleteMapping("/user/delete")
+    public ApiResult<String> delete(HttpServletRequest req){
+        Long id = (Long) jwtService.get(req.getHeader("jwt-auth-token")).get("UserId"); //id 받아오기
         return OK(userService.delete(id));
     }
 
-    @PostMapping("/user/{id}")
-    public ApiResult<String> update(@RequestBody UserDTO userdto){return OK(userService.update(new User(userdto)));}
+    @PostMapping("/user/edit")
+    public ApiResult<String> update(HttpServletRequest req, @RequestBody UserDTO userdto){
+        jwtService.get(req.getHeader("jwt-auth-token")); //id 받아오기
+        return OK(userService.update(new User(userdto)));
+    }
 
 
 //    @GetMapping("/user/{id}")
@@ -105,5 +107,6 @@ public class UserController {
 //        }else{
 //            return OK("회원 정보 조회 실패");
 //        }
-    }
+//      }
 }
+
