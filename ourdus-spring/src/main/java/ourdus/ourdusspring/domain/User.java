@@ -44,7 +44,10 @@ public class User {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> dc40164... reset before merge
     public void setTel(String tel) {
         this.tel = tel;
     }
@@ -81,5 +84,8 @@ public class User {
     }
 
 >>>>>>> d843e0d514b9cbec457a461076bf05840b494f96
+<<<<<<< HEAD
+>>>>>>> dc40164... reset before merge
+=======
 >>>>>>> dc40164... reset before merge
 }

@@ -47,11 +47,14 @@ public class Product {
     private User user;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     public Long getId() {
         return id;
     }
 =======
 <<<<<<< HEAD
+>>>>>>> dc40164... reset before merge
+=======
 >>>>>>> dc40164... reset before merge
 
     public void setId(Long id) {
@@ -163,6 +166,9 @@ public class Product {
 
     public int getHit() {
         return hit;
+<<<<<<< HEAD
+>>>>>>> dc40164... reset before merge
+=======
 >>>>>>> dc40164... reset before merge
     }
 
@@ -171,8 +177,13 @@ public class Product {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     public void setPurchase(int purchase) {
         this.purchase = purchase;
+=======
+    public int getOptionNum() {
+        return optionNum;
+>>>>>>> dc40164... reset before merge
 =======
     public int getOptionNum() {
         return optionNum;
@@ -184,16 +195,20 @@ public class Product {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     public void setCategory(Category category) {
         this.category = category;
     }
 
 =======
 >>>>>>> dc40164... reset before merge
+=======
+>>>>>>> dc40164... reset before merge
     public User getUser() {
         return user;
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     public void setUser(User user) {
         this.user = user;
@@ -207,6 +222,8 @@ public class Product {
         this.optionNum = optionNum;
     }
 =======
+=======
+>>>>>>> dc40164... reset before merge
 
     @Autowired
     CategoryRepository categoryRepository;
@@ -244,5 +261,8 @@ public class Product {
     }
 
 >>>>>>> d843e0d514b9cbec457a461076bf05840b494f96
+<<<<<<< HEAD
+>>>>>>> dc40164... reset before merge
+=======
 >>>>>>> dc40164... reset before merge
 }
