@@ -1,7 +1,6 @@
 package ourdus.ourdusspring.service;
 
 import io.jsonwebtoken.*;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -33,7 +32,7 @@ public class JwtService {
         //Payload 설정 - claim 정보 포함
         builder.setSubject("로그인토큰") //토큰 제목설정
                 .setExpiration(new Date(System.currentTimeMillis()+1000*60*expireMin)) //유효기간
-                .claim("User",user).claim("second","더 담고싶은거 있어?"); //담고 싶은 정보 설정
+                .claim("UserId",user.getId()).claim("second","더 담고싶은거 있어?"); //담고 싶은 정보 설정
 
         //signature - secret key를 이용한 암호화
         builder.signWith(SignatureAlgorithm.HS256,salt.getBytes());
@@ -53,6 +52,7 @@ public class JwtService {
 
     //jwt 토큰을 분석해서 필요한 정보 반환
     public Map<String,Object> get(final String jwt){
+        checkValid(jwt);
         Jws<Claims> claims = null;
         try{
             claims = Jwts.parser().setSigningKey(salt.getBytes()).parseClaimsJws(jwt);

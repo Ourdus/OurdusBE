@@ -3,21 +3,30 @@ package ourdus.ourdusspring.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import ourdus.ourdusspring.common.ApiResult;
 import ourdus.ourdusspring.domain.Product;
+import ourdus.ourdusspring.dto.ProductCreateDTO;
 import ourdus.ourdusspring.dto.ProductDTO;
 import ourdus.ourdusspring.repository.ProductRepository;
+import ourdus.ourdusspring.service.JwtService;
 import ourdus.ourdusspring.service.ProductService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import static ourdus.ourdusspring.common.ApiResult.OK;
+
 @RestController
+@RequestMapping("w")
 public class ProductController {
+
+    @Autowired
+    private JwtService jwtService;
 
     private ProductService productService;
 
@@ -25,46 +34,72 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping("/w/product")
-    public String viewAllProductList(Model model){
+    @GetMapping("product")
+    public ApiResult<List<ProductDTO>> viewAllProductList(){
         List<Product> productList = productService.findAll();
+        List<ProductDTO> productDTOList=new ArrayList<ProductDTO>();
         if(productList!=null){
-            List<ProductDTO> productDTOList=new ArrayList<ProductDTO>();
             productList.stream().forEach(product -> {
                 productDTOList.add(new ProductDTO(product));
             });
-            model.addAttribute("productList",productDTOList);
-            System.out.println(productDTOList);
-            return "작품 전체 조회 성공";
-        }else{
-            return "작품 전체 조회 실패";
         }
+        return OK(productDTOList);
     }
 
-    @GetMapping("/w/category/{category_id}")
-    public String viewAllProductList(Model model, @PathVariable("category_id") Long categoryId){
+    @GetMapping("category/{category_id}")
+    public ApiResult<List<ProductDTO>> viewCategoryProductList(@PathVariable("category_id") Long categoryId) {
         Optional<List<Product>> productByCategory = productService.findAllByCategory(categoryId);
-        if(productByCategory.isPresent()){
-            List<ProductDTO> productDTOList= new ArrayList<ProductDTO>();
+        List<ProductDTO> productDTOList = new ArrayList<ProductDTO>();
+        if (productByCategory.isPresent()) {
             productByCategory.get().stream().forEach(product -> {
                 productDTOList.add(new ProductDTO(product));
             });
-            model.addAttribute("productByCategory",productDTOList);
-            return "카테고리별 작품 조회 성공";
-        }else{
-            return "카테고리별 작품 조회 실패";
         }
+        return OK(productDTOList);
     }
 
-    @GetMapping("/w/product/{product_id}")
-    public String viewProduct(Model model, @PathVariable("product_id") Long productId){
+    @GetMapping("product/{product_id}")
+    public ApiResult<ProductDTO> viewProduct(@PathVariable("product_id") Long productId) {
         Optional<Product> product = productService.findOne(productId);
-        if(product.isPresent()){
-            ProductDTO productDTO = new ProductDTO(product.get());
-            model.addAttribute("product",productDTO);
-            return "작품 조회 성공";
-        }else{
-            return "작품 조회 실패";
-        }
+        product.orElseThrow(() -> new NoSuchElementException("해당하는 작품 정보가 없습니다"));
+        return OK(new ProductDTO(product.get()));
     }
+
+
+    @PostMapping("product/new")
+    public ApiResult<ProductDTO> save(HttpServletRequest req, @RequestBody ProductCreateDTO productdto){
+        Long userid = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId"))); //id 받아오기
+        Product product = Product
+                .builder()
+                .name(productdto.getName())
+                .price(productdto.getPrice())
+                .optionNum(productdto.getOptionNum())
+                .userId(userid)
+                .categoryId(productdto.getCategoryId())
+                .build();
+        return OK(new ProductDTO(productService.save(product)));
+    }
+
+
+//    @PostMapping("product/{product_id}/delete")
+//    public ApiResult<String> delete(@PathVariable("product_id") Long product_Id){
+//
+//        int row =productService.delete(product_Id);
+//        if(row==0)
+//            return "작품 삭제 실패";
+//        else
+//            return "작품 삭제";
+//    }
+//
+//    @PostMapping("/product/{product_id}/edit")
+//    public ApiResult<ProductDTO> modify(@PathVariable("product_id") Long product_Id){
+//
+//        int row =productService.modify(product_Id);
+//        if(row==0)
+//            return "작품 삭제 실패";
+//        else
+//            return "작품 삭제";
+//    }
+
+
 }

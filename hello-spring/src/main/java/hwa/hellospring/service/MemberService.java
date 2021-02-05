@@ -3,10 +3,11 @@ package hwa.hellospring.service;
 import hwa.hellospring.domain.Member;
 import hwa.hellospring.repository.JdbcMemberRepository;
 import hwa.hellospring.repository.MemberRepository;
-//import hwa.hellospring.repository.MemoryMemberRepository;
+import io.swagger.models.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,9 +30,9 @@ public class MemberService {
         return member.getUser_id();
     }
 
-    public boolean login(String user_id,String password)
+    public boolean login(Member member, Model model)
     {
-        return memberRepository.login(user_id, password).isEmpty();
+        return memberRepository.login(member.getUser_id(), member.getPassword()).isEmpty();
     }
 
     public Boolean findInfo(String user_id)
@@ -50,9 +51,7 @@ public class MemberService {
     }
 
     public boolean validateDuplicateMember(String user_id) {//이름이 중복되는 회원이 있는 경우
-        Boolean checker;
-        checker=memberRepository.findById(user_id).isEmpty();
-        return checker;
+        return memberRepository.findById(user_id).isEmpty();
     }
 
     public List<Member> findMembers()

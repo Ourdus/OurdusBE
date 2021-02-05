@@ -18,7 +18,7 @@ public class JdbcMemberRepository implements MemberRepository{
 
     @Override
     public Member join(Member member) {
-        String sql = "insert into user(user_id,user_pw,name,user_tel,user_email,user_point) values(?,?,?,?,?,?)";
+        String sql = "insert into user(user_id,user_pw,user_name,user_tel,user_email,user_point) values(?,?,?,?,?,?)";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -26,7 +26,7 @@ public class JdbcMemberRepository implements MemberRepository{
             conn = getConnection();
             pstmt = conn.prepareStatement(sql,
                     Statement.RETURN_GENERATED_KEYS);
-            pstmt.setString(3, member.getName());
+            pstmt.setString(3, member.getUser_name());
             pstmt.setString(2, member.getPassword());
             pstmt.setString(1, member.getUser_id());
             pstmt.setString(4, member.getUser_tel());
@@ -114,14 +114,14 @@ public class JdbcMemberRepository implements MemberRepository{
     {
         Connection conn = null;
         PreparedStatement pstmt=null;
-        String sql = " update user set user_tel=?,user_email=?, name=?  where user_id = ? and user_pw=? ";
+        String sql = " update user set user_tel=?,user_email=?, user_name=?  where user_id = ? and user_pw=? ";
         int rs = 0;
         try {
             conn = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/test", "sa", "");
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1,member.getUser_tel());
             pstmt.setString(2,member.getUser_email());
-            pstmt.setString(3,member.getName());
+            pstmt.setString(3,member.getUser_name());
             pstmt.setString(4,member.getUser_id());
             pstmt.setString(5,member.getPassword());
 
@@ -183,8 +183,8 @@ public class JdbcMemberRepository implements MemberRepository{
             List<Member> members = new ArrayList<>();
             while(rs.next()) {
                 Member member = new Member();
-                member.setUser_id(rs.getString("id"));
-                member.setName(rs.getString("name"));
+                member.setUser_id(rs.getString("user_id"));
+                member.setUser_name(rs.getString("user_name"));
                 members.add(member);
             }
             return members;
@@ -211,7 +211,7 @@ public class JdbcMemberRepository implements MemberRepository{
                 member.setUser_tel(rs.getString("user_tel"));
                 member.setUser_email(rs.getString("user_email"));
                 member.setUser_point(rs.getInt("user_point"));
-                member.setName(rs.getString("name"));
+                member.setUser_name(rs.getString("user_name"));
                 return Optional.of(member);
             }
             return Optional.empty();
