@@ -3,23 +3,10 @@ package ourdus.ourdusspring.service;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import ourdus.ourdusspring.SpringConfig;
-import ourdus.ourdusspring.domain.User;
-import ourdus.ourdusspring.dto.UserDTO;
-//import ourdus.ourdusspring.repository.SpringDataJpaUserRepository;
 import ourdus.ourdusspring.repository.UserRepository;
 
-import java.util.List;
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+//import ourdus.ourdusspring.repository.SpringDataJpaUserRepository;
 
 @DataJpaTest
 //@EnableConfigurationProperties(value= SpringConfig.class)
@@ -39,15 +26,15 @@ class UserServiceTest {
     @Test
     void join() {
         //given
-       UserDTO user1 =new UserDTO();
-       user1.setEmail("abc@naver.com");
-       UserDTO user2 = new UserDTO();
-       user2.setEmail("abc@naver.com");
-        //when
-        userService.join(user1);
-        //then
-        String result = userService.join(user2);
-        assertThat(result).isEqualTo("join failed");
+//       UserDTO user1 =new UserDTO();
+//       user1.setEmail("abc@naver.com");
+//       UserDTO user2 = new UserDTO();
+//       user2.setEmail("abc@naver.com");
+//        //when
+//        userService.join(user1);
+//        //then
+//        String result = userService.join(user2);
+//        assertThat(result).isEqualTo("join failed");
     }
 
 //    @Test

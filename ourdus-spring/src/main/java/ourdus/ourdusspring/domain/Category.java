@@ -1,14 +1,12 @@
 package ourdus.ourdusspring.domain;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name="PRODUCT_CATEGORY")
 public class Category {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="CATEGORY_ID")
     private Long id;
 

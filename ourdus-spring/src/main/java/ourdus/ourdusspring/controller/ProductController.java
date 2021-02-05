@@ -1,19 +1,15 @@
 package ourdus.ourdusspring.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ourdus.ourdusspring.common.ApiResult;
 import ourdus.ourdusspring.domain.Product;
 import ourdus.ourdusspring.dto.ProductCreateDTO;
 import ourdus.ourdusspring.dto.ProductDTO;
-import ourdus.ourdusspring.repository.ProductRepository;
 import ourdus.ourdusspring.service.JwtService;
 import ourdus.ourdusspring.service.ProductService;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -69,15 +65,13 @@ public class ProductController {
     @PostMapping("product/new")
     public ApiResult<ProductDTO> save(HttpServletRequest req, @RequestBody ProductCreateDTO productdto){
         Long userid = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId"))); //id 받아오기
-        Product product = Product
-                .builder()
-                .name(productdto.getName())
-                .price(productdto.getPrice())
-                .optionNum(productdto.getOptionNum())
-                .userId(userid)
-                .categoryId(productdto.getCategoryId())
-                .build();
-        return OK(new ProductDTO(productService.save(product)));
+//        Product product = Product
+//                .builder()
+//                .name(productdto.getName())
+//                .price(productdto.getPrice())
+//                .optionNum(productdto.getOptionNum())
+//                .build();
+        return OK(new ProductDTO(productService.save(productdto, userid, productdto.getCategoryId())));
     }
 
 

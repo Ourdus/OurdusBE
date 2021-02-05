@@ -1,11 +1,11 @@
 package ourdus.ourdusspring.repository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import ourdus.ourdusspring.domain.Category;
-import ourdus.ourdusspring.domain.Product;
 
 import java.util.Optional;
 
-public interface CategoryRepository {
+public interface CategoryRepository extends JpaRepository<Category,Long>  {
 
-    Optional<Category> findOneById(Long id);
+    Optional<Category> findById(Long id);
 }

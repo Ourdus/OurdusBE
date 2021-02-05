@@ -19,6 +19,8 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
+	// https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api
+	compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.2.4'
 	testCompile 'org.springframework.boot:spring-boot-starter-test'
 	runtimeOnly 'com.h2database:h2'
 	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
