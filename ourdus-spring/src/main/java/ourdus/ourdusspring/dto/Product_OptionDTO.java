@@ -1,13 +1,13 @@
 package ourdus.ourdusspring.dto;
 
-import ourdus.ourdusspring.domain.Product_Option;
+import ourdus.ourdusspring.domain.ProductOption;
 
 public class Product_OptionDTO {
     private Long id;
     private String name;
     private int price;
 
-    public Product_OptionDTO(Product_Option product_option) {
+    public Product_OptionDTO(ProductOption product_option) {
         this.id = product_option.getId();
         this.name = product_option.getName();
         this.price = product_option.getPrice();

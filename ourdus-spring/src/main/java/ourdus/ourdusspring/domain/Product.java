@@ -38,8 +38,7 @@ public class Product {
     private User user;
 
     @OneToMany(mappedBy = "product")
-    @JoinColumn(name="CATEGORY_ID")
-    private List<Product_Option> options;
+    private List<ProductOption> options;
 
 
     public Long getId() {

@@ -51,6 +51,15 @@ CREATE TABLE product_option
     product_id   bigint      NOT NULL,
     option_name  varchar(20) NOT NULL,
     option_price int         NOT NULL DEFAULT 0,
-    PRIMARY KEY (option_id),
+    PRIMARY KEY (option_id, product_id),
+    CONSTRAINT fk_product_id FOREIGN KEY (product_id) REFERENCES product (product_id) ON DELETE RESTRICT ON UPDATE RESTRICT
+)
+
+CREATE TABLE product_image
+(
+    image_id   bigint NOT NULL AUTO_INCREMENT,
+    product_id bigint NOT NULL,
+    image_file blob   NOT NULL,
+    PRIMARY KEY (option_id, product_id),
     CONSTRAINT fk_product_id FOREIGN KEY (product_id) REFERENCES product (product_id) ON DELETE RESTRICT ON UPDATE RESTRICT
 )

@@ -1,22 +1,29 @@
 package ourdus.ourdusspring.domain;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @Entity
+@IdClass(ProductOptionId.class)
 @Table(name="PRODUCT_OPTION")
-public class Product_Option {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Getter
+@NoArgsConstructor
+public class ProductOption {
+    @Id //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="OPTION_ID")
     private Long id;
+
+    @Id
+    @ManyToOne
+    @JoinColumn(name="PRODUCT_ID")
+    private Product product;
 
     @Column(name="OPTION_NAME")
     private String name;
     @Column(name="OPTION_PRICE")
     private int price;
-
-    @ManyToOne
-    @JoinColumn(name="PRODUCT_ID")
-    private Product product;
 
     public Long getId() {
         return id;
