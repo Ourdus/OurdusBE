@@ -69,13 +69,15 @@ CREATE TABLE cart_detail
     cart_id bigint NOT NULL AUTO_INCREMENT,
     user_id bigint NOT NULL,
     author_id bigint NOT NULL,
+    product_id bigint NOT NULL,
     option_info varchar(100) NULL,
     product_num int NOT NULL DEFAULT 1,
     cart_in_date datetime    NOT NULL DEFAULT CURRENT_TIMESTAMP(),
     product_detail_price int NOT NULL DEFAULT 0,
     PRIMARY KEY (cart_id),
     CONSTRAINT fk_author_id FOREIGN KEY (author_id) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
-    CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE RESTRICT
+    CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
+    CONSTRAINT fk_product_id FOREIGN KEY (product_id) REFERENCES product (product_id) ON DELETE RESTRICT ON UPDATE RESTRICT
 )
 
 CREATE TABLE order
@@ -94,10 +96,12 @@ CREATE TABLE order_detail
     order_detail_id bigint NOT NULL AUTO_INCREMENT,
     order_id bigint NOT NULL,
     author_id bigint NOT NULL,
+    product_id bigint NOT NULL,
     option_info varchar(100) NULL,
     product_num int NOT NULL DEFAULT 1,
     product_detail_price int NOT NULL DEFAULT 0,
     PRIMARY KEY (order_detail_id, order_id),
     CONSTRAINT fk_order_id FOREIGN KEY (order_id) REFERENCES order (order_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
-    CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE RESTRICT
+    CONSTRAINT fk_author_id FOREIGN KEY (author_id) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
+    CONSTRAINT fk_product_id FOREIGN KEY (product_id) REFERENCES product (product_id) ON DELETE RESTRICT ON UPDATE RESTRICT
 )

@@ -25,6 +25,10 @@ public class OrderDetail {
     @JoinColumn(name="AUTHOR_ID")
     private User author;
 
+    @ManyToOne
+    @JoinColumn(name="PRODUCT_ID")
+    private Product product;
+
     @Column(name="OPTION_INFO")
     private String optionInfo;
 
