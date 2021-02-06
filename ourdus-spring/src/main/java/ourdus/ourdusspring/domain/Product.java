@@ -76,6 +76,21 @@ public class Product {
         return user;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public void setOptionNum(int optionNum) {
+        this.optionNum = optionNum;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 
     @Builder
     public Product(String name, int price, int optionNum, Category category, User user) {

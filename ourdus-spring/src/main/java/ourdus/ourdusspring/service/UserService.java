@@ -37,9 +37,12 @@ public class UserService {
 
     public String join(User user){
         Optional<User> result = userRepository.findByEmail(user.getEmail());
-        result.orElseThrow(() -> new IllegalStateException("join failed"));
-        userRepository.save(user);
-        return "join success";  //TODO token 생성 필요
+        if(result.isPresent())  //email이 이미 존재하면 가입 실패
+             throw new RuntimeException("Join failed");
+        else {
+            userRepository.save(user);
+            return "join success";  //TODO token 생성 필요
+        }
     }
 
     public String getServerInfo(){
