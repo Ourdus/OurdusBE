@@ -18,6 +18,7 @@ import java.util.Optional;
 @Transactional
 public class UserService {
     private final UserRepository userRepository;
+
     private final AddressRepository addressRepository;
 
     public UserService(AddressRepository addressRepository,UserRepository userRepository ) {
@@ -91,7 +92,6 @@ public class UserService {
             } else {
                 throw new NoSuchElementException("Address add failed");
             }
-
         } else {
             throw new NoSuchElementException("Address add failed");
         }
