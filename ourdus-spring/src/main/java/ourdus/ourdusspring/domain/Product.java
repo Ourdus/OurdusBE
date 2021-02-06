@@ -1,10 +1,12 @@
 package ourdus.ourdusspring.domain;
 
 import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
+@NoArgsConstructor
 @Table (name="PRODUCT")
 public class Product {
 
