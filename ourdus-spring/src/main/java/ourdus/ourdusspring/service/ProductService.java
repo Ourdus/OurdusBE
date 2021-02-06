@@ -46,14 +46,14 @@ public class ProductService {
 
     public Product save(Product product, Long authorId, Long categoryId)//product info save
     {
-        User user = userRepository.findById(authorId).orElseThrow(() -> new NoSuchElementException("작가의 아이디가 잘못되었습니다."));
+        User author = userRepository.findById(authorId).orElseThrow(() -> new NoSuchElementException("작가의 아이디가 잘못되었습니다."));
         Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new NoSuchElementException("작품 카테고리의 아이디가 잘못되었습니다."));
         Product saveProduct = Product.builder()
                                     .name(product.getName())
                                     .price(product.getPrice())
                                     .optionNum(product.getOptionNum())
                                     .category(category)
-                                    .user(user)
+                                    .author(author)
                                     .build();
         Product result = productRepository.save(saveProduct);
         return result;
@@ -63,7 +63,7 @@ public class ProductService {
         if (!productRepository.existsById(productId)) {//해당 id가 존재하지 않는 경우 처리
             throw new NoSuchElementException("존재하지 않는 작품은 삭제할 수 없습니다.");
         }
-       Optional <Product> result= productRepository.findById(productId);
+       productRepository.deleteById(productId);
        return "delete success";
     }
 
