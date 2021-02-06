@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ourdus.ourdusspring.common.ApiResult;
+import ourdus.ourdusspring.domain.Address;
 import ourdus.ourdusspring.domain.User;
 import ourdus.ourdusspring.dto.UserDTO;
 import ourdus.ourdusspring.service.JwtService;
@@ -108,5 +109,13 @@ public class UserController {
 //            return OK("회원 정보 조회 실패");
 //        }
 //      }
+
+    @PostMapping("/user/address")
+    public ApiResult<String> addAddress(HttpServletRequest req, @RequestBody Address newAddress){
+        Long userId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId"))); //id 받아오기
+        String address = newAddress.getAddress();
+        return OK(userService.AddAddress(userId, address));
+    }
+
 }
 

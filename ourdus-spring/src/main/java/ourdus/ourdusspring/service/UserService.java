@@ -1,10 +1,14 @@
 package ourdus.ourdusspring.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ourdus.ourdusspring.domain.Address;
 import ourdus.ourdusspring.domain.User;
+import ourdus.ourdusspring.repository.AddressRepository;
 import ourdus.ourdusspring.repository.UserRepository;
 
+import javax.swing.text.html.Option;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -14,11 +18,12 @@ import java.util.Optional;
 @Transactional
 public class UserService {
     private final UserRepository userRepository;
+    private final AddressRepository addressRepository;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(AddressRepository addressRepository,UserRepository userRepository ) {
+        this.addressRepository = addressRepository;
         this.userRepository = userRepository;
     }
-
 
     public User login(User loginUser){
         String email = loginUser.getEmail();
@@ -64,4 +69,40 @@ public class UserService {
 //    public Optional<User> info(Long id){
 //        return userRepository.findById(id);
 //    }
+    public String AddAddress(Long userId,String addAddress) {
+
+        //배송지 생성
+        Address address = Address.createAddress(addAddress);
+
+        //유저 생성
+//        User user = User.createUser(address);
+        //엔티티조회
+        Optional<User> user = userRepository.findById(userId);
+        if (user.isPresent()) {
+            User findUser = user.get();
+            findUser.addAddress(address);
+
+            //유저 저장
+            userRepository.save(findUser);
+            address.setUser(findUser);
+            addressRepository.save(address);
+            if (findUser.getId().equals(userId)) {
+                return "Address add success";
+            } else {
+                throw new NoSuchElementException("Address add failed");
+            }
+
+        } else {
+            throw new NoSuchElementException("Address add failed");
+        }
+    }
+
+
+
+//    public void DeleteAddress(Long userId){
+//        Optional<User> user = userRepository.findById(userId);
+//        User findUser = user.get();
+//
+//    }
+
 }
