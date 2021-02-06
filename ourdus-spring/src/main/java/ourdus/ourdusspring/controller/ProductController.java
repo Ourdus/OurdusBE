@@ -3,13 +3,11 @@ package ourdus.ourdusspring.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 import ourdus.ourdusspring.common.ApiResult;
 import ourdus.ourdusspring.domain.Product;
 import ourdus.ourdusspring.dto.ProductCreateDTO;
 import ourdus.ourdusspring.dto.ProductDTO;
-import ourdus.ourdusspring.repository.PagingAndSortingRepository;
 import ourdus.ourdusspring.service.JwtService;
 import ourdus.ourdusspring.service.ProductService;
 
