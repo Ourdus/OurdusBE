@@ -5,7 +5,11 @@ INSERT INTO user(user_id, user_email, user_pw, user_name, user_tel) VALUES (null
 INSERT INTO user(user_id, user_email, user_pw, user_name, user_tel) VALUES (null, 'test4@gmail.com', '2222', 'test2', '01033333444');
 INSERT INTO user(user_id, user_email, user_pw, user_name, user_tel) VALUES (null, 'test5@gmail.com', '2222', 'test2', '01033333444');
 INSERT INTO user(user_id, user_email, user_pw, user_name, user_tel) VALUES (null, 'test6@gmail.com', '2222', 'test2', '01033333444');
-
+INSERT INTO user(user_id, user_email, user_pw, user_name, user_tel) VALUES (null, 'test7@gmail.com', '2222', 'test2', '01033333444');
+INSERT INTO user(user_id, user_email, user_pw, user_name, user_tel) VALUES (null, 'test8@gmail.com', '2222', 'test2', '01033333444');
+INSERT INTO user(user_id, user_email, user_pw, user_name, user_tel) VALUES (null, 'test9@gmail.com', '2222', 'test2', '01033333444');
+INSERT INTO user(user_id, user_email, user_pw, user_name, user_tel) VALUES (null, 'test10@gmail.com', '2222', 'test2', '01033333444');
+INSERT INTO user(user_id, user_email, user_pw, user_name, user_tel) VALUES (null, 'test11@gmail.com', '2222', 'test2', '01033333444');
 
 INSERT INTO product_category(category_id, category_name) VALUES (null, '음료');
 INSERT INTO product_category(category_id, category_name) VALUES (null, '디저트');
@@ -35,9 +39,9 @@ INSERT INTO cart_detail(cart_id, user_id, author_id, product_id, option_info, pr
 INSERT INTO cart_detail(cart_id, user_id, author_id, product_id, option_info, product_num, product_detail_price) VALUES (null, 3, 3, 3, '옵션1과옵션2를선택', 1, 400);
 INSERT INTO cart_detail(cart_id, user_id, author_id, product_id, option_info, product_num, product_detail_price) VALUES (null, 4, 3, 3, '옵션1과옵션2를선택', 5, 500);
 
-INSERT INTO order(order_id, user_id, order_price, order_account) VALUES (null, 2, 1000, '무통장입금');
-INSERT INTO order(order_id, user_id, order_price, order_account) VALUES (null, 3, 4000, '신한카드');
-INSERT INTO order(order_id, user_id, order_price, order_account) VALUES (null, 4, 5000, '계좌이체');
+INSERT INTO orders(order_id, user_id, order_price, order_account) VALUES (null, 2, 1000, '무통장입금');
+INSERT INTO orders(order_id, user_id, order_price, order_account) VALUES (null, 3, 4000, '신한카드');
+INSERT INTO orders(order_id, user_id, order_price, order_account) VALUES (null, 4, 5000, '계좌이체');
 
 INSERT INTO order_detail(order_detail_id, order_id, author_id, product_id, option_info, product_num, product_detail_price) VALUES(null, 1, 1, 1, '옵션1과옵션2를선택', 2, 400);
 INSERT INTO order_detail(order_detail_id, order_id, author_id, product_id, option_info, product_num, product_detail_price) VALUES(null, 1, 2, 2, '옵션1과옵션2를선택', 2, 200);

@@ -2,6 +2,7 @@ package ourdus.ourdusspring.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ourdus.ourdusspring.domain.Category;
@@ -29,7 +30,7 @@ public class ProductService {
         this.categoryRepository = categoryRepository;
     }
 
-    public Page<Product> findAll(Pageable pageable){
+    public Page<Product> findAll(@PageableDefault(size=10, page=0) Pageable pageable){
         return productRepository.findAll(pageable);
     }
 
