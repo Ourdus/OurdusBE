@@ -8,10 +8,11 @@ import java.io.Serializable;
 
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
-public class ProductImageId implements Serializable {
+public class OrderDetailId implements Serializable {
+
     @EqualsAndHashCode.Include
     @Id
-    private Long product;
+    private Long order;
 
     @EqualsAndHashCode.Include
     @Id

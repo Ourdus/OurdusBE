@@ -5,11 +5,6 @@ INSERT INTO user(user_id, user_email, user_pw, user_name, user_tel) VALUES (null
 INSERT INTO user(user_id, user_email, user_pw, user_name, user_tel) VALUES (null, 'test4@gmail.com', '2222', 'test2', '01033333444');
 INSERT INTO user(user_id, user_email, user_pw, user_name, user_tel) VALUES (null, 'test5@gmail.com', '2222', 'test2', '01033333444');
 INSERT INTO user(user_id, user_email, user_pw, user_name, user_tel) VALUES (null, 'test6@gmail.com', '2222', 'test2', '01033333444');
-INSERT INTO user(user_id, user_email, user_pw, user_name, user_tel) VALUES (null, 'test7@gmail.com', '2222', 'test2', '01033333444');
-INSERT INTO user(user_id, user_email, user_pw, user_name, user_tel) VALUES (null, 'test8@gmail.com', '2222', 'test2', '01033333444');
-INSERT INTO user(user_id, user_email, user_pw, user_name, user_tel) VALUES (null, 'test9@gmail.com', '2222', 'test2', '01033333444');
-INSERT INTO user(user_id, user_email, user_pw, user_name, user_tel) VALUES (null, 'test10@gmail.com', '2222', 'test2', '01033333444');
-INSERT INTO user(user_id, user_email, user_pw, user_name, user_tel) VALUES (null, 'test11@gmail.com', '2222', 'test2', '01033333444');
 
 
 INSERT INTO product_category(category_id, category_name) VALUES (null, '음료');
@@ -33,3 +28,5 @@ INSERT INTO product_option(option_id, product_id, option_name, option_price) VAL
 INSERT INTO product_option(option_id, product_id, option_name, option_price) VALUES (null, 1, '1옵션2', 100);
 INSERT INTO product_option(option_id, product_id, option_name, option_price) VALUES (null, 2, '2옵션1', 400);
 INSERT INTO product_option(option_id, product_id, option_name, option_price) VALUES (null, 2, '2옵션2', 1000);
+
+
