@@ -79,25 +79,16 @@ public class ProductController {
     }
 
 
-//    @PostMapping("product/{product_id}/delete")
-//    public ApiResult<String> delete(@PathVariable("product_id") Long product_Id){
-//
-//        int row =productService.delete(product_Id);
-//        if(row==0)
-//            return "작품 삭제 실패";
-//        else
-//            return "작품 삭제";
-//    }
-//
-//    @PostMapping("/product/{product_id}/edit")
-//    public ApiResult<ProductDTO> modify(@PathVariable("product_id") Long product_Id){
-//
-//        int row =productService.modify(product_Id);
-//        if(row==0)
-//            return "작품 삭제 실패";
-//        else
-//            return "작품 삭제";
-//    }
+    @PostMapping("product/{product_id}/delete")
+    public ApiResult<String> delete(@PathVariable("product_id") Long product_Id){
+        return OK(productService.delete(product_Id));
+    }
+
+    @PostMapping("/product/{product_id}/edit")
+    public ApiResult<ProductDTO> modify(@RequestBody Product product){
+
+       return OK(new ProductDTO(productService.update(product)));
+    }
 
 
 }
