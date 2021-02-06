@@ -61,6 +61,20 @@ public class UserService {
         return "update success";
     }
 
+    public String findUserId(String tel){
+        if(!userRepository.findByTel(tel).isPresent()) new NoSuchElementException("find Id failed");
+        User user=userRepository.findByTel(tel).get();
+        //System.out.println(user.getEmail());
+        return "find id success";
+    }
+
+    public String findPW(String email, String tel){
+        if(!userRepository.findByEmailAndTel(email,tel).isPresent()) new NoSuchElementException("find pw failed");
+        User user=userRepository.findByEmailAndTel(email,tel).get();
+        //System.out.println(user.getPassword());
+        return "find pw success";
+    }
+
 //    public Optional<User> info(Long id){
 //        return userRepository.findById(id);
 //    }

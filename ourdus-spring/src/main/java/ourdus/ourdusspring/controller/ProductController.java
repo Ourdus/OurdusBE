@@ -1,6 +1,8 @@
 package ourdus.ourdusspring.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 import ourdus.ourdusspring.common.ApiResult;
 import ourdus.ourdusspring.domain.Product;
@@ -21,6 +23,7 @@ import static ourdus.ourdusspring.common.ApiResult.OK;
 @RequestMapping("w")
 public class ProductController {
 
+
     @Autowired
     private JwtService jwtService;
 
@@ -31,8 +34,8 @@ public class ProductController {
     }
 
     @GetMapping("product")
-    public ApiResult<List<ProductDTO>> viewAllProductList(){
-        List<Product> productList = productService.findAll();
+    public ApiResult<List<ProductDTO>> viewAllProductList(@RequestParam("page")int page,@RequestParam("size")int size){
+       Page <Product> productList = productService.findAll(PageRequest.of(page,size));
         List<ProductDTO> productDTOList=new ArrayList<ProductDTO>();
         if(productList!=null){
             productList.stream().forEach(product -> {
@@ -41,6 +44,7 @@ public class ProductController {
         }
         return OK(productDTOList);
     }
+
 
     @GetMapping("category/{category_id}")
     public ApiResult<List<ProductDTO>> viewCategoryProductList(@PathVariable("category_id") Long categoryId) {
