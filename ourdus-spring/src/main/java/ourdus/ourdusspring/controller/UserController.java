@@ -6,15 +6,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ourdus.ourdusspring.common.ApiResult;
 import ourdus.ourdusspring.domain.Address;
+import ourdus.ourdusspring.domain.Product;
 import ourdus.ourdusspring.domain.User;
+import ourdus.ourdusspring.dto.ProductDTO;
 import ourdus.ourdusspring.dto.UserDTO;
 import ourdus.ourdusspring.service.JwtService;
 import ourdus.ourdusspring.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static ourdus.ourdusspring.common.ApiResult.OK;
 
@@ -115,6 +116,23 @@ public class UserController {
         Long userId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId"))); //id 받아오기
         String address = newAddress.getAddress();
         return OK(userService.AddAddress(userId, address));
+    }
+
+    @DeleteMapping("/user/address/{address_id}")
+    public ApiResult<String> addAddress(@PathVariable("address_id") Long address_Id){
+        return OK(userService.deleteAddress(address_Id));
+    }
+
+    @PostMapping("/user/address/{address_id}")
+    public ApiResult<String> editAddress(@PathVariable("address_id") Long address_Id,@RequestBody Address newAddress){
+        String address = newAddress.getAddress();
+        return OK(userService.editAddress(address_Id,address));
+    }
+
+    @GetMapping("/user/address")
+    public ApiResult<List<String>> getAddress(HttpServletRequest req){
+        Long userId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId"))); //id 받아오기
+        return OK(userService.getAddressList(userId));
     }
 
 }

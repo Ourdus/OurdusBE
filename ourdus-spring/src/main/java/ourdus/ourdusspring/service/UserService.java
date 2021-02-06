@@ -9,6 +9,8 @@ import ourdus.ourdusspring.repository.AddressRepository;
 import ourdus.ourdusspring.repository.UserRepository;
 
 import javax.swing.text.html.Option;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -97,6 +99,36 @@ public class UserService {
         }
     }
 
+    public String deleteAddress(Long address_id) {
+        if(!addressRepository.existsById(address_id)) new NoSuchElementException("Address delete failed");
+        addressRepository.deleteById(address_id);
+        return "Address delete success";
+    }
+
+    public String editAddress(Long address_id,String newAddress) {
+        Optional<Address> result  = addressRepository.findById(address_id);
+        if(!result.isPresent()) new NoSuchElementException("address update failed");
+        Address address = result.get();
+        address.setAddress(newAddress);
+        addressRepository.save(address);
+
+        return "address update success";
+    }
+
+    public List<String> getAddressList(Long userId) {
+        Optional<User> user = userRepository.findById(userId);
+        if (user.isPresent()) {
+            List<String> showAddress = new ArrayList<String>();
+            User findUser = user.get();
+            List<Address> addressList= findUser.getAddressList();
+            for(Address address : addressList){
+                showAddress.add(address.getAddress());
+            }
+            return showAddress;
+        }else{
+            throw new NoSuchElementException("Address info load failed");
+        }
+    }
 
 
 //    public void DeleteAddress(Long userId){
