@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ourdus.ourdusspring.domain.Category;
 import ourdus.ourdusspring.domain.Product;
 import ourdus.ourdusspring.domain.User;
-import ourdus.ourdusspring.dto.ProductCreateDTO;
 import ourdus.ourdusspring.repository.CategoryRepository;
 import ourdus.ourdusspring.repository.ProductRepository;
 import ourdus.ourdusspring.repository.UserRepository;
@@ -43,15 +42,15 @@ public class ProductService {
         return productRepository.findAllByCategoryId(categoryId);
     }
 
-    //TODO 정보값을 넘겨받을떄 dto가 아닌 다른 vo로 선언해주어야함 (product 생성시에 필요한 dto 정보들)
-    public Product save(ProductCreateDTO dto, Long authorId, Long categoryId)//product info save
+
+    public Product save(Product product, Long authorId, Long categoryId)//product info save
     {
         User user = userRepository.findById(authorId).orElseThrow(() -> new NoSuchElementException("작가의 아이디가 잘못되었습니다."));
         Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new NoSuchElementException("작품 카테고리의 아이디가 잘못되었습니다."));
         Product saveProduct = Product.builder()
-                                    .name(dto.getName())
-                                    .price(dto.getPrice())
-                                    .optionNum(dto.getOptionNum())
+                                    .name(product.getName())
+                                    .price(product.getPrice())
+                                    .optionNum(product.getOptionNum())
                                     .category(category)
                                     .user(user)
                                     .build();
@@ -61,23 +60,21 @@ public class ProductService {
 
     public String delete(Long productId) {
         if (!productRepository.existsById(productId)) {//해당 id가 존재하지 않는 경우 처리
-            throw new NoSuchElementException("delete failed");
+            throw new NoSuchElementException("존재하지 않는 작품은 삭제할 수 없습니다.");
         }
-        else {
-           Optional <Product> result= productRepository.findById(productId);
-           return "delete success";
-        }
+       Optional <Product> result= productRepository.findById(productId);
+       return "delete success";
     }
 
-    public Product update(Product product) {
-        Optional<Product> result = productRepository.findById(product.getId());
-        if(!result.isPresent()) new NoSuchElementException("update failed");
-        Product findProduct = result.get();
-        findProduct.setCategory(product.getCategory());
-        findProduct.setOptionNum(product.getOptionNum());
-        findProduct.setName(product.getName());
-        findProduct.setPrice(product.getPrice());
-        return findProduct;
+    public Product update(Product product, Long categoryId) {
+        Product result = productRepository.findById(product.getId()).orElseThrow(() -> new NoSuchElementException("존재하지 않는 작품은 수정할 수 없습니다."));
+        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new NoSuchElementException("작품 카테고리의 아이디가 잘못되었습니다."));
+
+        result.setCategory(category);
+        result.setOptionNum(product.getOptionNum());
+        result.setName(product.getName());
+        result.setPrice(product.getPrice());
+        return result;
     }
 
 }

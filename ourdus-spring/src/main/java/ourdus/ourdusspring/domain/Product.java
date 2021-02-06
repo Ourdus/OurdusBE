@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -35,6 +36,11 @@ public class Product {
     @ManyToOne
     @JoinColumn(name="AUTHOR_ID")
     private User user;
+
+    @OneToMany(mappedBy = "product")
+    @JoinColumn(name="CATEGORY_ID")
+    private List<Product_Option> options;
+
 
     public Long getId() {
         return id;

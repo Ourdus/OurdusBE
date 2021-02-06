@@ -13,9 +13,8 @@ public class Category {
     @Column(name="CATEGORY_NAME")
     private String name;
 
-//    @OneToMany
-//    @JoinColumn(name="CATEGORY_ID")
-//    private List<Product> products = new ArrayList<Product>();
+//    @OneToMany(mappedBy = "category")
+//    private List<Product> products;
 
     public Long getId() {
         return id;

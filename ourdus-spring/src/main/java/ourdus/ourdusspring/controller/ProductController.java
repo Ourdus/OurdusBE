@@ -6,7 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 import ourdus.ourdusspring.common.ApiResult;
 import ourdus.ourdusspring.domain.Product;
-import ourdus.ourdusspring.dto.ProductCreateDTO;
+import ourdus.ourdusspring.dto.ProductRequest;
 import ourdus.ourdusspring.dto.ProductDTO;
 import ourdus.ourdusspring.service.JwtService;
 import ourdus.ourdusspring.service.ProductService;
@@ -67,15 +67,15 @@ public class ProductController {
 
 
     @PostMapping("product/new")
-    public ApiResult<ProductDTO> save(HttpServletRequest req, @RequestBody ProductCreateDTO productdto){
+    public ApiResult<ProductDTO> save(HttpServletRequest req, @RequestBody ProductRequest productRequest){
         Long userid = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId"))); //id 받아오기
-//        Product product = Product
-//                .builder()
-//                .name(productdto.getName())
-//                .price(productdto.getPrice())
-//                .optionNum(productdto.getOptionNum())
-//                .build();
-        return OK(new ProductDTO(productService.save(productdto, userid, productdto.getCategoryId())));
+        Product product = Product
+                .builder()
+                .name(productRequest.getName())
+                .price(productRequest.getPrice())
+                .optionNum(productRequest.getOptionNum())
+                .build();
+        return OK(new ProductDTO(productService.save(product, userid, productRequest.getCategoryId())));
     }
 
 
@@ -85,9 +85,14 @@ public class ProductController {
     }
 
     @PostMapping("/product/{product_id}/edit")
-    public ApiResult<ProductDTO> modify(@RequestBody Product product){
-
-       return OK(new ProductDTO(productService.update(product)));
+    public ApiResult<ProductDTO> modify(@RequestBody ProductRequest productRequest){
+        Product product = Product
+                .builder()
+                .name(productRequest.getName())
+                .price(productRequest.getPrice())
+                .optionNum(productRequest.getOptionNum())
+                .build();
+        return OK(new ProductDTO(productService.update(product, productRequest.getCategoryId())));
     }
 
 
