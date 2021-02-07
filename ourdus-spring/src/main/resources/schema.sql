@@ -52,3 +52,12 @@ CREATE TABLE product_option
     PRIMARY KEY (option_id),
     CONSTRAINT fk_product_id FOREIGN KEY (product_id) REFERENCES product (product_id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
+
+CREATE TABLE address
+(
+    address_id     bigint       NOT NULL AUTO_INCREMENT,
+    user_address   varchar(100) NOT NULL,
+    user_id        bigint       NOT NULL,
+    PRIMARY KEY (address_id),
+    CONSTRAINT fk_user_id   FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE RESTRICT
+);
