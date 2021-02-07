@@ -95,6 +95,6 @@ CREATE TABLE order_detail
     option_info varchar(100) NULL,
     product_num int NOT NULL DEFAULT 1,
     product_detail_price int NOT NULL DEFAULT 0,
-    PRIMARY KEY (order_detail_id, order_id),
+    PRIMARY KEY (order_detail_id),
     CONSTRAINT fk_order_id FOREIGN KEY (order_id) REFERENCES orders (order_id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );

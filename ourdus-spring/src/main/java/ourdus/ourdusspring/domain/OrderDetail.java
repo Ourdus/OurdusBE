@@ -1,33 +1,34 @@
 package ourdus.ourdusspring.domain;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
-@IdClass(OrderDetailId.class)
 @NoArgsConstructor
 @Table(name="ORDER_DETAIL")
 @Getter
 public class OrderDetail {
 
-    @Id //@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="OPTION_ID")
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="ORDER_DETAIL_ID")
     private Long id;
 
-    @Id
     @ManyToOne
     @JoinColumn(name="ORDER_ID")
     private Order order;
 
-    @ManyToOne
-    @JoinColumn(name="AUTHOR_ID")
-    private User author;
-
+//    @ManyToOne
+//    @JoinColumn(name="AUTHOR_ID")
+//    private User author;
     @ManyToOne
     @JoinColumn(name="PRODUCT_ID")
     private Product product;
+
+    @Column(name="AUTHOR_ID")
+    private Long authorId;
 
     @Column(name="OPTION_INFO")
     private String optionInfo;
@@ -44,4 +45,13 @@ public class OrderDetail {
         order.getOrderDetails().add(this);
     }
 
+    @Builder(builderClassName = "defaultBuilder", builderMethodName = "defaultBuilder")
+    public OrderDetail(Order order, Product product, String optionInfo, int productNum, int price) {
+        this.order = order;
+        this.product = product;
+        this.authorId = product.getAuthor().getId();
+        this.optionInfo = optionInfo;
+        this.productNum = productNum;
+        this.price = price;
+    }
 }

@@ -1,5 +1,6 @@
 package ourdus.ourdusspring.domain;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -16,7 +17,7 @@ import java.util.List;
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="PRODUCT_ID")
+    @Column(name="ORDER_ID")
     private Long id;
 
     @ManyToOne
@@ -31,7 +32,7 @@ public class Order {
     @Column(name="ORDER_ACCOUNT")
     private String account;
 
-    @OneToMany(mappedBy = "ORDERS")
+    @OneToMany(mappedBy = "order")
     private List<OrderDetail> orderDetails = new ArrayList<>();
 
     //연관관계 메소드
@@ -40,4 +41,25 @@ public class Order {
         orderDetail.setOrder(this);
     }
 
+    @Builder(builderMethodName = "defaultBuilder", builderClassName = "defaultBuilder")
+    public Order(Long id, User user, LocalDateTime orderDate, int price, String account, List<OrderDetail> orderDetails) {
+        this.id = id;
+        this.user = user;
+        this.orderDate = orderDate;
+        this.price = price;
+        this.account = account;
+        this.orderDetails = orderDetails;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", user=" + user +
+                ", orderDate=" + orderDate +
+                ", price=" + price +
+                ", account='" + account + '\'' +
+                ", orderDetails=" + orderDetails +
+                '}';
+    }
 }

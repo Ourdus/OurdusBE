@@ -39,11 +39,13 @@ INSERT INTO cart_detail(cart_id, user_id, author_id, product_id, option_info, pr
 INSERT INTO cart_detail(cart_id, user_id, author_id, product_id, option_info, product_num, product_detail_price) VALUES (null, 3, 3, 3, '옵션1과옵션2를선택', 1, 400);
 INSERT INTO cart_detail(cart_id, user_id, author_id, product_id, option_info, product_num, product_detail_price) VALUES (null, 4, 3, 3, '옵션1과옵션2를선택', 5, 500);
 
-INSERT INTO orders(order_id, user_id, order_price, order_account) VALUES (null, 2, 1000, '무통장입금');
+INSERT INTO orders(order_id, user_id,  order_price, order_account) VALUES (null, 2, 1000, '무통장입금');
 INSERT INTO orders(order_id, user_id, order_price, order_account) VALUES (null, 3, 4000, '신한카드');
 INSERT INTO orders(order_id, user_id, order_price, order_account) VALUES (null, 4, 5000, '계좌이체');
 
 INSERT INTO order_detail(order_detail_id, order_id, author_id, product_id, option_info, product_num, product_detail_price) VALUES(null, 1, 1, 1, '옵션1과옵션2를선택', 2, 400);
 INSERT INTO order_detail(order_detail_id, order_id, author_id, product_id, option_info, product_num, product_detail_price) VALUES(null, 1, 2, 2, '옵션1과옵션2를선택', 2, 200);
 INSERT INTO order_detail(order_detail_id, order_id, author_id, product_id, option_info, product_num, product_detail_price) VALUES(null, 1, 3, 3, '옵션1과옵션2를선택', 1, 400);
-INSERT INTO order_detail(order_detail_id, order_id, author_id, product_id, option_info, product_num, product_detail_price) VALUES(null, 1, 3, 3, '옵션1과옵션2를선택', 5, 500);
+INSERT INTO order_detail(order_detail_id, order_id, author_id, product_id, option_info, product_num, product_detail_price) VALUES(null, 2, 3, 3, '옵션1과옵션2를선택', 5, 500);
+INSERT INTO order_detail(order_detail_id, order_id, author_id, product_id, option_info, product_num, product_detail_price) VALUES(null, 2, 1, 1, '옵션1과옵션2를선택', 5, 500);
+INSERT INTO order_detail(order_detail_id, order_id, author_id, product_id, option_info, product_num, product_detail_price) VALUES(null, 3, 3, 3, '옵션1과옵션2를선택', 5, 500);
