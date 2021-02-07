@@ -45,9 +45,12 @@ public class UserService {
 
     public String join(User user){
         Optional<User> result = userRepository.findByEmail(user.getEmail());
-        result.orElseThrow(() -> new IllegalStateException("join failed"));
-        userRepository.save(user);
-        return "join success";  //TODO token 생성 필요
+        if(result.isPresent())  //email이 이미 존재하면 가입 실패
+             throw new RuntimeException("Join failed");
+        else {
+            userRepository.save(user);
+            return "join success";  //TODO token 생성 필요
+        }
     }
 
     public String getServerInfo(){
@@ -67,6 +70,20 @@ public class UserService {
         findUser.setTel(user.getTel());
         findUser.setName(user.getName());
         return "update success";
+    }
+
+    public String findUserId(String tel){
+        if(!userRepository.findByTel(tel).isPresent()) new NoSuchElementException("find Id failed");
+        User user=userRepository.findByTel(tel).get();
+        //System.out.println(user.getEmail());
+        return "find id success";
+    }
+
+    public String findPW(String email, String tel){
+        if(!userRepository.findByEmailAndTel(email,tel).isPresent()) new NoSuchElementException("find pw failed");
+        User user=userRepository.findByEmailAndTel(email,tel).get();
+        //System.out.println(user.getPassword());
+        return "find pw success";
     }
 
 //    public Optional<User> info(Long id){

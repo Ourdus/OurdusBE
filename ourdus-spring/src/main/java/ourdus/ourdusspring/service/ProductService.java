@@ -1,5 +1,8 @@
 package ourdus.ourdusspring.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ourdus.ourdusspring.domain.Category;
@@ -28,8 +31,8 @@ public class ProductService {
         this.categoryRepository = categoryRepository;
     }
 
-    public List<Product> findAll(){
-        return productRepository.findAll();
+    public Page<Product> findAll(@PageableDefault(size=10,page=0) Pageable pageable){
+        return productRepository.findAll(pageable);
     }
 
     public Optional<Product> findOne(Long productId){
@@ -56,4 +59,26 @@ public class ProductService {
         Product result = productRepository.save(saveProduct);
         return result;
     }
+
+    public String delete(Long productId) {
+        if (!productRepository.existsById(productId)) {//해당 id가 존재하지 않는 경우 처리
+            throw new NoSuchElementException("delete failed");
+        }
+        else {
+           Optional <Product> result= productRepository.findById(productId);
+           return "delete success";
+        }
+    }
+
+    public Product update(Product product) {
+        Optional<Product> result = productRepository.findById(product.getId());
+        if(!result.isPresent()) new NoSuchElementException("update failed");
+        Product findProduct = result.get();
+        findProduct.setCategory(product.getCategory());
+        findProduct.setOptionNum(product.getOptionNum());
+        findProduct.setName(product.getName());
+        findProduct.setPrice(product.getPrice());
+        return findProduct;
+    }
+
 }

@@ -20,8 +20,10 @@ class UserControllerTest {
 
     @Test
     public void 삭제테스트(){
-        mockMvc.perform(MockMvcRequestBuilders.delete("/user/delete"))
-                .andExpect(MockMvcRe)
+     /*   mockMvc.perform(MockMvcRequestBuilders.delete("/user/delete"))
+                .andExpect(MockMvcRe);*/
+
+
     }
 
 }

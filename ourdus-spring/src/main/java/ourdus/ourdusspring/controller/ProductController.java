@@ -1,6 +1,9 @@
 package ourdus.ourdusspring.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import ourdus.ourdusspring.common.ApiResult;
 import ourdus.ourdusspring.domain.Product;
@@ -21,6 +24,7 @@ import static ourdus.ourdusspring.common.ApiResult.OK;
 @RequestMapping("w")
 public class ProductController {
 
+
     @Autowired
     private JwtService jwtService;
 
@@ -31,8 +35,8 @@ public class ProductController {
     }
 
     @GetMapping("product")
-    public ApiResult<List<ProductDTO>> viewAllProductList(){
-        List<Product> productList = productService.findAll();
+    public ApiResult<List<ProductDTO>> viewAllProductList( @RequestParam("page")int page, @RequestParam("size")int size){
+       Page <Product> productList = productService.findAll(PageRequest.of(page,size));
         List<ProductDTO> productDTOList=new ArrayList<ProductDTO>();
         if(productList!=null){
             productList.stream().forEach(product -> {
@@ -41,6 +45,7 @@ public class ProductController {
         }
         return OK(productDTOList);
     }
+
 
     @GetMapping("category/{category_id}")
     public ApiResult<List<ProductDTO>> viewCategoryProductList(@PathVariable("category_id") Long categoryId) {
@@ -75,25 +80,16 @@ public class ProductController {
     }
 
 
-//    @PostMapping("product/{product_id}/delete")
-//    public ApiResult<String> delete(@PathVariable("product_id") Long product_Id){
-//
-//        int row =productService.delete(product_Id);
-//        if(row==0)
-//            return "작품 삭제 실패";
-//        else
-//            return "작품 삭제";
-//    }
-//
-//    @PostMapping("/product/{product_id}/edit")
-//    public ApiResult<ProductDTO> modify(@PathVariable("product_id") Long product_Id){
-//
-//        int row =productService.modify(product_Id);
-//        if(row==0)
-//            return "작품 삭제 실패";
-//        else
-//            return "작품 삭제";
-//    }
+    @PostMapping("product/{product_id}/delete")
+    public ApiResult<String> delete(@PathVariable("product_id") Long product_Id){
+        return OK(productService.delete(product_Id));
+    }
+
+    @PostMapping("/product/{product_id}/edit")
+    public ApiResult<ProductDTO> modify(@RequestBody Product product){
+
+       return OK(new ProductDTO(productService.update(product)));
+    }
 
 
 }

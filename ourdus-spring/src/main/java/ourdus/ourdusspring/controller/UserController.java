@@ -99,6 +99,16 @@ public class UserController {
         return OK(userService.update(new User(userdto)));
     }
 
+    @PostMapping("/user/id-finding")
+    public ApiResult<String> findUserId(HttpServletRequest req, @RequestBody UserDTO userdto){
+        return OK(userService.findUserId(userdto.getTel()));
+    }
+
+    @PostMapping("/user/pw-finding")
+    public ApiResult<String> findPW(HttpServletRequest req, @RequestBody UserDTO userdto){
+        return OK(userService.findPW(userdto.getEmail(),userdto.getTel()));
+    }
+
 
 //    @GetMapping("/user/{id}")
 //    public ApiResult<String> info(@PathVariable("id") Long id,Model model) {
