@@ -1,95 +1,167 @@
-## OurdusBE_혜진
-2021-01-26~2021-02-02  
-Product CRUD 구현해보기  
+## OurdusBE_통합#3_혜진
 
+주문(Order) Entity 생성 및 조회 구현
+관련 내용 [이슈사항](https://github.com/Ourdus/OurdusBE/issues/20)
 ### Table
 ---
-![image](https://user-images.githubusercontent.com/59992230/105850581-43a6e680-6025-11eb-86c6-52445c3fe795.png)
-* 작품, 작품 카테고리, 작품 옵션은 Table 생성 必
-* 작품 이미지는 선택사항
+![image](https://user-images.githubusercontent.com/59992230/107112429-f20b2100-689a-11eb-9ca7-6b3fbb612953.png)
 
-### API 명세
----
+![image](https://user-images.githubusercontent.com/59992230/107118071-fa2a8700-68c1-11eb-8c88-7619c969747e.png)
 
-4. 작품 조회
+
+![image](https://user-images.githubusercontent.com/59992230/107118063-e67f2080-68c1-11eb-9db5-03e564d55845.png)
+
+
+복합키를 사용에 참고한 [링크](https://woowabros.github.io/experience/2019/01/04/composit-key-jpa.html)  
+@IdClass 이용시엔 *(자바 ORM 표준 JPA 프로그래밍 책 참고)*
+1. 식별자 클래스의 속성명과 엔터티에서 사용하는 식별자의 속성명이 같아야한다.
+2. Serialiable 인터페이스를 구현해야한다.
+3. equals, hashCode를 구현해야한다.
+4. 기본생성자가 있어야한다.
+5. 식별자 클래스는 public이어야한다.
+
+이를 만족하는 OOOId Class들을 각각 Image, Option, Detail에 구현해주었다.
+
+API 명세서
+
+카트
 ```
-GET /w/product
+카트리스트 조회(Header에서 jwt 확인)
+GET /w/cart
 Request
 Response
-SUCCESS { "code": 200, "message": "작품전체조회", "data": [
-{ "product_id": 1,
-  "user_id": 123,
-  "author_id": "1",
-  "author_name" : "aaa", #name추가
-  "category_name": 3,  #id대신 name
-  "product_name": "작품명",
-  "product_price": 5000,
-  "product_option_num": 2,
-  "product_hit" : 3 #hit 추가
-  "product_purchase" : 15 #구매량 추가
-  "product_review" : 133 #리뷰수 추가
-  "product_rate" : 5 #별점 추가
- }]
+SUCCESS { "success": true,
+"response": [
+    {"cart_id": ,
+    "author_id": , 
+    "author_name": ,
+    "product_id": ,
+    "product_name": ,
+    "option_info": ,
+    "product_num":, 
+    "product_detail_price": 
+    }
+],
+"apiError": null
 }
-FAIL {"code": 500, "message": "작품전체조회실패"}
-```
+FAIL {"success": false,
+"response": "errormessage",
+"apiError": code
+}
 
-```
-GET /w/category/{category_id}
-Request
+카트 삭제
+POST /w/cart/delete
+Request { "cart_id": }
 Response
-SUCCESS { "code": 200, "message": "카테고리별 작품 조회 성공", "data":
-{ "product_id": 1,
-  "author_id": 123,
-  "author_name": "작가이름",
-  "category_name": "음료(커피,차)",  #카테고리 아이디 대신 이름
-  "product_name": "작품명",
-  "product_price": 5000,
-  "product_option_num": 2,
-  "product_rate" : 5 , #추가
-  "product_review" : 123, #추가
-  "product_purchase" : 111, #추가
-  "product_option_num" : 3, #추가
- }
-}
-FAIL {"code": 500, "message": "카테고리별 작품 조회 실패"}
-```
+SUCESS {}
+FAIL {}
 
-```
-GET /w/product/{product_id}
-Request
+카트 담기(Header에서 jwt 확인)
+POST /w/cart-in
+Request {data:[
+    {
+    "author_id": , 
+    "author_name": ,
+    "product_id": ,
+    "product_name": ,
+    "option_info": ,
+    "product_num":, 
+    "product_detail_price":
+}, ...]    
+}
 Response
-SUCCESS { "code": 200, "message": "작품조회 성공", "data":
-{ "product_id": 1,
-  "author_id": 123,
-  "author_name": "작가이름",
-  "category_id": 3,
-  "product_name": "작품명",
-  "product_price": 5000,
-  "product_option_num": 2,
- "product_rate" : 5 , #추가
-  "product_review" : 123, #추가
-  "product_purchase" : 111, #추가
- "product_hit" : 3 , #추가
- }
+SUCESS {}
+FAIL {}
+```
+
+주문
+```
+바로주문 (작품상세->구매하기, 데이터를 그대로 전달) (Header에서 jwt 확인)
+POST /w/product/order
+Request {{data:[
+    {
+    "author_id": , 
+    "author_name": ,
+    "product_id": ,
+    "product_name": ,
+    "option_info": ,
+    "product_num":, 
+    "product_detail_price":
+}, ...]    
 }
-FAIL {"code": 500, "message": "작품 조회 실패"}
-```
-- 이미지 추가시 이미지도 함께 반환
-- 실조회시에는 할인율 등등도 같이 반환될 수 있어야함 (이후에 추가)
+Response {data:[
+    {
+    "author_id": , 
+    "author_name": ,
+    "product_id": ,
+    "product_name": ,
+    "option_info": ,
+    "product_num":, 
+    "product_detail_price":
+}, ...]    
+}
+SUCESS {}
+FAIL {}
 
-- 원하는 방식으로 API method 생성 가능(PUT, PATCH, DELETE ...)
- 단, **수정시에 유의할 점** 작업하고 있는 로컬 폴더 내의 README.md 파일을 작업한 형식대로 수정하고 commit&push
- 
-- **author_id** 를 보내는 방법 (어느 방법을 사용하셔도 OK)
-	- 1) user 정보를 직접 parameter로 주입
-	- 2) 로그인한 정보를 전달 (Session을 이용 or Jwt Token을 이용)
 
-- 작품 Crawling
+주문 (Header에서 jwt 확인)
+POST /w/payment
+Request {
+    {data:[
+    {
+    "author_id": , 
+    "author_name": ,
+    "product_id": ,
+    "product_name": ,
+    "option_info": ,
+    "product_num":, 
+    "product_detail_price":
+}, ...] 
+}
+Response {
+    
+    response:
+    user_name: " ",
+    user_tel: " ",
+    user_Address: [ ],
+    product: [
+    {
+    "author_id": , 
+    "author_name": ,
+    "product_id": ,
+    "product_name": ,
+    "option_info": ,
+    "product_num":, 
+    "product_detail_price":
+}, ...]    
+}
 
-```
-git pull origin
-git checkout proto/product#2
-git checkout -b proto/product#2_이름
-git push origin HEAD
+
+주문확인(Header에서 jwt 확인)
+GET /w/me/order/payment
+Response {
+    
+    response:
+    orders:[
+        {
+            "order_id": ,
+            "order_date": ,
+            "order_price": ,
+            "orderDetails": [
+               {"order_detail_id": ,
+                "author_id": ,
+                "author_name": ,
+                "product_id": ,
+                "product_name": ,
+                "option_info": ,
+                "product_num": }, ...
+            ]
+        }
+
+    ]    
+}
+
+주문상세확인
+GET /w/me/order/payment/detail/{order_id}
+
 ```
