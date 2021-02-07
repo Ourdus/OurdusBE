@@ -1,24 +1,22 @@
+drop table if exists user;
+drop table if exists product_category;
+drop table if exists product;
+drop table if exists product_option;
+
 CREATE TABLE user
 (
     user_id     bigint      NOT NULL AUTO_INCREMENT,
---     user_status int(3) NOT NULL,
+
     user_email  varchar(20) NOT NULL,
     user_pw     varchar(20) NOT NULL,
     user_name   varchar(20) NOT NULL,
     user_tel    varchar(20) NOT NULL,
-    reg_date    datetime    NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+    reg_date    datetime    NOT NULL DEFAULT NOW(),
     user_point  int         NOT NULL DEFAULT 0,
     writer_flag TINYINT(1) NOT NULL DEFAULT false,
     PRIMARY KEY (user_id),
     CONSTRAINT unique_user_email UNIQUE (user_email)
---     CONSTRAINT fk_user_status FOREIGN KEY (user_status) REFERENCES status (status) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
-
--- CREATE TABLE status
--- (
---     status int(1) NOT NULL,
---     status_description varchar(500) NULL
--- )
 
 
 CREATE TABLE product_category
@@ -97,4 +95,12 @@ CREATE TABLE order_detail
     product_detail_price int NOT NULL DEFAULT 0,
     PRIMARY KEY (order_detail_id),
     CONSTRAINT fk_order_id FOREIGN KEY (order_id) REFERENCES orders (order_id) ON DELETE RESTRICT ON UPDATE RESTRICT
+
+CREATE TABLE address
+(
+    address_id     bigint       NOT NULL AUTO_INCREMENT,
+    user_address   varchar(100) NOT NULL,
+    user_id        bigint       NOT NULL,
+    PRIMARY KEY (address_id),
+    CONSTRAINT fk_user_id   FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );

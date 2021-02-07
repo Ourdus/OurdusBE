@@ -34,6 +34,7 @@ INSERT INTO product_option(option_id, product_id, option_name, option_price) VAL
 INSERT INTO product_option(option_id, product_id, option_name, option_price) VALUES (null, 2, '2옵션2', 1000);
 
 
+
 INSERT INTO cart_detail(cart_id, user_id, author_id, product_id, option_info, product_num, product_detail_price) VALUES (null, 3, 1, 1, '옵션1과옵션2를선택', 2, 400);
 INSERT INTO cart_detail(cart_id, user_id, author_id, product_id, option_info, product_num, product_detail_price) VALUES (null, 2, 2, 2, '옵션1과옵션2를선택', 2, 200);
 INSERT INTO cart_detail(cart_id, user_id, author_id, product_id, option_info, product_num, product_detail_price) VALUES (null, 3, 3, 3, '옵션1과옵션2를선택', 1, 400);

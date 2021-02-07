@@ -3,6 +3,7 @@ package ourdus.ourdusspring.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import ourdus.ourdusspring.common.ApiResult;
 import ourdus.ourdusspring.domain.Product;
@@ -34,7 +35,7 @@ public class ProductController {
     }
 
     @GetMapping("product")
-    public ApiResult<List<ProductDTO>> viewAllProductList(@RequestParam("page")int page,@RequestParam("size")int size){
+    public ApiResult<List<ProductDTO>> viewAllProductList( @RequestParam("page")int page, @RequestParam("size")int size){
        Page <Product> productList = productService.findAll(PageRequest.of(page,size));
         List<ProductDTO> productDTOList=new ArrayList<ProductDTO>();
         if(productList!=null){

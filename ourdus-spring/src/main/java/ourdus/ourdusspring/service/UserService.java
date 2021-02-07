@@ -1,10 +1,16 @@
 package ourdus.ourdusspring.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ourdus.ourdusspring.domain.Address;
 import ourdus.ourdusspring.domain.User;
+import ourdus.ourdusspring.repository.AddressRepository;
 import ourdus.ourdusspring.repository.UserRepository;
 
+import javax.swing.text.html.Option;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -15,10 +21,12 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
+    private final AddressRepository addressRepository;
+
+    public UserService(AddressRepository addressRepository,UserRepository userRepository ) {
+        this.addressRepository = addressRepository;
         this.userRepository = userRepository;
     }
-
 
     public User login(User loginUser){
         String email = loginUser.getEmail();
@@ -81,4 +89,69 @@ public class UserService {
 //    public Optional<User> info(Long id){
 //        return userRepository.findById(id);
 //    }
+    public String AddAddress(Long userId,String addAddress) {
+
+        //배송지 생성
+        Address address = Address.createAddress(addAddress);
+
+        //유저 생성
+//        User user = User.createUser(address);
+        //엔티티조회
+        Optional<User> user = userRepository.findById(userId);
+        if (user.isPresent()) {
+            User findUser = user.get();
+            findUser.addAddress(address);
+
+            //유저 저장
+            userRepository.save(findUser);
+            address.setUser(findUser);
+            addressRepository.save(address);
+            if (findUser.getId().equals(userId)) {
+                return "Address add success";
+            } else {
+                throw new NoSuchElementException("Address add failed");
+            }
+        } else {
+            throw new NoSuchElementException("Address add failed");
+        }
+    }
+
+    public String deleteAddress(Long address_id) {
+        if(!addressRepository.existsById(address_id)) new NoSuchElementException("Address delete failed");
+        addressRepository.deleteById(address_id);
+        return "Address delete success";
+    }
+
+    public String editAddress(Long address_id,String newAddress) {
+        Optional<Address> result  = addressRepository.findById(address_id);
+        if(!result.isPresent()) new NoSuchElementException("address update failed");
+        Address address = result.get();
+        address.setAddress(newAddress);
+        addressRepository.save(address);
+
+        return "address update success";
+    }
+
+    public List<String> getAddressList(Long userId) {
+        Optional<User> user = userRepository.findById(userId);
+        if (user.isPresent()) {
+            List<String> showAddress = new ArrayList<String>();
+            User findUser = user.get();
+            List<Address> addressList= findUser.getAddressList();
+            for(Address address : addressList){
+                showAddress.add(address.getAddress());
+            }
+            return showAddress;
+        }else{
+            throw new NoSuchElementException("Address info load failed");
+        }
+    }
+
+
+//    public void DeleteAddress(Long userId){
+//        Optional<User> user = userRepository.findById(userId);
+//        User findUser = user.get();
+//
+//    }
+
 }

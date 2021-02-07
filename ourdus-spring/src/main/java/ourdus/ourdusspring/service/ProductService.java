@@ -30,6 +30,7 @@ public class ProductService {
         this.categoryRepository = categoryRepository;
     }
 
+
     public Page<Product> findAll(@PageableDefault(size=10, page=0) Pageable pageable){
         return productRepository.findAll(pageable);
     }
