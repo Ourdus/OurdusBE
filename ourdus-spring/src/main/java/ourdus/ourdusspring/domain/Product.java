@@ -29,11 +29,11 @@ public class Product {
     @Column(name="PRODUCT_OPTION_NUM")
     private int optionNum;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name="CATEGORY_ID")
     private Category category;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name="AUTHOR_ID")
     private User author;
 //

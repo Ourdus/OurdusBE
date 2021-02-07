@@ -80,7 +80,7 @@ public class ProductController {
     }
 
 
-    @DeleteMapping ("product/{product_id}/delete")
+    @PostMapping("product/{product_id}/delete")
     public ApiResult<String> delete(@PathVariable("product_id") Long product_Id){
         return OK(productService.delete(product_Id));
     }
