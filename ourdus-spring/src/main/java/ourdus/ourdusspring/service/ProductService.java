@@ -61,11 +61,14 @@ public class ProductService {
     }
 
     public String delete(Long productId) {
-        if (!productRepository.existsById(productId)) {//해당 id가 존재하지 않는 경우 처리
+
+        Optional<Product> findProduct = productRepository.findById(productId);
+        if(findProduct.isPresent()){
+            productRepository.delete(findProduct.get());
+            return "작품 삭제 성공";
+        }else{
             throw new NoSuchElementException("존재하지 않는 작품은 삭제할 수 없습니다.");
         }
-       productRepository.deleteById(productId);
-       return "delete success";
     }
 
     public Product update(Product product, Long categoryId) {

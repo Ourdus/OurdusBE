@@ -8,7 +8,7 @@ public class ProductRequest {
     private int price;
     private Long categoryId;
     private int optionNum;
-    private List<Product_OptionDTO> options;
+   // private List<Product_OptionDTO> options;
 
     public String getName() {
         return name;
@@ -42,11 +42,11 @@ public class ProductRequest {
         this.optionNum = optionNum;
     }
 
-    public List<Product_OptionDTO> getOptions() {
-        return options;
-    }
+//    public List<Product_OptionDTO> getOptions() {
+//        return options;
+//    }
 
-    public void setOptions(List<Product_OptionDTO> options) {
-        this.options = options;
-    }
+//    public void setOptions(List<Product_OptionDTO> options) {
+//        this.options = options;
+//    }
 }

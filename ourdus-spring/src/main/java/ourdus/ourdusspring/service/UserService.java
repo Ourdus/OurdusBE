@@ -50,9 +50,6 @@ public class UserService {
         }
     }
 
-    public String getServerInfo(){
-        return "made by KSY";
-    }
 
     public String delete(Long id){
         if(!userRepository.existsById(id)) new NoSuchElementException("delete failed");
@@ -60,8 +57,8 @@ public class UserService {
         return "delete success";
     }
 
-    public String update(User user){
-        Optional<User> result = userRepository.findByEmail(user.getEmail());
+    public String update(Long id,User user){
+        Optional<User> result = userRepository.findById(id);
         if(!result.isPresent()) new NoSuchElementException("update failed");
         User findUser = result.get();
         findUser.setTel(user.getTel());
@@ -72,15 +69,13 @@ public class UserService {
     public String findUserId(String tel){
         if(!userRepository.findByTel(tel).isPresent()) new NoSuchElementException("find Id failed");
         User user=userRepository.findByTel(tel).get();
-        //System.out.println(user.getEmail());
-        return "find id success";
+        return user.getEmail();
     }
 
     public String findPW(String email, String tel){
         if(!userRepository.findByEmailAndTel(email,tel).isPresent()) new NoSuchElementException("find pw failed");
         User user=userRepository.findByEmailAndTel(email,tel).get();
-        //System.out.println(user.getPassword());
-        return "find pw success";
+        return user.getPassword();
     }
 
 //    public Optional<User> info(Long id){
@@ -114,6 +109,17 @@ public class UserService {
     public List<Address> getAddressList(Long userId) {
         User user = userRepository.findById(userId).orElse(null);
         return user.getAddressList();
+    }
+
+    public User getUserInfo(Long id) {
+        Optional<User> findUser = userRepository.findById(id);
+        if(findUser.isPresent()){
+            User user = findUser.get();
+            return user;
+        }else{
+            throw new NoSuchElementException("No User Info");
+        }
+
     }
 
 

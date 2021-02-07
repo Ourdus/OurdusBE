@@ -62,25 +62,10 @@ public class UserController {
         return OK(resultMap);
     }
 
-    @PostMapping("/info")
-    public ApiResult<Map<String,Object>> getInfo(HttpServletRequest req, @RequestBody UserDTO user){
-        Map<String, Object> resultMap = new HashMap<>();
-        HttpStatus status = null;
-        try{
-            //사용자에게 전달할 정보
-            String info = userService.getServerInfo();
-            //보너스로 토큰에 담긴 정보도 전달. 서버에서 토큰을 사용하는 방법임을 알수있음
-            resultMap.putAll(jwtService.get(req.getHeader("jwt-auth-token")));
-            resultMap.put("status",true);
-            resultMap.put("info",info);
-            resultMap.put("request_body",user);
-            status=HttpStatus.ACCEPTED;
-        }catch(RuntimeException e){
-            log.error("정보 조회 실패",e);
-            resultMap.put("message",e.getMessage());
-            status=HttpStatus.INTERNAL_SERVER_ERROR;
-        }
-        return OK(resultMap);
+    @GetMapping("/user/info")
+    public ApiResult<User> getInfo(HttpServletRequest req){
+        Long id = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId")));
+        return OK(userService.getUserInfo(id));
     }
 
     @PostMapping("/user/join")
@@ -97,17 +82,17 @@ public class UserController {
 
     @PostMapping("/user/edit")
     public ApiResult<String> update(HttpServletRequest req, @RequestBody UserDTO userdto){
-        //Long id = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId"))); //id 받아오기
-        return OK(userService.update(new User(userdto)));
+        Long id = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId"))); //id 받아오기
+        return OK(userService.update(id,new User(userdto)));
     }
 
     @PostMapping("/user/id-finding")
-    public ApiResult<String> findUserId(HttpServletRequest req, @RequestBody UserDTO userdto){
+    public ApiResult<String> findUserId(@RequestBody UserDTO userdto){
         return OK(userService.findUserId(userdto.getTel()));
     }
 
     @PostMapping("/user/pw-finding")
-    public ApiResult<String> findPW(HttpServletRequest req, @RequestBody UserDTO userdto){
+    public ApiResult<String> findPW(@RequestBody UserDTO userdto){
         return OK(userService.findPW(userdto.getEmail(),userdto.getTel()));
     }
 
