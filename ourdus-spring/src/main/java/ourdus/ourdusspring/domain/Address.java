@@ -3,7 +3,6 @@ package ourdus.ourdusspring.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import ourdus.ourdusspring.repository.UserRepository;
 
 import javax.persistence.*;
 
@@ -18,13 +17,40 @@ public class Address {
     @Column(name="ADDRESS_ID")
     private Long id;
 
-    @Column(name="USER_ADDRESS")
-    private String address;
+    @Column(name="ADDRESS_NAME")
+    private String name;
+    @Column(name="ADDRESS_PHONE")
+    private String phone;
+    @Column(name="ADDRESS_ZIPCODE")
+    private String zipcode;
+    @Column(name="ADDRESS_MAIN")
+    private String addressMain;
+    @Column(name="ADDRESS_SUB")
+    private String addressSub;
 
     @ManyToOne
     @JoinColumn(name="USER_ID")
     private User user;
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setZipcode(String zipcode) {
+        this.zipcode = zipcode;
+    }
+
+    public void setAddressMain(String addressMain) {
+        this.addressMain = addressMain;
+    }
+
+    public void setAddressSub(String addressSub) {
+        this.addressSub = addressSub;
+    }
 
     //연관관계 매핑
     public void setUser(User user){
@@ -35,25 +61,24 @@ public class Address {
         user.getAddressList().add(this);
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    @Builder(builderClassName = "createBuilder", builderMethodName = "createBuilder")
+    public Address(String name, String phone, String zipcode, String addressMain, String addressSub) {
+        this.name = name;
+        this.phone = phone;
+        this.zipcode = zipcode;
+        this.addressMain = addressMain;
+        this.addressSub = addressSub;
     }
 
-    //생성 메소드
-    public static Address createAddress(String address){
-        Address addr = new Address();
-        addr.setAddress(address);
-        return addr;
-    }
-
-    @Builder
-    public Address(Long id, String address, User user) {
-        this.id = id;
-        this.address = address;
+    @Builder(builderClassName = "defaultBuilder", builderMethodName = "defaultBuilder")
+    public Address(String name, String phone, String zipcode, String addressMain, String addressSub, User user) {
+        this.name = name;
+        this.phone = phone;
+        this.zipcode = zipcode;
+        this.addressMain = addressMain;
+        this.addressSub = addressSub;
         this.user = user;
     }
-
-
 
 
 }

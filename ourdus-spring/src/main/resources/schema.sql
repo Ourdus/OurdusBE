@@ -86,20 +86,27 @@ CREATE TABLE orders
 
 CREATE TABLE order_detail
 (
-    order_detail_id bigint NOT NULL AUTO_INCREMENT,
-    order_id bigint NOT NULL,
-    author_id bigint CONSTRAINT fk_author_id NOT NULL,
-    product_id bigint CONSTRAINT fk_product_id NOT NULL,
-    option_info varchar(100) NULL,
-    product_num int NOT NULL DEFAULT 1,
-    product_detail_price int NOT NULL DEFAULT 0,
+    order_detail_id      bigint NOT NULL AUTO_INCREMENT,
+    order_id             bigint NOT NULL,
+    author_id            bigint
+        CONSTRAINT fk_author_id NOT NULL,
+    product_id           bigint
+        CONSTRAINT fk_product_id NOT NULL,
+    option_info          varchar(100) NULL,
+    product_num          int    NOT NULL DEFAULT 1,
+    product_detail_price int    NOT NULL DEFAULT 0,
     PRIMARY KEY (order_detail_id),
     CONSTRAINT fk_order_id FOREIGN KEY (order_id) REFERENCES orders (order_id) ON DELETE RESTRICT ON UPDATE RESTRICT
+);
 
 CREATE TABLE address
 (
     address_id     bigint       NOT NULL AUTO_INCREMENT,
-    user_address   varchar(100) NOT NULL,
+    address_name   varchar(20) NOT NULL,
+    address_phone varchar(30) NOT NULL,
+    address_zipcode varchar(20) NOT NULL,
+    address_main varchar(50) NOT NULL,
+    address_sub varchar(50) NOT NULL,
     user_id        bigint       NOT NULL,
     PRIMARY KEY (address_id),
     CONSTRAINT fk_user_id   FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE RESTRICT
