@@ -38,4 +38,10 @@ public class OrderDetail {
     @Column(name="product_detail_price")
     private int price;
 
+    //연관관계 메소드
+    public void setOrder(Order order){
+        this.order = order;
+        order.getOrderDetails().add(this);
+    }
+
 }

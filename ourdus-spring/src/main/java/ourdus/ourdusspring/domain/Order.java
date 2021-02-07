@@ -6,6 +6,8 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -28,5 +30,14 @@ public class Order {
     private int price;
     @Column(name="ORDER_ACCOUNT")
     private String account;
+
+    @OneToMany(mappedBy = "ORDERS")
+    private List<OrderDetail> orderDetails = new ArrayList<>();
+
+    //연관관계 메소드
+    public void addOrderDetail(OrderDetail orderDetail){
+        orderDetails.add(orderDetail);
+        orderDetail.setOrder(this);
+    }
 
 }
