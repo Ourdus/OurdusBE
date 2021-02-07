@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -34,7 +35,11 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name="AUTHOR_ID")
-    private User user;
+    private User author;
+
+    @OneToMany(mappedBy = "product")
+    private List<ProductOption> options;
+
 
     public Long getId() {
         return id;
@@ -72,8 +77,12 @@ public class Product {
         return category;
     }
 
-    public User getUser() {
-        return user;
+    public User getAuthor() {
+        return author;
+    }
+
+    public List<ProductOption> getOptions() {
+        return options;
     }
 
     public void setName(String name) {
@@ -93,12 +102,12 @@ public class Product {
     }
 
     @Builder
-    public Product(String name, int price, int optionNum, Category category, User user) {
+    public Product(String name, int price, int optionNum, Category category, User author) {
         this.name = name;
         this.price = price;
         this.optionNum = optionNum;
         this.category = category;
-        this.user = user;
+        this.author = author;
     }
 
 }

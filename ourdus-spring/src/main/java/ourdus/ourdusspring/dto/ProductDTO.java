@@ -1,9 +1,6 @@
 package ourdus.ourdusspring.dto;
 
-import ourdus.ourdusspring.domain.Category;
 import ourdus.ourdusspring.domain.Product;
-
-import javax.persistence.*;
 
 public class ProductDTO {
 
@@ -30,8 +27,8 @@ public class ProductDTO {
         this.purchase = product.getPurchase();
         this.categoryId = product.getCategory().getId();
         this.categoryName = product.getCategory().getName();
-        this.authorId = product.getUser().getId();
-        this.authorName = product.getUser().getName();
+        this.authorId = product.getAuthor().getId();
+        this.authorName = product.getAuthor().getName();
         this.optionNum = product.getOptionNum();
     }
 

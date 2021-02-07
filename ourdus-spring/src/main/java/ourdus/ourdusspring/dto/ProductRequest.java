@@ -1,11 +1,14 @@
 package ourdus.ourdusspring.dto;
 
-public class ProductCreateDTO {
+import java.util.List;
+
+public class ProductRequest {
 
     private String name;
     private int price;
     private Long categoryId;
     private int optionNum;
+    private List<Product_OptionDTO> options;
 
     public String getName() {
         return name;
@@ -37,5 +40,13 @@ public class ProductCreateDTO {
 
     public void setOptionNum(int optionNum) {
         this.optionNum = optionNum;
+    }
+
+    public List<Product_OptionDTO> getOptions() {
+        return options;
+    }
+
+    public void setOptions(List<Product_OptionDTO> options) {
+        this.options = options;
     }
 }
