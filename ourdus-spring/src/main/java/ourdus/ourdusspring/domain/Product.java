@@ -36,9 +36,9 @@ public class Product {
     @ManyToOne
     @JoinColumn(name="AUTHOR_ID")
     private User author;
-
-    @OneToMany(mappedBy = "product")
-    private List<ProductOption> options;
+//
+//    @OneToMany(mappedBy = "product")
+//    private List<ProductOption> options;
 
 
     public Long getId() {
@@ -81,9 +81,9 @@ public class Product {
         return author;
     }
 
-    public List<ProductOption> getOptions() {
-        return options;
-    }
+//    public List<ProductOption> getOptions() {
+//        return options;
+//    }
 
     public void setName(String name) {
         this.name = name;
