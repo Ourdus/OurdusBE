@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import ourdus.ourdusspring.domain.OrderDetail;
+import ourdus.ourdusspring.dto.OrderForm;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
@@ -18,6 +20,9 @@ class OrderServiceTest {
     @Autowired
     private OrderService orderService;
 
+    private Long userId = 1L;
+
+
     @BeforeAll
     void setUp(){
 
@@ -25,7 +30,7 @@ class OrderServiceTest {
 
     @Test
     void 유저의주문목록_조회를_테스트(){
-        System.out.println(orderService.findAllByUserId(2L));
+        System.out.println(orderService.findAllByUserId(userId));
     }
 
     @Test
@@ -36,7 +41,21 @@ class OrderServiceTest {
 
     @Test
     void 주문한다(){
+        유저의주문목록_조회를_테스트();
+        OrderForm orderForm = new OrderForm(1L, "test0", 3L, "product3_by_test1", "옵션1:옵션1세부/옵션2:옵션2세부",3, 30000);
+        OrderForm orderForm2 = new OrderForm(1L, "test0", 4L, "product4_by_test1", "2옵션1:옵션1세부/옵션2:옵션2세부",1, 1000);
+        OrderForm orderForm3 = new OrderForm(1L, "test0", 5L, "product5_by_test1", "3옵션1:옵션1세부/옵션2:옵션2세부",2, 40000);
 
+        List<OrderForm> orderForms = new ArrayList<>();
+        orderForms.add(orderForm); orderForms.add(orderForm2); orderForms.add(orderForm3);
+        int price = 71000;
+        String orderAccount = "무통장입금";
+
+        Long orderId = orderService.order(userId, orderForms, price, orderAccount);
+        유저의주문목록_조회를_테스트();
+
+        List<OrderDetail> orderDetailList = orderService.findDetailAllByOrderId(orderId);
+        System.out.println(orderDetailList);
     }
 
 }
