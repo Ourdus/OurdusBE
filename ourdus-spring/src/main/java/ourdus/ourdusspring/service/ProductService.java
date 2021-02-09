@@ -64,7 +64,7 @@ public class ProductService {
 
         Optional<Product> findProduct = productRepository.findById(productId);
         if(findProduct.isPresent()){
-            productRepository.delete(findProduct.get());
+            productRepository.delete(productId);
             return "작품 삭제 성공";
         }else{
             throw new NoSuchElementException("존재하지 않는 작품은 삭제할 수 없습니다.");
