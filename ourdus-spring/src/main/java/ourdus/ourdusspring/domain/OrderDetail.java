@@ -16,7 +16,7 @@ public class OrderDetail {
     @Column(name="ORDER_DETAIL_ID")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="ORDER_ID")
     private Order order;
 
@@ -48,6 +48,15 @@ public class OrderDetail {
     @Builder(builderClassName = "defaultBuilder", builderMethodName = "defaultBuilder")
     public OrderDetail(Order order, Product product, String optionInfo, int productNum, int price) {
         this.order = order;
+        this.product = product;
+        this.authorId = product.getAuthor().getId();
+        this.optionInfo = optionInfo;
+        this.productNum = productNum;
+        this.price = price;
+    }
+
+    @Builder(builderClassName = "createBuilder", builderMethodName = "createBuilder")
+    public OrderDetail(Product product, String optionInfo, int productNum, int price) {
         this.product = product;
         this.authorId = product.getAuthor().getId();
         this.optionInfo = optionInfo;

@@ -41,6 +41,14 @@ public class Order {
         orderDetail.setOrder(this);
     }
 
+    @Builder(builderMethodName = "createBuilder", builderClassName = "createBuilder")
+    public Order(User user, int price, String account, List<OrderDetail> orderDetails) {
+        this.user = user;
+        this.price = price;
+        this.account = account;
+        this.orderDetails = orderDetails;
+    }
+
     @Builder(builderMethodName = "defaultBuilder", builderClassName = "defaultBuilder")
     public Order(Long id, User user, LocalDateTime orderDate, int price, String account, List<OrderDetail> orderDetails) {
         this.id = id;
