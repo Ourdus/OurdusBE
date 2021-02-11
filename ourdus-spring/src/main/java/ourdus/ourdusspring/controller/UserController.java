@@ -23,7 +23,7 @@ import static ourdus.ourdusspring.common.ApiResult.OK;
 
 @RestController
 @Slf4j
-@RequestMapping("/api")
+@RequestMapping("api")
 public class UserController {
 
     @Autowired
@@ -52,7 +52,7 @@ public class UserController {
             res.setHeader("jwt-auth-token",token);
 
             resultMap.put("status",true);
-            resultMap.put("data",loginUser);
+            resultMap.put("data",new UserDTO(loginUser));
             status = HttpStatus.ACCEPTED;
         }catch(RuntimeException e){
             log.error("로그인 실패",e);
@@ -63,9 +63,10 @@ public class UserController {
     }
 
     @GetMapping("/user/info")
-    public ApiResult<User> getInfo(HttpServletRequest req){
+    public ApiResult<UserDTO> getInfo(HttpServletRequest req){
         Long id = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId")));
-        return OK(userService.getUserInfo(id));
+        User user =userService.getUserInfo(id);
+        return OK(new UserDTO(user));
     }
 
     @PostMapping("/user/join")

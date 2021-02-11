@@ -48,6 +48,7 @@ public class User {
         address.setUser(this);
     }
 
+
     public void setName(String name) {
         this.name = name;
     }

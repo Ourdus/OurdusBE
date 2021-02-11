@@ -39,8 +39,8 @@ public class CartController {
         return OK(cartDTOs);
     }
 
-    @PostMapping("cart/delete")
-    public ApiResult<String> delete(@RequestBody Long cartId){
+    @PostMapping("cart/delete/{cart_id}")
+    public ApiResult<String> delete(@PathVariable("cart_id") Long cartId){
         cartService.delete(cartId);
         return OK("해당 카트를 삭제하였습니다.");
     }
