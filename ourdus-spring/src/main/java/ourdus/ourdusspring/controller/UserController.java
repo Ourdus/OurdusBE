@@ -22,7 +22,6 @@ import java.util.Map;
 import static ourdus.ourdusspring.common.ApiResult.OK;
 
 @RestController
-@RequestMapping("/api")
 @Slf4j
 public class UserController {
 
