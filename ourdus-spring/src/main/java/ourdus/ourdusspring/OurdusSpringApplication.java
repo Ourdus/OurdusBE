@@ -3,11 +3,13 @@ package ourdus.ourdusspring;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import ourdus.ourdusspring.interceptor.JwtInterceptor;
 
 @SpringBootApplication
+
 public class OurdusSpringApplication implements WebMvcConfigurer {
 
 	public static void main(String[] args) {
