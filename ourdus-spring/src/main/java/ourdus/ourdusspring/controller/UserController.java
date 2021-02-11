@@ -23,7 +23,7 @@ import static ourdus.ourdusspring.common.ApiResult.OK;
 
 @RestController
 @Slf4j
-@RequestMapping("api")
+@RequestMapping("/api")
 public class UserController {
 
     @Autowired

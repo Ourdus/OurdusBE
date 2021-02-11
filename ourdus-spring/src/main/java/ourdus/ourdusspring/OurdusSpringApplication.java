@@ -5,11 +5,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import ourdus.ourdusspring.interceptor.JwtInterceptor;
 
-@SpringBootApplication
+import java.util.Arrays;
 
+@SpringBootApplication
 public class OurdusSpringApplication implements WebMvcConfigurer {
 
 	public static void main(String[] args) {
@@ -19,11 +21,11 @@ public class OurdusSpringApplication implements WebMvcConfigurer {
 	@Autowired
 	private JwtInterceptor jwtInterceptor;
 	
-//	@Override
-//	public void addInterceptors(InterceptorRegistry registry){
-//		registry.addInterceptor(jwtInterceptor).addPathPatterns("/api/**") //기본 적용 경로
-//				.excludePathPatterns(Arrays.asList("/api/user/**")); //적용 제외 경로
-//	}
+	@Override
+	public void addInterceptors(InterceptorRegistry registry){
+		registry.addInterceptor(jwtInterceptor).addPathPatterns("/api/**") //기본 적용 경로
+				.excludePathPatterns(Arrays.asList("/api/user/**")); //적용 제외 경로
+	}
 
 	//interceptor 이용해서 처리하므로 전역의 corss origin 처리해준다
 	@Override

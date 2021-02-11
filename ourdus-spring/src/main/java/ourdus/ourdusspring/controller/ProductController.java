@@ -20,7 +20,7 @@ import java.util.Optional;
 import static ourdus.ourdusspring.common.ApiResult.OK;
 
 @RestController
-@RequestMapping("api/w")
+@RequestMapping("/api/w")
 public class ProductController {
 
 
