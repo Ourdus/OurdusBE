@@ -14,7 +14,7 @@ import java.util.List;
 import static ourdus.ourdusspring.common.ApiResult.OK;
 
 @RestController
-@RequestMapping("w")
+@RequestMapping("api/w")
 public class OrderController {
 
     @Autowired

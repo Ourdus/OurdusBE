@@ -9,6 +9,7 @@ import ourdus.ourdusspring.repository.CartRepository;
 import ourdus.ourdusspring.repository.ProductRepository;
 import ourdus.ourdusspring.repository.UserRepository;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -39,7 +40,7 @@ public class CartService {
     }
 
     public List<Cart> findAllByUserId(Long userId){
-        return cartRepository.findAllByUserId(userId).orElse(null);
+        return cartRepository.findAllByUserId(userId).orElse(Collections.emptyList());
     }
 
     public void delete(Long cartId){

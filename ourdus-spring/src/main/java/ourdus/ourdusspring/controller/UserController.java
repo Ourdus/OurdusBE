@@ -22,8 +22,8 @@ import java.util.Map;
 import static ourdus.ourdusspring.common.ApiResult.OK;
 
 @RestController
-@RequestMapping("/api")
 @Slf4j
+@RequestMapping("api")
 public class UserController {
 
     @Autowired
