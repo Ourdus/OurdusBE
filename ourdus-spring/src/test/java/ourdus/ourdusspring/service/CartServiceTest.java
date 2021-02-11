@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ourdus.ourdusspring.domain.Cart;
 
 import java.util.List;
+import java.util.Objects;
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -32,11 +33,10 @@ class CartServiceTest {
 
     @Test
     @Order(1)
-    void 카트_전체조회를_테스트(){
-        List<Cart> carts = cartService.findAllByUserId(1L);
+    void 카트_전체조회를_테스트() {
+        List<Cart> carts = cartService.findAllByUserId(2L);
 
-        for(Cart tempcart : carts)
-            System.out.println(tempcart.toString());
+        carts.stream().filter(Objects::nonNull).forEach(System.out::println);
     }
 
     @Test
@@ -46,11 +46,11 @@ class CartServiceTest {
         카트_전체조회를_테스트();
     }
 
-    @Test
-    @Order(3)
-    void 카트_삭제를_테스트(){
-        카트_전체조회를_테스트();
-    }
+//    @Test
+//    @Order(3)
+//    void 카트_삭제를_테스트(){
+//        카트_전체조회를_테스트();
+//    }
 
 
 

@@ -3,12 +3,11 @@ package ourdus.ourdusspring.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import ourdus.ourdusspring.common.ApiResult;
 import ourdus.ourdusspring.domain.Product;
-import ourdus.ourdusspring.dto.ProductRequest;
 import ourdus.ourdusspring.dto.ProductDTO;
+import ourdus.ourdusspring.dto.ProductRequest;
 import ourdus.ourdusspring.service.JwtService;
 import ourdus.ourdusspring.service.ProductService;
 
@@ -21,7 +20,7 @@ import java.util.Optional;
 import static ourdus.ourdusspring.common.ApiResult.OK;
 
 @RestController
-@RequestMapping("w")
+@RequestMapping("api/w")
 public class ProductController {
 
 
