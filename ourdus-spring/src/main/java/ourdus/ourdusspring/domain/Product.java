@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -85,6 +86,10 @@ public class Product {
 //        return options;
 //    }
 
+    public List<Comment> getCommentList() {
+        return commentList;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -98,6 +103,15 @@ public class Product {
     }
 
     public void setCategory(Category category) { this.category = category; }
+
+    @OneToMany(mappedBy = "product") //반대쪽 매핑이 Comment.product라서
+    private List<Comment> commentList = new ArrayList<Comment>();
+
+    //연관관계 메서드
+    public void addComment(Comment comment){
+        commentList.add(comment);
+        comment.setProduct(this);
+    }
 
     @Builder
     public Product(String name, int price, int optionNum, Category category, User author) {

@@ -27,7 +27,7 @@ public class OurdusSpringApplication implements WebMvcConfigurer {
 				.excludePathPatterns(Arrays.asList("/api/user/**")); //적용 제외 경로
 	}
 
-	//interceptor 이용해서 처리하므로 전역의 corss origin 처리해준다
+//	interceptor 이용해서 처리하므로 전역의 corss origin 처리해준다
 	@Override
 	public void addCorsMappings(CorsRegistry registry){
 		registry.addMapping("/**")
