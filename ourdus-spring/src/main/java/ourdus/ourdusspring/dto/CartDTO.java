@@ -87,4 +87,18 @@ public class CartDTO {
         this.productNum = cart.getProductNum();
         this.productDetailPrice = cart.getPrice();
     }
+
+    public CartDTO() {
+    }
+
+    public CartDTO(Long id, Long authorId, String authorName, Long productId, String productName, String optionInfo, int productNum, int productDetailPrice) {
+        this.id = id;
+        this.authorId = authorId;
+        this.authorName = authorName;
+        this.productId = productId;
+        this.productName = productName;
+        this.optionInfo = optionInfo;
+        this.productNum = productNum;
+        this.productDetailPrice = productDetailPrice;
+    }
 }

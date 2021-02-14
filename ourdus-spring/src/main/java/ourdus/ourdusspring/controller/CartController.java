@@ -8,7 +8,6 @@ import ourdus.ourdusspring.dto.CartDTO;
 import ourdus.ourdusspring.service.CartService;
 import ourdus.ourdusspring.service.JwtService;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,9 +26,9 @@ public class CartController {
         this.cartService = cartService;
     }
 
-    @GetMapping("cart")
-    public ApiResult<List<CartDTO>> viewAllProduct(HttpServletRequest req){
-        Long userId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId"))); //id 받아오기
+    @GetMapping("cart/{user_id}")
+    public ApiResult<List<CartDTO>> viewAllProduct(@PathVariable("user_id") Long userId /*HttpServletRequest req*/){
+        //Long userId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId"))); //id 받아오기
         List<Cart> carts = cartService.findAllByUserId(userId);
         List<CartDTO> cartDTOs = new ArrayList<>();
         carts.stream().forEach(cart -> {
@@ -46,8 +45,9 @@ public class CartController {
     }
 
     @PostMapping("cart-in")
-    public ApiResult<String> cartIn(HttpServletRequest req, @RequestBody CartDTO cartDTO){
-        Long userId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId"))); //id 받아오기
+    public ApiResult<String> cartIn(/*HttpServletRequest req,*/ @RequestBody CartDTO cartDTO){
+//        Long userId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId"))); //id 받아오기
+        Long userId = 1L;
         Cart cart = Cart.createBuilder()
                 .optionInfo(cartDTO.getOptionInfo())
                 .productNum(cartDTO.getProductNum())
