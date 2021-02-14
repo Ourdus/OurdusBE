@@ -27,9 +27,9 @@ public class CartController {
         this.cartService = cartService;
     }
 
-    @GetMapping("cart")
-    public ApiResult<List<CartDTO>> viewAllProduct(HttpServletRequest req){
-        Long userId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId"))); //id 받아오기
+    @GetMapping("cart/{user_id}")
+    public ApiResult<List<CartDTO>> viewAllProduct(@PathVariable("user_id") Long userId /*HttpServletRequest req*/){
+        //Long userId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId"))); //id 받아오기
         List<Cart> carts = cartService.findAllByUserId(userId);
         List<CartDTO> cartDTOs = new ArrayList<>();
         carts.stream().forEach(cart -> {
