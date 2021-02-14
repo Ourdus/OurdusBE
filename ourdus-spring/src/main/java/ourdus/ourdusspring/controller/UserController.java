@@ -110,8 +110,9 @@ public class UserController {
 //      }
 
     @PostMapping("/user/address")
-    public ApiResult<AddressDTO> addAddress(HttpServletRequest req, @RequestBody AddressDTO addressDTO){
-        Long userId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId"))); //id 받아오기
+    public ApiResult<AddressDTO> addAddress(/*HttpServletRequest req,*/ @RequestBody AddressDTO addressDTO){
+//        Long userId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId"))); //id 받아오기
+        Long userId = 1L;
         Address address = Address.createBuilder()
                             .name(addressDTO.getName())
                             .phone(addressDTO.getPhone())

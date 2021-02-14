@@ -1,7 +1,5 @@
 package ourdus.ourdusspring.dto;
 
-import java.util.List;
-
 public class ProductRequest {
 
     private String name;
@@ -42,7 +40,17 @@ public class ProductRequest {
         this.optionNum = optionNum;
     }
 
-//    public List<Product_OptionDTO> getOptions() {
+    public ProductRequest(String name, int price, Long categoryId, int optionNum) {
+        this.name = name;
+        this.price = price;
+        this.categoryId = categoryId;
+        this.optionNum = optionNum;
+    }
+
+    public ProductRequest() {
+    }
+
+    //    public List<Product_OptionDTO> getOptions() {
 //        return options;
 //    }
 

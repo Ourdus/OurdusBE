@@ -32,6 +32,24 @@ public class ProductDTO {
         this.optionNum = product.getOptionNum();
     }
 
+    public ProductDTO(Long id, String name, int price, int rate, int review, int hit, int purchase, Long categoryId, String categoryName, Long authorId, String authorName, int optionNum) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.rate = rate;
+        this.review = review;
+        this.hit = hit;
+        this.purchase = purchase;
+        this.categoryId = categoryId;
+        this.categoryName = categoryName;
+        this.authorId = authorId;
+        this.authorName = authorName;
+        this.optionNum = optionNum;
+    }
+
+    public ProductDTO() {
+    }
+
     public Long getId() {
         return id;
     }
