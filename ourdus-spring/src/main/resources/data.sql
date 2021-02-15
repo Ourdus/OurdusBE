@@ -56,3 +56,10 @@ INSERT INTO address(address_id, address_name, address_phone, address_zipcode,add
 INSERT INTO address(address_id, address_name, address_phone, address_zipcode,address_main,address_sub, user_id) VALUES(null, '주소3', '010231221121', '123532', '주소1121', '세부주소111', 2);
 INSERT INTO address(address_id, address_name, address_phone, address_zipcode,address_main,address_sub, user_id) VALUES(null, '주소4', '010231221121', '123532', '주소1121', '세부주소111', 3);
 INSERT INTO address(address_id, address_name, address_phone, address_zipcode,address_main,address_sub, user_id) VALUES(null, '주소5', '010231221121', '123532', '주소1121', '세부주소111', 4);
+
+INSERT INTO comment(comment_id, comment_content, product_id,user_id) VALUES(null,'첫번째 작품 댓글1',1,1);
+INSERT INTO comment(comment_id, comment_content, product_id,user_id) VALUES(null,'첫번째 작품 댓글2',1,2);
+INSERT INTO comment(comment_id, comment_content, product_id,user_id) VALUES(null,'첫번째 작품 댓글3',1,3);
+INSERT INTO comment(comment_id, comment_content, product_id,user_id) VALUES(null,'두번째 작품 댓글1',2,1);
+INSERT INTO comment(comment_id, comment_content, product_id,user_id) VALUES(null,'두번째 작품 댓글2',2,2);
+INSERT INTO comment(comment_id, comment_content, product_id,user_id) VALUES(null,'세번째 작품 댓글1',3,4);

@@ -2,6 +2,7 @@ drop table if exists user;
 drop table if exists product_category;
 drop table if exists product;
 drop table if exists product_option;
+drop table if exists comment;
 
 CREATE TABLE user
 (
@@ -110,4 +111,15 @@ CREATE TABLE address
     user_id        bigint       NOT NULL,
     PRIMARY KEY (address_id),
     CONSTRAINT fk_user_id   FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE RESTRICT
+);
+
+CREATE TABLE comment
+(
+    comment_id     bigint       NOT NULL AUTO_INCREMENT,
+    comment_content   varchar(50) NOT NULL,
+    product_id      bigint      NOT NULL,
+    user_id        bigint       NOT NULL,
+    PRIMARY KEY (comment_id),
+    FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
+    FOREIGN KEY (product_id) REFERENCES product (product_id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
