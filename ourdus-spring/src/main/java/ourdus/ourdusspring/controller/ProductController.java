@@ -86,14 +86,14 @@ public class ProductController {
     }
 
     @PostMapping("/product/{product_id}/edit")
-    public ApiResult<ProductDTO> modify(@RequestBody ProductRequest productRequest){
+    public ApiResult<ProductDTO> modify(@PathVariable("product_id") Long product_Id,@RequestBody ProductRequest productRequest){
         Product product = Product
                 .builder()
                 .name(productRequest.getName())
                 .price(productRequest.getPrice())
                 .optionNum(productRequest.getOptionNum())
                 .build();
-        return OK(new ProductDTO(productService.update(product, productRequest.getCategoryId())));
+        return OK(new ProductDTO(productService.modify(product_Id,product, productRequest.getCategoryId())));
     }
 
 

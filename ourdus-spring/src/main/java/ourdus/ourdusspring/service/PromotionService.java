@@ -12,7 +12,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 public class PromotionService {
 
     private final PromotionRepository promotionRepository;
@@ -55,7 +55,7 @@ public class PromotionService {
         if(!promotionRepository.existsById(promotionId))
             new NoSuchElementException("프로모션 삭제 실패");
         promotionRepository.deleteById(promotionId);
-        return "프로모션 삭제 실패";
+        return "프로모션 삭제 성공";
     }
 }
 

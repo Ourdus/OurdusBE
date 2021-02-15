@@ -61,8 +61,8 @@ INSERT INTO promotion (promotion_name,promotion_description) values ('first','di
 INSERT INTO promotion (promotion_name,promotion_description) values ('second','discount');
 INSERT INTO promotion (promotion_name,promotion_description) values ('third','discount');
 
---INSERT INTO promotion_product(promotion_id,product_id) values (1,1);
---INSERT INTO promotion_product(promotion_id,product_id) values (1,2);
---INSERT INTO promotion_product(promotion_id,product_id) values (2,1);
---INSERT INTO promotion_product(promotion_id,product_id) values (2,2);
---INSERT INTO promotion_product(promotion_id,product_id) values (2,3);
+INSERT INTO promotion_product(promotion_id,product_id) values (1,1);
+INSERT INTO promotion_product(promotion_id,product_id) values (1,2);
+INSERT INTO promotion_product(promotion_id,product_id) values (2,1);
+INSERT INTO promotion_product(promotion_id,product_id) values (2,2);
+INSERT INTO promotion_product(promotion_id,product_id) values (2,3);

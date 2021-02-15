@@ -71,14 +71,10 @@ public class ProductService {
         }
     }
 
-    public Product update(Product product, Long categoryId) {
-        Product result = productRepository.findById(product.getId()).orElseThrow(() -> new NoSuchElementException("존재하지 않는 작품은 수정할 수 없습니다."));
+    public Product modify(Long productId,Product product, Long categoryId) {
+        Product result = productRepository.findById(productId).orElseThrow(() -> new NoSuchElementException("존재하지 않는 작품은 수정할 수 없습니다."));
         Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new NoSuchElementException("작품 카테고리의 아이디가 잘못되었습니다."));
-
-        result.setCategory(category);
-        result.setOptionNum(product.getOptionNum());
-        result.setName(product.getName());
-        result.setPrice(product.getPrice());
+        productRepository.update(productId,product,categoryId);
         return result;
     }
 
