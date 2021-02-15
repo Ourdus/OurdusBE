@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -36,6 +37,9 @@ public class Product {
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name="AUTHOR_ID")
     private User author;
+
+//    @OneToMany(mappedBy = "product") //promotion_product와 one to many 관계
+//    private List<PromotionProduct> promotionList = new ArrayList<PromotionProduct>();
 //
 //    @OneToMany(mappedBy = "product")
 //    private List<ProductOption> options;

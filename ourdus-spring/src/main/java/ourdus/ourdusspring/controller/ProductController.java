@@ -35,7 +35,7 @@ public class ProductController {
     }
 
     @GetMapping("product")
-    public ApiResult<List<ProductDTO>> viewAllProductList( @RequestParam("page")int page, @RequestParam("size")int size){
+    public ApiResult<List<ProductDTO>> viewAllProductList(@RequestParam("page")int page, @RequestParam("size")int size){
        Page <Product> productList = productService.findAll(PageRequest.of(page,size));
         List<ProductDTO> productDTOList=new ArrayList<ProductDTO>();
         if(productList!=null){
