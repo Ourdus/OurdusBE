@@ -1,5 +1,6 @@
 package ourdus.ourdusspring.domain;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -18,13 +19,17 @@ public class Comment {
     @Column(name="COMMENT_CONTENT")
     private String content;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="USER_ID")
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="PRODUCT_ID")
     private Product product;
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     //연관관계 매핑
     public void setProduct(Product product){
@@ -33,6 +38,19 @@ public class Comment {
         }
         this.product=product;
         product.getCommentList().add(this);
+    }
+
+
+    @Builder(builderClassName = "createBuilder", builderMethodName = "createBuilder")
+    public Comment(String content){
+        this.content=content;
+    }
+
+    @Builder(builderClassName = "defaultBuilder",builderMethodName = "defaultBuilder")
+    public Comment(String content, User user, Product product){
+        this.content = content;
+        this.user = user;
+        this.product = product;
     }
 
     @Override
