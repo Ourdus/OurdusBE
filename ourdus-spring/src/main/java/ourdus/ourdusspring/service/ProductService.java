@@ -101,19 +101,6 @@ public class ProductService {
         return product.getCommentList();
     }
 
-    public String deleteComment(Long productId, Long commentId) {
-        Product product = productRepository.findById(productId)
-                .orElseThrow(()->new NoSuchElementException("해당하는 작품이 없습니다."));
-        Comment comment = commentRepository.findById(commentId)
-                .orElseThrow(()->new NoSuchElementException("해당하는 댓글이 없습니다."));
-        if(comment.getProduct().equals(product)){
-            commentRepository.delete(comment);
-            return "comment delete success";
-        }else{
-            throw new NoSuchElementException("comment delete fail");
-        }
-    }
-
     public String removeComment(Long commentId,Long productId){
         Product product = productRepository.findById(productId).get();
         if(product.getCommentList().removeIf(comment -> comment.getId().equals(commentId))){
