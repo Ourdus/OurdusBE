@@ -113,6 +113,29 @@ CREATE TABLE address
     CONSTRAINT fk_user_id   FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 
+
+create table promotion
+(
+    promotion_id bigint NOT NULL AUTO_INCREMENT,
+    promotion_name varchar(100) NOT NULL,
+    promotion_description MEDIUMTEXT,
+    promotion_start_date datetime  DEFAULT CURRENT_TIMESTAMP(),
+    promotion_end_date datetime  DEFAULT CURRENT_TIMESTAMP(),
+    promotion_img varchar(50),
+    PRIMARY KEY(promotion_id)
+);
+create table promotion_product
+(
+    promotion_product_id bigint NOT NULL AUTO_INCREMENT,
+    promotion_id bigint NOT NULL,
+    product_id bigint NOT NULL,
+    PRIMARY KEY(promotion_product_id),
+    CONSTRAINT fk_promotion_id FOREIGN KEY (promotion_id) REFERENCES promotion (promotion_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
+    FOREIGN KEY (product_id) REFERENCES product (product_id) ON DELETE RESTRICT ON UPDATE RESTRICT
+);
+
+
+
 CREATE TABLE comment
 (
     comment_id     bigint       NOT NULL AUTO_INCREMENT,
@@ -123,3 +146,4 @@ CREATE TABLE comment
     FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
     FOREIGN KEY (product_id) REFERENCES product (product_id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
+

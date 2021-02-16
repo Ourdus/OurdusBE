@@ -37,7 +37,7 @@ public class ProductController {
     }
 
     @GetMapping("product")
-    public ApiResult<List<ProductDTO>> viewAllProductList( @RequestParam("page")int page, @RequestParam("size")int size){
+    public ApiResult<List<ProductDTO>> viewAllProductList(@RequestParam("page")int page, @RequestParam("size")int size){
        Page <Product> productList = productService.findAll(PageRequest.of(page,size));
         List<ProductDTO> productDTOList=new ArrayList<ProductDTO>();
         if(productList!=null){
@@ -82,20 +82,20 @@ public class ProductController {
     }
 
 
-    @DeleteMapping ("product/{product_id}/delete")
+    @PostMapping("product/{product_id}/delete")
     public ApiResult<String> delete(@PathVariable("product_id") Long product_Id){
         return OK(productService.delete(product_Id));
     }
 
     @PostMapping("/product/{product_id}/edit")
-    public ApiResult<ProductDTO> modify(@RequestBody ProductRequest productRequest){
+    public ApiResult<ProductDTO> modify(@PathVariable("product_id") Long product_Id,@RequestBody ProductRequest productRequest){
         Product product = Product
                 .builder()
                 .name(productRequest.getName())
                 .price(productRequest.getPrice())
                 .optionNum(productRequest.getOptionNum())
                 .build();
-        return OK(new ProductDTO(productService.update(product, productRequest.getCategoryId())));
+        return OK(new ProductDTO(productService.modify(product_Id,product, productRequest.getCategoryId())));
     }
 
     @PostMapping("/product/{product_id}/comment")

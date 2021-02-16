@@ -30,14 +30,17 @@ public class Product {
     @Column(name="PRODUCT_OPTION_NUM")
     private int optionNum;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name="CATEGORY_ID")
     private Category category;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name="AUTHOR_ID")
     private User author;
-//
+
+    @OneToMany(mappedBy = "product") //promotion_product와 one to many 관계
+    private List<PromotionProduct> promotionList = new ArrayList<PromotionProduct>();
+
 //    @OneToMany(mappedBy = "product")
 //    private List<ProductOption> options;
 
@@ -104,6 +107,7 @@ public class Product {
 
     public void setCategory(Category category) { this.category = category; }
 
+
     @OneToMany(mappedBy = "product") //반대쪽 매핑이 Comment.product라서
     private List<Comment> commentList = new ArrayList<Comment>();
 
@@ -112,6 +116,7 @@ public class Product {
         commentList.add(comment);
         comment.setProduct(this);
     }
+
 
     @Builder
     public Product(String name, int price, int optionNum, Category category, User author) {
