@@ -5,19 +5,21 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ourdus.ourdusspring.domain.*;
+import ourdus.ourdusspring.domain.Category;
+import ourdus.ourdusspring.domain.Comment;
+import ourdus.ourdusspring.domain.Product;
+import ourdus.ourdusspring.domain.User;
 import ourdus.ourdusspring.repository.CategoryRepository;
 import ourdus.ourdusspring.repository.CommentRepository;
 import ourdus.ourdusspring.repository.ProductRepository;
 import ourdus.ourdusspring.repository.UserRepository;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 public class ProductService {
 
     private final ProductRepository productRepository;
@@ -63,20 +65,26 @@ public class ProductService {
     }
 
     public String delete(Long productId) {
-
-        Optional<Product> findProduct = productRepository.findById(productId);
-        if(findProduct.isPresent()){
-            productRepository.delete(productId);
-            return "작품 삭제 성공";
-        }else{
-            throw new NoSuchElementException("존재하지 않는 작품은 삭제할 수 없습니다.");
-        }
+        productRepository.deleteById(productId);
+//        Optional<Product> findProduct = productRepository.findById(productId);
+//        if(findProduct.isPresent()){
+//            productRepository.delete(productId);
+//            return "작품 삭제 성공";
+//        }else{
+//            throw new NoSuchElementException("존재하지 않는 작품은 삭제할 수 없습니다.");
+//        }
+        return "작품 삭제 성공";
     }
 
     public Product modify(Long productId,Product product, Long categoryId) {
         Product result = productRepository.findById(productId).orElseThrow(() -> new NoSuchElementException("존재하지 않는 작품은 수정할 수 없습니다."));
-        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new NoSuchElementException("작품 카테고리의 아이디가 잘못되었습니다."));
-        productRepository.update(productId,product,categoryId);
+        if(categoryId != result.getCategory().getId() && categoryId != null){
+            result.setCategory(categoryRepository.findById(categoryId)
+            .orElseThrow(() -> new NoSuchElementException("잘못된 카테고리 아이디입니다.")));
+        }
+        result.setName(product.getName());
+        result.setPrice(product.getPrice());
+        result.setOptionNum(product.getOptionNum());
         return result;
     }
 
@@ -97,14 +105,16 @@ public class ProductService {
         return product.getCommentList();
     }
 
-    public String removeComment(Long commentId,Long productId){
-        Product product = productRepository.findById(productId).get();
-        if(product.getCommentList().removeIf(comment -> comment.getId().equals(commentId))){
-            productRepository.save(product);
-            commentRepository.delete(commentId);
-            return "comment delete success";
-        }else{
-            throw new NoSuchElementException("comment delete fail");
-        }
+    public String removeComment(Long commentId/*,Long productId*/){
+        commentRepository.deleteById(commentId);
+//        Product product = productRepository.findById(productId).get();
+//        if(product.getCommentList().removeIf(comment -> comment.getId().equals(commentId))){
+//            productRepository.save(product);
+//            commentRepository.deleteById(commentId);
+//            return "comment delete success";
+//        }else{
+//            throw new NoSuchElementException("comment delete fail");
+//        }
+        return "comment delete success";
     }
 }

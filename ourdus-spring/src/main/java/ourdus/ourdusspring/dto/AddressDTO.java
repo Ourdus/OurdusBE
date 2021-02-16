@@ -18,18 +18,6 @@ public class AddressDTO {
     private String addressMain;
     private String addressSub;
 
-    public AddressDTO() {
-    }
-
-    public AddressDTO(Long id, String name, String phone, String zipcode, String addressMain, String addressSub) {
-        this.id = id;
-        this.name = name;
-        this.phone = phone;
-        this.zipcode = zipcode;
-        this.addressMain = addressMain;
-        this.addressSub = addressSub;
-    }
-
     public AddressDTO(Address address) {
         this.id = address.getId();
         this.name = address.getName();

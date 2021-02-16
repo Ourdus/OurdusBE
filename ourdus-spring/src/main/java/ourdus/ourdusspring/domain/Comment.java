@@ -3,6 +3,8 @@ package ourdus.ourdusspring.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.persistence.*;
 
@@ -19,11 +21,11 @@ public class Comment {
     @Column(name="COMMENT_CONTENT")
     private String content;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name="USER_ID")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name="PRODUCT_ID")
     private Product product;
 
@@ -55,12 +57,7 @@ public class Comment {
 
     @Override
     public String toString() {
-        return "Comment{" +
-                "id=" + id +
-                ", content='" + content + '\'' +
-                ", user=" + user +
-                ", product=" + product +
-                '}';
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
 
 

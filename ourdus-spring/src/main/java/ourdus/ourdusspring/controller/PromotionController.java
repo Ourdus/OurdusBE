@@ -21,7 +21,7 @@ import static ourdus.ourdusspring.common.ApiResult.OK;
 
 
 @RestController
-@RequestMapping("w")
+@RequestMapping("api/w")
 public class PromotionController {
 
     private PromotionService promotionService;

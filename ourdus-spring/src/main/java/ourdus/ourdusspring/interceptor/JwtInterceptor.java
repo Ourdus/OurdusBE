@@ -22,19 +22,16 @@ public class JwtInterceptor implements HandlerInterceptor {
         System.out.println(request.getMethod()+":"+request.getServletPath());
 
         //option 요청은 바로 통과
-        if(request.getMethod().equals("OPTIONS")){
+        if(request.getMethod().equals("OPTIONS"))
             return true;
-        }else{
-            //request의 parameter에서 auth_token으로 넘어온 녀석을 찾아본다
-            String token = request.getHeader("jwt-auth-token");
-            if(token!=null & token.length()>0){
-                //유효한 토큰이면 진행, 그렇지 않으면 예외 발생시킴
-                jwtService.checkValid(token);
-                log.trace("토큰 사용 가능: {}",token);
-                return true;
-            }else{
-                throw new RuntimeException("인증 토큰이 없습니다.");
-            }
-        }
+
+        //request의 parameter에서 auth_token으로 넘어온 녀석을 찾아본다
+        String token = request.getHeader("jwt-auth-token");
+        if(token == null || token.length() <=0) throw new RuntimeException("인증 토큰이 없습니다.");
+
+            jwtService.checkValid(token);
+            log.trace("토큰 사용 가능: {}",token);
+            return true;
+
     }
 }

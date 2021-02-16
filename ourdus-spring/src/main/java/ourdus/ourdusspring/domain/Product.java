@@ -50,9 +50,9 @@ public class Product {
 //    private List<ProductOption> options;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST)
-    private List<Review> reviews;
+    private List<Review> reviews = new ArrayList<Review>();
   
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Comment> commentList = new ArrayList<Comment>();
 
     public Long getId() {

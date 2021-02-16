@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import ourdus.ourdusspring.common.ApiResult;
 import ourdus.ourdusspring.domain.Comment;
 import ourdus.ourdusspring.domain.Product;
-import ourdus.ourdusspring.dto.AddressDTO;
 import ourdus.ourdusspring.dto.CommentDTO;
 import ourdus.ourdusspring.dto.ProductDTO;
 import ourdus.ourdusspring.dto.ProductRequest;
@@ -23,7 +22,7 @@ import java.util.Optional;
 import static ourdus.ourdusspring.common.ApiResult.OK;
 
 @RestController
-@RequestMapping("/api/w")
+@RequestMapping("api/w")
 public class ProductController {
 
 
@@ -120,6 +119,6 @@ public class ProductController {
     @DeleteMapping("/product/{product_id}/comment/{comment_id}")
     public ApiResult<String> deleteAddress(@PathVariable("product_id")Long productId,
                                            @PathVariable("comment_id")Long commentId){
-        return OK(productService.removeComment(commentId,productId));
+        return OK(productService.removeComment(commentId/*,productId*/));
     }
 }
