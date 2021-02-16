@@ -22,8 +22,8 @@ import java.util.Map;
 import static ourdus.ourdusspring.common.ApiResult.OK;
 
 @RestController
-@RequestMapping("/api")
 @Slf4j
+@RequestMapping("/api")
 public class UserController {
 
     @Autowired
@@ -52,7 +52,7 @@ public class UserController {
             res.setHeader("jwt-auth-token",token);
 
             resultMap.put("status",true);
-            resultMap.put("data",loginUser);
+            resultMap.put("data",new UserDTO(loginUser));
             status = HttpStatus.ACCEPTED;
         }catch(RuntimeException e){
             log.error("로그인 실패",e);
@@ -63,9 +63,10 @@ public class UserController {
     }
 
     @GetMapping("/user/info")
-    public ApiResult<User> getInfo(HttpServletRequest req){
+    public ApiResult<UserDTO> getInfo(HttpServletRequest req){
         Long id = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId")));
-        return OK(userService.getUserInfo(id));
+        User user =userService.getUserInfo(id);
+        return OK(new UserDTO(user));
     }
 
     @PostMapping("/user/join")
@@ -96,21 +97,10 @@ public class UserController {
         return OK(userService.findPW(userdto.getEmail(),userdto.getTel()));
     }
 
-
-//    @GetMapping("/user/{id}")
-//    public ApiResult<String> info(@PathVariable("id") Long id,Model model) {
-//        Optional<User> user = userService.info(id);
-//        if(user.isPresent()){
-//            model.addAttribute("userInfo" ,user);
-//            return OK("회원 정보 조회 성공");
-//        }else{
-//            return OK("회원 정보 조회 실패");
-//        }
-//      }
-
     @PostMapping("/user/address")
-    public ApiResult<AddressDTO> addAddress(HttpServletRequest req, @RequestBody AddressDTO addressDTO){
-        Long userId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId"))); //id 받아오기
+    public ApiResult<AddressDTO> addAddress(/*HttpServletRequest req,*/ @RequestBody AddressDTO addressDTO){
+//        Long userId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId"))); //id 받아오기
+        Long userId = 1L;
         Address address = Address.createBuilder()
                             .name(addressDTO.getName())
                             .phone(addressDTO.getPhone())
@@ -120,6 +110,7 @@ public class UserController {
                             .build();
         return OK(new AddressDTO(userService.AddAddress(userId, address)));
     }
+
 
     @DeleteMapping("/user/address/{address_id}")
     public ApiResult<String> deleteAddress(@PathVariable("address_id") Long address_Id){

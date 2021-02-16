@@ -5,13 +5,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ourdus.ourdusspring.domain.Category;
-import ourdus.ourdusspring.domain.Product;
-import ourdus.ourdusspring.domain.User;
+import ourdus.ourdusspring.domain.*;
 import ourdus.ourdusspring.repository.CategoryRepository;
+import ourdus.ourdusspring.repository.CommentRepository;
 import ourdus.ourdusspring.repository.ProductRepository;
 import ourdus.ourdusspring.repository.UserRepository;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -23,13 +23,15 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
+    private final CommentRepository commentRepository;
 
-    public ProductService(ProductRepository productRepository, UserRepository userRepository, CategoryRepository categoryRepository) {
+    public ProductService(ProductRepository productRepository, UserRepository userRepository,
+                          CategoryRepository categoryRepository, CommentRepository commentRepository) {
         this.productRepository = productRepository;
         this.userRepository = userRepository;
         this.categoryRepository = categoryRepository;
+        this.commentRepository = commentRepository;
     }
-
 
     public Page<Product> findAll(@PageableDefault(size=10, page=0) Pageable pageable){
         return productRepository.findAll(pageable);
@@ -78,4 +80,31 @@ public class ProductService {
         return result;
     }
 
+    public Comment addComment(Comment comment, Long productId, Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(()->new NoSuchElementException("해당하는 유저가 없습니다."));
+        Product product = productRepository.findById(productId)
+                .orElseThrow(()->new NoSuchElementException("해당하는 작품이 없습니다."));
+        comment.setProduct(product);
+        comment.setUser(user);
+        commentRepository.save(comment);
+        return comment;
+    }
+
+    public List<Comment> getCommentList(Long productId) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(()->new NoSuchElementException("해당하는 작품이 없습니다."));
+        return product.getCommentList();
+    }
+
+    public String removeComment(Long commentId,Long productId){
+        Product product = productRepository.findById(productId).get();
+        if(product.getCommentList().removeIf(comment -> comment.getId().equals(commentId))){
+            productRepository.save(product);
+            commentRepository.delete(commentId);
+            return "comment delete success";
+        }else{
+            throw new NoSuchElementException("comment delete fail");
+        }
+    }
 }

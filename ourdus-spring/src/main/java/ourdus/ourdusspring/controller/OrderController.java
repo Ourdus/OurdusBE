@@ -1,35 +1,49 @@
 package ourdus.ourdusspring.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ourdus.ourdusspring.common.ApiResult;
 import ourdus.ourdusspring.dto.OrderForm;
 import ourdus.ourdusspring.dto.PaymentResult;
 import ourdus.ourdusspring.service.JwtService;
+import ourdus.ourdusspring.service.OrderService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+import static ourdus.ourdusspring.common.ApiResult.OK;
+
 @RestController
-@RequestMapping("w")
+@RequestMapping("api/w")
 public class OrderController {
 
     @Autowired
     private JwtService jwtService;
 
-//    @PostMapping("product/order")
-//    public ApiResult<List<OrderForm>> orderNow(@RequestBody List<OrderForm> orderForms){
-//        return OK(orderForms);
-//    }
+    @Autowired
+    private OrderService orderService;
 
     @PostMapping("payment")
-    public ApiResult<PaymentResult> payment(HttpServletRequest req, List<OrderForm> orderForms){
+    public ApiResult<PaymentResult> payment(HttpServletRequest req){
         Long userid = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId"))); //id 받아오기
-
+        //TODO userService에서 이름, 전화번호, 유저 주소 목록 불러오기
         return null;
     }
 
+    @PostMapping("payment/order")
+    public ApiResult<Long> order(HttpServletRequest req, List<OrderForm> orderForms, int orderPrice, String orderAccount){
+        Long userId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId"))); //id 받아오기
+        return OK(orderService.order(userId, orderForms, orderPrice, orderAccount));
+    }
 
+
+    @GetMapping("me/order/payment")
+    public ApiResult<List<PaymentResult>> paymentList(HttpServletRequest req){
+        return null;
+    }
+
+    @GetMapping("me/order/payment/detail/{order_id}")
+    public ApiResult<?> paymentDetail(@PathVariable("order_id") Long orderId){
+        return null;
+    }
 }

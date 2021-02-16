@@ -3,12 +3,14 @@ package ourdus.ourdusspring.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import ourdus.ourdusspring.common.ApiResult;
+import ourdus.ourdusspring.domain.Comment;
 import ourdus.ourdusspring.domain.Product;
-import ourdus.ourdusspring.dto.ProductRequest;
+import ourdus.ourdusspring.dto.AddressDTO;
+import ourdus.ourdusspring.dto.CommentDTO;
 import ourdus.ourdusspring.dto.ProductDTO;
+import ourdus.ourdusspring.dto.ProductRequest;
 import ourdus.ourdusspring.service.JwtService;
 import ourdus.ourdusspring.service.ProductService;
 
@@ -21,7 +23,7 @@ import java.util.Optional;
 import static ourdus.ourdusspring.common.ApiResult.OK;
 
 @RestController
-@RequestMapping("w")
+@RequestMapping("/api/w")
 public class ProductController {
 
 
@@ -94,6 +96,31 @@ public class ProductController {
                 .optionNum(productRequest.getOptionNum())
                 .build();
         return OK(new ProductDTO(productService.modify(product_Id,product, productRequest.getCategoryId())));
+    }
+
+    @PostMapping("/product/{product_id}/comment")
+    public ApiResult<CommentDTO> addComment(HttpServletRequest req, @PathVariable("product_id") Long productId,
+                                            @RequestBody CommentDTO commentDTO){
+        Long userId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId")));
+        Comment comment = Comment.createBuilder()
+                .content(commentDTO.getContent())
+                .build();
+        return OK(new CommentDTO(productService.addComment(comment,productId,userId)));
+    }
+
+    @GetMapping("/product/{product_id}/comment")
+    public ApiResult<List<CommentDTO>> getComment(@PathVariable("product_id") Long productId){
+        List<CommentDTO> commentDTOList= new ArrayList<>();
+        productService.getCommentList(productId).stream().forEach(comment->{
+            commentDTOList.add(new CommentDTO(comment));
+        });
+        return OK(commentDTOList);
+    }
+
+    @DeleteMapping("/product/{product_id}/comment/{comment_id}")
+    public ApiResult<String> deleteAddress(@PathVariable("product_id")Long productId,
+                                           @PathVariable("comment_id")Long commentId){
+        return OK(productService.removeComment(commentId,productId));
     }
 
 

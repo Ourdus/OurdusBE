@@ -1,7 +1,15 @@
 package ourdus.ourdusspring.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import ourdus.ourdusspring.domain.Address;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class AddressDTO {
     private Long id;
     private String name;
@@ -9,6 +17,18 @@ public class AddressDTO {
     private String zipcode;
     private String addressMain;
     private String addressSub;
+
+    public AddressDTO() {
+    }
+
+    public AddressDTO(Long id, String name, String phone, String zipcode, String addressMain, String addressSub) {
+        this.id = id;
+        this.name = name;
+        this.phone = phone;
+        this.zipcode = zipcode;
+        this.addressMain = addressMain;
+        this.addressSub = addressSub;
+    }
 
     public AddressDTO(Address address) {
         this.id = address.getId();
@@ -19,51 +39,4 @@ public class AddressDTO {
         this.addressSub = address.getAddressSub();
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getZipcode() {
-        return zipcode;
-    }
-
-    public void setZipcode(String zipcode) {
-        this.zipcode = zipcode;
-    }
-
-    public String getAddressMain() {
-        return addressMain;
-    }
-
-    public void setAddressMain(String addressMain) {
-        this.addressMain = addressMain;
-    }
-
-    public String getAddressSub() {
-        return addressSub;
-    }
-
-    public void setAddressSub(String addressSub) {
-        this.addressSub = addressSub;
-    }
 }

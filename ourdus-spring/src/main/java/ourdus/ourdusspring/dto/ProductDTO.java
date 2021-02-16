@@ -1,6 +1,10 @@
 package ourdus.ourdusspring.dto;
 
+import ourdus.ourdusspring.domain.Comment;
 import ourdus.ourdusspring.domain.Product;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProductDTO {
 
@@ -16,6 +20,12 @@ public class ProductDTO {
     private Long authorId;
     private String authorName;
     private int optionNum;
+    private List<CommentDTO> commentList = new ArrayList<CommentDTO>();
+
+    //연관관계 메서드
+    public void addComment(Comment comment){
+        this.commentList.add(new CommentDTO(comment));
+    }
 
     public ProductDTO(Product product) {
         this.id = product.getId();
@@ -30,6 +40,27 @@ public class ProductDTO {
         this.authorId = product.getAuthor().getId();
         this.authorName = product.getAuthor().getName();
         this.optionNum = product.getOptionNum();
+        for(Comment comment : product.getCommentList()){
+            this.addComment(comment);
+        }
+    }
+
+    public ProductDTO(Long id, String name, int price, int rate, int review, int hit, int purchase, Long categoryId, String categoryName, Long authorId, String authorName, int optionNum) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.rate = rate;
+        this.review = review;
+        this.hit = hit;
+        this.purchase = purchase;
+        this.categoryId = categoryId;
+        this.categoryName = categoryName;
+        this.authorId = authorId;
+        this.authorName = authorName;
+        this.optionNum = optionNum;
+    }
+
+    public ProductDTO() {
     }
 
     public Long getId() {

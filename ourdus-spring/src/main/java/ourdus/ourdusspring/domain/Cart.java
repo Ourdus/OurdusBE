@@ -3,6 +3,8 @@ package ourdus.ourdusspring.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -59,15 +61,6 @@ public class Cart {
 
     @Override
     public String toString() {
-        return "Cart{" +
-                "id=" + id +
-                ", user=" + user +
-                ", product=" + product +
-                ", authorId=" + authorId +
-                ", optionInfo='" + optionInfo + '\'' +
-                ", productNum=" + productNum +
-                ", price=" + price +
-                ", cartDate=" + cartDate +
-                '}';
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
 }

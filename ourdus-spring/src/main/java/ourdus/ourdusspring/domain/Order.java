@@ -3,6 +3,8 @@ package ourdus.ourdusspring.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -41,6 +43,13 @@ public class Order {
         orderDetail.setOrder(this);
     }
 
+    @Builder(builderMethodName = "createBuilder", builderClassName = "createBuilder")
+    public Order(User user, int price, String account) {
+        this.user = user;
+        this.price = price;
+        this.account = account;
+    }
+
     @Builder(builderMethodName = "defaultBuilder", builderClassName = "defaultBuilder")
     public Order(Long id, User user, LocalDateTime orderDate, int price, String account, List<OrderDetail> orderDetails) {
         this.id = id;
@@ -53,13 +62,7 @@ public class Order {
 
     @Override
     public String toString() {
-        return "Order{" +
-                "id=" + id +
-                ", user=" + user +
-                ", orderDate=" + orderDate +
-                ", price=" + price +
-                ", account='" + account + '\'' +
-                ", orderDetails=" + orderDetails +
-                '}';
+        //JPA 연관관계 매핑시 toString()에서 StackOverFlow Error발생, 해결방법으로 ToStringBuilder 이용
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
 }

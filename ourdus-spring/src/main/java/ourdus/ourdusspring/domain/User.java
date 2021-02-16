@@ -48,13 +48,6 @@ public class User {
         address.setUser(this);
     }
 
-    //생성 메서드
-//    public static User createUser(Address address){
-//        User user = new User();
-//        user.addAddress(address);
-//
-//        return user;
-//    }
 
     public void setName(String name) {
         this.name = name;

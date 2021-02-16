@@ -80,5 +80,16 @@ public class Address {
         this.user = user;
     }
 
-
+    @Override
+    public String toString() {
+        return "Address{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", phone='" + phone + '\'' +
+                ", zipcode='" + zipcode + '\'' +
+                ", addressMain='" + addressMain + '\'' +
+                ", addressSub='" + addressSub + '\'' +
+                ", user=" + user +
+                '}';
+    }
 }

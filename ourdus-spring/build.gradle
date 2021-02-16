@@ -19,11 +19,14 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
+	testCompileOnly 'org.projectlombok:lombok'
+	testAnnotationProcessor 'org.projectlombok:lombok'
 	// https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api
 	compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.2.4'
+	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.0' //tostringbuilder 사용
 	testCompile 'org.springframework.boot:spring-boot-starter-test'
-	runtimeOnly 'com.h2database:h2'
-	runtimeOnly 'mysql:mysql-connector-java'
+	compile 'com.h2database:h2'
+	compile 'mysql:mysql-connector-java'
 	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
 	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
 	compile 'io.jsonwebtoken:jjwt:0.9.0'

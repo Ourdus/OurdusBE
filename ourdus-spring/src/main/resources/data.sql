@@ -53,6 +53,7 @@ INSERT INTO order_detail(order_detail_id, order_id, author_id, product_id, optio
 
 INSERT INTO address(address_id, address_name, address_phone, address_zipcode,address_main,address_sub, user_id) VALUES(null, '주소1', '010231221121', '123532', '주소1121', '세부주소111', 1);
 INSERT INTO address(address_id, address_name, address_phone, address_zipcode,address_main,address_sub, user_id) VALUES(null, '주소2', '01023122121', '22', '주소22', '세부주소221', 1);
+
 INSERT INTO address(address_id, address_name, address_phone, address_zipcode,address_main,address_sub, user_id) VALUES(null, '주소1', '010231221121', '123532', '주소1121', '세부주소111', 2);
 INSERT INTO address(address_id, address_name, address_phone, address_zipcode,address_main,address_sub, user_id) VALUES(null, '주소1', '010231221121', '123532', '주소1121', '세부주소111', 3);
 INSERT INTO address(address_id, address_name, address_phone, address_zipcode,address_main,address_sub, user_id) VALUES(null, '주소1', '010231221121', '123532', '주소1121', '세부주소111', 4);
@@ -66,3 +67,14 @@ INSERT INTO promotion_product(promotion_id,product_id) values (1,2);
 INSERT INTO promotion_product(promotion_id,product_id) values (2,1);
 INSERT INTO promotion_product(promotion_id,product_id) values (2,2);
 INSERT INTO promotion_product(promotion_id,product_id) values (2,3);
+
+INSERT INTO address(address_id, address_name, address_phone, address_zipcode,address_main,address_sub, user_id) VALUES(null, '주소3', '010231221121', '123532', '주소1121', '세부주소111', 2);
+INSERT INTO address(address_id, address_name, address_phone, address_zipcode,address_main,address_sub, user_id) VALUES(null, '주소4', '010231221121', '123532', '주소1121', '세부주소111', 3);
+INSERT INTO address(address_id, address_name, address_phone, address_zipcode,address_main,address_sub, user_id) VALUES(null, '주소5', '010231221121', '123532', '주소1121', '세부주소111', 4);
+
+INSERT INTO comment(comment_id, comment_content, product_id,user_id) VALUES(null,'첫번째 작품 댓글1',1,1);
+INSERT INTO comment(comment_id, comment_content, product_id,user_id) VALUES(null,'첫번째 작품 댓글2',1,2);
+INSERT INTO comment(comment_id, comment_content, product_id,user_id) VALUES(null,'첫번째 작품 댓글3',1,3);
+INSERT INTO comment(comment_id, comment_content, product_id,user_id) VALUES(null,'두번째 작품 댓글1',2,1);
+INSERT INTO comment(comment_id, comment_content, product_id,user_id) VALUES(null,'두번째 작품 댓글2',2,2);
+INSERT INTO comment(comment_id, comment_content, product_id,user_id) VALUES(null,'세번째 작품 댓글1',3,4);

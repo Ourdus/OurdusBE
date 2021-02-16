@@ -8,8 +8,6 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import ourdus.ourdusspring.interceptor.JwtInterceptor;
 
-import java.util.Arrays;
-
 @SpringBootApplication
 public class OurdusSpringApplication implements WebMvcConfigurer {
 
@@ -22,11 +20,11 @@ public class OurdusSpringApplication implements WebMvcConfigurer {
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry){
-		registry.addInterceptor(jwtInterceptor).addPathPatterns("/api/**") //기본 적용 경로
-				.excludePathPatterns(Arrays.asList("/api/user/**")); //적용 제외 경로
+//		registry.addInterceptor(jwtInterceptor).addPathPatterns("/api/**") //기본 적용 경로
+//				.excludePathPatterns(Arrays.asList("/api/user/**")); //적용 제외 경로
 	}
 
-	//interceptor 이용해서 처리하므로 전역의 corss origin 처리해준다
+//	interceptor 이용해서 처리하므로 전역의 corss origin 처리해준다
 	@Override
 	public void addCorsMappings(CorsRegistry registry){
 		registry.addMapping("/**")

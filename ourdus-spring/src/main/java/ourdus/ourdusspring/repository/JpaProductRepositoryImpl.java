@@ -1,7 +1,6 @@
 package ourdus.ourdusspring.repository;
 
 import ourdus.ourdusspring.domain.Product;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -20,6 +19,7 @@ public class JpaProductRepositoryImpl implements JpaProductRepository{
                 .setParameter(1, product_id)
                 .executeUpdate();
     }
+
 
     @Override
     public void update(Long product_id, Product product, Long categoryId) {

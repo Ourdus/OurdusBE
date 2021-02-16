@@ -3,6 +3,7 @@ package ourdus.ourdusspring.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ourdus.ourdusspring.domain.Address;
+import ourdus.ourdusspring.domain.Product;
 import ourdus.ourdusspring.domain.User;
 import ourdus.ourdusspring.repository.AddressRepository;
 import ourdus.ourdusspring.repository.UserRepository;
@@ -78,15 +79,12 @@ public class UserService {
         return user.getPassword();
     }
 
-//    public Optional<User> info(Long id){
-//        return userRepository.findById(id);
-//    }
     public Address AddAddress(Long userId,Address address) {
-        //엔티티조회
         User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchElementException("해당하는 유저가 없습니다."));
         address.setUser(user);
         addressRepository.save(address);
-        user.addAddress(address);
+        //user.addAddress(address);
+        //양방향 연관관계 저장시 연관관계의 주인은 '외래키가 있는 곳'인 address.user가 된다. 고로 주인에게만 설정해주어야한다.
         return address;
     }
 
@@ -123,10 +121,5 @@ public class UserService {
     }
 
 
-//    public void DeleteAddress(Long userId){
-//        Optional<User> user = userRepository.findById(userId);
-//        User findUser = user.get();
-//
-//    }
 
 }
