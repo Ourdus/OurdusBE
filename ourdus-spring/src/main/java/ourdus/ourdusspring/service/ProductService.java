@@ -118,7 +118,7 @@ public class ProductService {
         Product product = productRepository.findById(productId).get();
         if(product.getCommentList().removeIf(comment -> comment.getId().equals(commentId))){
             productRepository.save(product);
-            commentRepository.deleteById(commentId);
+            commentRepository.delete(commentId);
             return "comment delete success";
         }else{
             throw new NoSuchElementException("comment delete fail");
