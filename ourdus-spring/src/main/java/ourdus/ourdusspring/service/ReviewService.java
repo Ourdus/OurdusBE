@@ -16,7 +16,7 @@ import ourdus.ourdusspring.repository.ReviewRepository;
 import java.util.NoSuchElementException;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 @RequiredArgsConstructor
 public class ReviewService {
 
