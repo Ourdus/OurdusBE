@@ -122,6 +122,4 @@ public class ProductController {
                                            @PathVariable("comment_id")Long commentId){
         return OK(productService.removeComment(commentId,productId));
     }
-
-
 }

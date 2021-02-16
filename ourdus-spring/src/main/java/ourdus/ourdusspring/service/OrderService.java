@@ -1,8 +1,12 @@
 package ourdus.ourdusspring.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ourdus.ourdusspring.domain.*;
+import ourdus.ourdusspring.domain.Order;
+import ourdus.ourdusspring.domain.OrderDetail;
+import ourdus.ourdusspring.domain.Product;
+import ourdus.ourdusspring.domain.User;
 import ourdus.ourdusspring.dto.OrderForm;
 import ourdus.ourdusspring.repository.OrderDetailRepository;
 import ourdus.ourdusspring.repository.OrderRepository;
@@ -14,19 +18,13 @@ import java.util.NoSuchElementException;
 
 @Service
 @Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class OrderService {
 
     private final OrderRepository orderRepository;
     private final OrderDetailRepository orderDetailRepository;
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
-
-    public OrderService(OrderRepository orderRepository, OrderDetailRepository orderDetailRepository, UserRepository userRepository, ProductRepository productRepository) {
-        this.orderRepository = orderRepository;
-        this.orderDetailRepository = orderDetailRepository;
-        this.userRepository = userRepository;
-        this.productRepository = productRepository;
-    }
 
 //    public PaymentResult payment(Long userId, List<OrderDetail> orderDetails) {
 //
@@ -40,6 +38,10 @@ public class OrderService {
     public List<OrderDetail> findDetailAllByOrderId(Long orderId){
         Order order = orderRepository.findAllById(orderId);
         return order.getOrderDetails();
+    }
+
+    public OrderDetail findDetaillOne(Long orderdetailId){
+        return orderDetailRepository.findById(orderdetailId).orElseThrow(() -> new NoSuchElementException("찾을수 없는 주문상세번호입니다."));
     }
 
     public Long order(Long userId, List<OrderForm> orderForms, int price, String orderAccount) { //TODO parameter의 orderform 수정하기

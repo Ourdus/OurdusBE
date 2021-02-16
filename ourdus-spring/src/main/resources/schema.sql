@@ -113,7 +113,6 @@ CREATE TABLE address
     CONSTRAINT fk_user_id   FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 
-
 create table promotion
 (
     promotion_id bigint NOT NULL AUTO_INCREMENT,
@@ -134,8 +133,6 @@ create table promotion_product
     FOREIGN KEY (product_id) REFERENCES product (product_id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 
-
-
 CREATE TABLE comment
 (
     comment_id     bigint       NOT NULL AUTO_INCREMENT,
@@ -147,3 +144,17 @@ CREATE TABLE comment
     FOREIGN KEY (product_id) REFERENCES product (product_id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 
+CREATE TABLE review
+(
+    review_id bigint NOT NULL AUTO_INCREMENT,
+    user_id bigint NOT NULL,
+    order_detail_id bigint NOT NULL,
+    product_id bigint NOT NULL,
+    review_content varchar(500) NOT NULL,
+    review_date datetime NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+    review_rate int NOT NULL DEFAULT 50,
+    PRIMARY KEY (review_id),
+    FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
+    FOREIGN KEY (order_detail_id) REFERENCES order_detail (order_detail_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
+    FOREIGN KEY (product_id) REFERENCES product (product_id) ON DELETE RESTRICT ON UPDATE RESTRICT
+);
