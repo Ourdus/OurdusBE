@@ -1,6 +1,7 @@
 package ourdus.ourdusspring.domain;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="PRODUCT_CATEGORY")
@@ -13,8 +14,8 @@ public class Category {
     @Column(name="CATEGORY_NAME")
     private String name;
 
-//    @OneToMany(mappedBy = "category")
-//    private List<Product> products;
+   /* @OneToMany(mappedBy = "category")
+    private List<Product> products;*/
 
     public Long getId() {
         return id;

@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -34,19 +35,25 @@ public class Product {
     @Column(name="PRODUCT_OPTION_NUM")
     private int optionNum;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name="CATEGORY_ID")
     private Category category;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name="AUTHOR_ID")
     private User author;
-//
+
+    @OneToMany(mappedBy = "product") //promotion_product와 one to many 관계
+    private List<PromotionProduct> promotionList = new ArrayList<PromotionProduct>();
+
 //    @OneToMany(mappedBy = "product")
 //    private List<ProductOption> options;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST)
     private List<Review> reviews;
+  
+    @OneToMany(mappedBy = "product")
+    private List<Comment> commentList = new ArrayList<Comment>();
 
     public Long getId() {
         return id;
@@ -96,6 +103,10 @@ public class Product {
 //        return options;
 //    }
 
+    public List<Comment> getCommentList() {
+        return commentList;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -125,6 +136,13 @@ public class Product {
         insertReview(review);
         review.setProduct(this);
     }
+
+    //연관관계 메서드
+    public void addComment(Comment comment){
+        commentList.add(comment);
+        comment.setProduct(this);
+    }
+  
     @Builder
     public Product(String name, int price, int optionNum, Category category, User author) {
         this.name = name;

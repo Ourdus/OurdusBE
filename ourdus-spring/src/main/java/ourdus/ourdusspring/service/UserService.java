@@ -3,6 +3,7 @@ package ourdus.ourdusspring.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ourdus.ourdusspring.domain.Address;
+import ourdus.ourdusspring.domain.Product;
 import ourdus.ourdusspring.domain.User;
 import ourdus.ourdusspring.repository.AddressRepository;
 import ourdus.ourdusspring.repository.UserRepository;
@@ -118,5 +119,7 @@ public class UserService {
         }
 
     }
+
+
 
 }

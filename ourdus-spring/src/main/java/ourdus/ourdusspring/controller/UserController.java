@@ -23,7 +23,7 @@ import static ourdus.ourdusspring.common.ApiResult.OK;
 
 @RestController
 @Slf4j
-@RequestMapping("api")
+@RequestMapping("/api")
 public class UserController {
 
     @Autowired
@@ -97,18 +97,6 @@ public class UserController {
         return OK(userService.findPW(userdto.getEmail(),userdto.getTel()));
     }
 
-
-//    @GetMapping("/user/{id}")
-//    public ApiResult<String> info(@PathVariable("id") Long id,Model model) {
-//        Optional<User> user = userService.info(id);
-//        if(user.isPresent()){
-//            model.addAttribute("userInfo" ,user);
-//            return OK("회원 정보 조회 성공");
-//        }else{
-//            return OK("회원 정보 조회 실패");
-//        }
-//      }
-
     @PostMapping("/user/address")
     public ApiResult<AddressDTO> addAddress(/*HttpServletRequest req,*/ @RequestBody AddressDTO addressDTO){
 //        Long userId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId"))); //id 받아오기
@@ -122,6 +110,7 @@ public class UserController {
                             .build();
         return OK(new AddressDTO(userService.AddAddress(userId, address)));
     }
+
 
     @DeleteMapping("/user/address/{address_id}")
     public ApiResult<String> deleteAddress(@PathVariable("address_id") Long address_Id){

@@ -5,7 +5,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 import ourdus.ourdusspring.common.ApiResult;
+import ourdus.ourdusspring.domain.Comment;
 import ourdus.ourdusspring.domain.Product;
+import ourdus.ourdusspring.dto.AddressDTO;
+import ourdus.ourdusspring.dto.CommentDTO;
 import ourdus.ourdusspring.dto.ProductDTO;
 import ourdus.ourdusspring.dto.ProductRequest;
 import ourdus.ourdusspring.service.JwtService;
@@ -34,8 +37,8 @@ public class ProductController {
     }
 
     @GetMapping("product")
-    public ApiResult<List<ProductDTO>> viewAllProductList( @RequestParam("page")int page, @RequestParam("size")int size){
-        Page <Product> productList = productService.findAll(PageRequest.of(page,size));
+    public ApiResult<List<ProductDTO>> viewAllProductList(@RequestParam("page")int page, @RequestParam("size")int size){
+       Page <Product> productList = productService.findAll(PageRequest.of(page,size));
         List<ProductDTO> productDTOList=new ArrayList<ProductDTO>();
         if(productList!=null){
             productList.stream().forEach(product -> {
@@ -79,19 +82,44 @@ public class ProductController {
     }
 
 
-    @DeleteMapping ("product/{product_id}/delete")
+    @PostMapping("product/{product_id}/delete")
     public ApiResult<String> delete(@PathVariable("product_id") Long product_Id){
         return OK(productService.delete(product_Id));
     }
 
     @PostMapping("/product/{product_id}/edit")
-    public ApiResult<ProductDTO> modify(@RequestBody ProductRequest productRequest){
+    public ApiResult<ProductDTO> modify(@PathVariable("product_id") Long product_Id,@RequestBody ProductRequest productRequest){
         Product product = Product
                 .builder()
                 .name(productRequest.getName())
                 .price(productRequest.getPrice())
                 .optionNum(productRequest.getOptionNum())
                 .build();
-        return OK(new ProductDTO(productService.update(product, productRequest.getCategoryId())));
+        return OK(new ProductDTO(productService.modify(product_Id,product, productRequest.getCategoryId())));
+    }
+
+    @PostMapping("/product/{product_id}/comment")
+    public ApiResult<CommentDTO> addComment(HttpServletRequest req, @PathVariable("product_id") Long productId,
+                                            @RequestBody CommentDTO commentDTO){
+        Long userId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId")));
+        Comment comment = Comment.createBuilder()
+                .content(commentDTO.getContent())
+                .build();
+        return OK(new CommentDTO(productService.addComment(comment,productId,userId)));
+    }
+
+    @GetMapping("/product/{product_id}/comment")
+    public ApiResult<List<CommentDTO>> getComment(@PathVariable("product_id") Long productId){
+        List<CommentDTO> commentDTOList= new ArrayList<>();
+        productService.getCommentList(productId).stream().forEach(comment->{
+            commentDTOList.add(new CommentDTO(comment));
+        });
+        return OK(commentDTOList);
+    }
+
+    @DeleteMapping("/product/{product_id}/comment/{comment_id}")
+    public ApiResult<String> deleteAddress(@PathVariable("product_id")Long productId,
+                                           @PathVariable("comment_id")Long commentId){
+        return OK(productService.removeComment(commentId,productId));
     }
 }
