@@ -40,6 +40,7 @@ INSERT INTO cart_detail(cart_id, user_id, author_id, product_id, option_info, pr
 INSERT INTO cart_detail(cart_id, user_id, author_id, product_id, option_info, product_num, product_detail_price) VALUES (null, 3, 3, 3, '옵션1과옵션2를선택', 1, 400);
 INSERT INTO cart_detail(cart_id, user_id, author_id, product_id, option_info, product_num, product_detail_price) VALUES (null, 4, 3, 3, '옵션1과옵션2를선택', 5, 500);
 
+INSERT INTO orders(order_id, user_id,  order_price, order_account) VALUES (null, 1, 5000, '무통장입금');
 INSERT INTO orders(order_id, user_id,  order_price, order_account) VALUES (null, 2, 1000, '무통장입금');
 INSERT INTO orders(order_id, user_id, order_price, order_account) VALUES (null, 3, 4000, '신한카드');
 INSERT INTO orders(order_id, user_id, order_price, order_account) VALUES (null, 4, 5000, '계좌이체');
@@ -56,3 +57,6 @@ INSERT INTO address(address_id, address_name, address_phone, address_zipcode,add
 INSERT INTO address(address_id, address_name, address_phone, address_zipcode,address_main,address_sub, user_id) VALUES(null, '주소3', '010231221121', '123532', '주소1121', '세부주소111', 2);
 INSERT INTO address(address_id, address_name, address_phone, address_zipcode,address_main,address_sub, user_id) VALUES(null, '주소4', '010231221121', '123532', '주소1121', '세부주소111', 3);
 INSERT INTO address(address_id, address_name, address_phone, address_zipcode,address_main,address_sub, user_id) VALUES(null, '주소5', '010231221121', '123532', '주소1121', '세부주소111', 4);
+
+INSERT INTO review(user_id, order_detail_id, product_id, review_content, review_rate) VALUES(1, 2, 2, '쓸만해요', 50);
+INSERT INTO review(user_id, order_detail_id, product_id, review_content, review_rate) VALUES(2, 4, 3, '좋아용', 40);

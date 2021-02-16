@@ -37,6 +37,7 @@ public class Order {
     @OneToMany(mappedBy = "order")
     private List<OrderDetail> orderDetails = new ArrayList<>();
 
+
     //연관관계 메소드
     public void addOrderDetail(OrderDetail orderDetail){
         orderDetails.add(orderDetail);

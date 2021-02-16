@@ -22,7 +22,7 @@ public class ProductDTO {
         this.name = product.getName();
         this.price = product.getPrice();
         this.rate = product.getRate();
-        this.review = product.getReview();
+        this.review = product.getReviewNum();
         this.hit = product.getHit();
         this.purchase = product.getPurchase();
         this.categoryId = product.getCategory().getId();

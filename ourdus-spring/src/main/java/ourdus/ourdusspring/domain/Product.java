@@ -2,6 +2,7 @@ package ourdus.ourdusspring.domain;
 
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.util.List;
@@ -19,12 +20,16 @@ public class Product {
     @Column(name="PRODUCT_PRICE")
     private int price;
     @Column(name="PRODUCT_RATE")
+    @ColumnDefault("0")
     private int rate;
     @Column(name="PRODUCT_REVIEW_NUM")
-    private int review;
+    @ColumnDefault("0")
+    private int reviewNum;
     @Column(name="PRODUCT_HIT")
+    @ColumnDefault("0")
     private int hit;
     @Column(name="PRODUCT_PURCHASE")
+    @ColumnDefault("0")
     private int purchase;
     @Column(name="PRODUCT_OPTION_NUM")
     private int optionNum;
@@ -40,6 +45,8 @@ public class Product {
 //    @OneToMany(mappedBy = "product")
 //    private List<ProductOption> options;
 
+    @OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST)
+    private List<Review> reviews;
 
     public Long getId() {
         return id;
@@ -57,8 +64,8 @@ public class Product {
         return rate;
     }
 
-    public int getReview() {
-        return review;
+    public int getReviewNum() {
+        return reviewNum;
     }
 
     public int getHit() {
@@ -81,7 +88,11 @@ public class Product {
         return author;
     }
 
-//    public List<ProductOption> getOptions() {
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    //    public List<ProductOption> getOptions() {
 //        return options;
 //    }
 
@@ -99,6 +110,21 @@ public class Product {
 
     public void setCategory(Category category) { this.category = category; }
 
+    /* rate는 작품의 평균 별점을 의미하며, (쉽게 다루기위해 저장은 *10인 int값으로 해준다.)
+    *  각 리뷰(별점을 부여)가 등록될때마다 작품의 평균 별점도 바뀌어 저장되어야한다.
+    *  별점은 총 1-5점 사이로, int값으로 저장되므로 10-50점으로 저장된다.
+    *  평균 별점인 product의 rate = (rate+추가된 별점)/리뷰수 로 결정된다. */
+    public void insertReview(Review review){
+        reviewNum++;
+        rate = (rate + review.getRate()) / reviews.size();
+    }
+
+    //연관관계메소드
+    public void addReview(Review review){
+        reviews.add(review);
+        insertReview(review);
+        review.setProduct(this);
+    }
     @Builder
     public Product(String name, int price, int optionNum, Category category, User author) {
         this.name = name;
