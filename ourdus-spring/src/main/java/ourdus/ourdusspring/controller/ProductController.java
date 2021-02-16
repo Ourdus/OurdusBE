@@ -8,6 +8,7 @@ import ourdus.ourdusspring.common.ApiResult;
 import ourdus.ourdusspring.domain.Product;
 import ourdus.ourdusspring.dto.ProductDTO;
 import ourdus.ourdusspring.dto.ProductRequest;
+import ourdus.ourdusspring.dto.ReviewDTO;
 import ourdus.ourdusspring.service.JwtService;
 import ourdus.ourdusspring.service.ProductService;
 
@@ -95,5 +96,10 @@ public class ProductController {
         return OK(new ProductDTO(productService.update(product, productRequest.getCategoryId())));
     }
 
+
+    @GetMapping("product/{product_id}/review")
+    public ApiResult<ReviewDTO> viewReviewList(){
+        return null;
+    }
 
 }

@@ -28,6 +28,10 @@ public class ReviewService {
         return reviewRepository.findAll(pageable);
     }
 
+    public Page<Review> findAllByProductId(@PageableDefault(size = 10, page = 0)Pageable pageable, Long productId){
+        return reviewRepository.findAllByProductId(pageable, productId);
+    }
+
     public Review findOne(Long reviewId){
         Review review = reviewRepository.findById(reviewId).orElseThrow(() -> new NoSuchElementException("찾을 수 없는 리뷰입니다."));
         return review;

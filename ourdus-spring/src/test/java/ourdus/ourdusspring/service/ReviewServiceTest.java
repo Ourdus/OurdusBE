@@ -25,7 +25,7 @@ class ReviewServiceTest {
     @Autowired
     private ReviewService reviewService;
     private Long orderDetailId = 1L;
-    private Long productId = 1L;
+    private Long productId = 2L;
     private String content ="저장할 리뷰내용";
     private int rate = 30;
     private Review saveReview;
@@ -41,6 +41,16 @@ class ReviewServiceTest {
             System.out.println(review);
         }
     }
+
+    @Test
+    void 작품별조회테스트(){
+        Page<Review> reviews = reviewService.findAllByProductId(PageRequest.of(0, 10), productId);
+        for(Review review : reviews){
+            assertThat(review.getProduct().getId(), is(equalTo(productId)));
+            System.out.println(review);
+        }
+    }
+
     @Test
     void 작성_및_한가지조회테스트(){
         Review review = reviewService.write(content, rate, orderDetailId);
