@@ -5,7 +5,11 @@ import org.springframework.web.bind.annotation.*;
 import ourdus.ourdusspring.common.ApiResult;
 import ourdus.ourdusspring.domain.Promotion;
 
+import ourdus.ourdusspring.domain.PromotionProduct;
 import ourdus.ourdusspring.dto.PromotionDTO;
+import ourdus.ourdusspring.dto.PromotionProductDTO;
+import ourdus.ourdusspring.dto.PromotionProductRequest;
+import ourdus.ourdusspring.service.PromotionProductService;
 import ourdus.ourdusspring.service.PromotionService;
 
 import java.util.ArrayList;
@@ -21,8 +25,13 @@ import static ourdus.ourdusspring.common.ApiResult.OK;
 public class PromotionController {
 
     private PromotionService promotionService;
+    private PromotionProductService promotionProductService;
 
-    public PromotionController(PromotionService promotionService){this.promotionService=promotionService;}
+    public PromotionController(PromotionService promotionService,PromotionProductService promotionProductService)
+    {
+        this.promotionService=promotionService;
+        this.promotionProductService=promotionProductService;
+    }
 
     @GetMapping("promotion")
     public ApiResult<List<PromotionDTO>> viewPromotionList(){
@@ -66,6 +75,16 @@ public class PromotionController {
     @DeleteMapping("promotion/{promotion_id}")
     public ApiResult<String> deletePromotion(@PathVariable("promotion_id") Long promotionId){
         return OK(promotionService.deletePromotion(promotionId));
+    }
+
+    @PostMapping("promotion/product/new")
+    public ApiResult<PromotionProductDTO> save(@RequestBody PromotionProductRequest promotionProductRequest)
+    {
+        PromotionProduct pp= PromotionProduct.builder()
+                .build();
+        Long promotionId=promotionProductRequest.getPromotionId();
+        Long productId=promotionProductRequest.getProductId();
+        return OK(new PromotionProductDTO(promotionProductService.save(pp,promotionId,productId)));
     }
 
 }

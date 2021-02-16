@@ -1,7 +1,9 @@
 package ourdus.ourdusspring.domain;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import ourdus.ourdusspring.dto.PromotionProductDTO;
 
 import javax.persistence.*;
 
@@ -15,7 +17,7 @@ public class PromotionProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="PROMOTION_PRODUCT_ID" )
-    private Long Id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name="PROMOTION_ID",insertable = false,updatable = false)
@@ -25,12 +27,10 @@ public class PromotionProduct {
     @JoinColumn(name="PRODUCT_ID",insertable = false,updatable = false)
     private Product product;
 
-    public Long getId() {
-        return Id;
-    }
+
 
     public void setId(Long id) {
-        Id = id;
+        id = id;
     }
 
     public Promotion getPromotion() {
@@ -47,5 +47,19 @@ public class PromotionProduct {
 
    public void setProduct(Product product) {
         this.product = product;
+    }
+
+
+    public PromotionProduct (PromotionProductDTO promotionProductdto)
+    {
+        this.id=promotionProductdto.getId();
+        this.promotion=promotionProductdto.getPromotion();
+        this.product=promotionProductdto.getProduct();
+    }
+
+    @Builder
+    public PromotionProduct( Promotion promotion, Product product ) {
+        this.promotion=promotion;
+        this.product=product;
     }
 }
