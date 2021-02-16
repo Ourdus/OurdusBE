@@ -20,11 +20,11 @@ public class PromotionProduct {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name="PROMOTION_ID",insertable = false,updatable = false)
+    @JoinColumn(name="PROMOTION_ID")
     private Promotion promotion;
 
     @ManyToOne
-    @JoinColumn(name="PRODUCT_ID",insertable = false,updatable = false)
+    @JoinColumn(name="PRODUCT_ID")
     private Product product;
 
 

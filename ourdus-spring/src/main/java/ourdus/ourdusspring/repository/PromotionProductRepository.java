@@ -6,5 +6,5 @@ import ourdus.ourdusspring.domain.PromotionProduct;
 public interface PromotionProductRepository extends JpaRepository<PromotionProduct,Long> {
 
     PromotionProduct save(PromotionProduct promotionProduct);
-
+    void deleteById(Long promotionId);
 }

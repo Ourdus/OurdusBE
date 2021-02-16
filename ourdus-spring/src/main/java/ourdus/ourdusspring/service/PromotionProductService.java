@@ -10,6 +10,7 @@ import ourdus.ourdusspring.repository.PromotionProductRepository;
 import ourdus.ourdusspring.repository.PromotionRepository;
 
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -40,6 +41,17 @@ public class PromotionProductService {
                 .build();
         promotionProductRepository.save(pp);
         return promotionProduct;
+    }
+
+    public String delete(Long promotionId) {
+
+        Optional<PromotionProduct> findPP =promotionProductRepository.findById(promotionId);
+        if(findPP.isPresent()){
+            promotionProductRepository.deleteById(promotionId);
+            return "프로모션 작품 삭제 성공";
+        }else{
+            throw new NoSuchElementException("존재하지 않는 작품은 삭제할 수 없습니다.");
+        }
     }
 
 }

@@ -87,4 +87,9 @@ public class PromotionController {
         return OK(new PromotionProductDTO(promotionProductService.save(pp,promotionId,productId)));
     }
 
+    @PostMapping("promotion/{product_id}/delete")
+    public ApiResult<String> delete(@PathVariable("product_id") Long promotion_id){
+        return OK(promotionProductService.delete(promotion_id));
+    }
+
 }
