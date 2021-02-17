@@ -43,8 +43,8 @@ public class Product {
     @JoinColumn(name="AUTHOR_ID")
     private User author;
 
-    @OneToMany(mappedBy = "product") //promotion_product와 one to many 관계
-    private List<PromotionProduct> promotionList = new ArrayList<PromotionProduct>();
+//    @OneToMany(mappedBy = "product",orphanRemoval=true) //promotion_product와 one to many 관계
+//    private List<PromotionProduct> promotionList = new ArrayList<PromotionProduct>();
 
 //    @OneToMany(mappedBy = "product")
 //    private List<ProductOption> options;
