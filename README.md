@@ -1,4 +1,4 @@
-## OurdusBE_통합#5
+# OurdusBE_통합#5
 
 - 통합 with front (API document를 중점으로)
 - Deploy  
@@ -8,7 +8,7 @@
   : RDS(MySQL)
   
 
-📙 프로모션(Promotiom) &프로모션 작품 (PromotionProduct) Entity 생성 및 조회 구현 
+## 📙 프로모션(Promotiom) &프로모션 작품 (PromotionProduct) Entity 생성 및 조회 구현 
 ### Table
 ---
 Promotion table, PromotionProduct table 
@@ -27,7 +27,7 @@ Ourdus 통합 페이지 [링크](https://github.com/Ourdus/Ourdus/wiki)
 
 --- 
 
-📙 리뷰 (Review) Entity 생성 및 조회 구현  
+## 📙 리뷰 (Review) Entity 생성 및 조회 구현  
 ### Table
 ---
 Review table 
@@ -47,7 +47,7 @@ Ourdus 통합 페이지 [링크](https://github.com/Ourdus/Ourdus/wiki)
 --- 
 
 
-📙 댓글 (Comment) Entity 생성 및 조회 구현  
+## 📙 댓글 (Comment) Entity 생성 및 조회 구현  
 ### Table
 ---
 Comment table 
