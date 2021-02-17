@@ -35,7 +35,6 @@ public class Promotion {
     private LocalDateTime start_date;
 
     @Column(name = "PROMOTION_END_DATE")
-    @CreationTimestamp
     private LocalDateTime end_date;
 
     @Column(name = "PROMOTION_IMG")
@@ -62,14 +61,14 @@ public class Promotion {
         this.image = image;
     }
 
-//    @OneToMany(mappedBy = "promotion") //promotion_product와 one to many 관계
-//    private List<PromotionProduct> promotionList = new ArrayList<PromotionProduct>();
-//
-//    //연관관계 메소드
-//    public void addPromotionProduct(PromotionProduct promotionProduct){
-//        promotionList.add(promotionProduct);
-//        promotionProduct.setPromotion(this);
-//    }
+    @OneToMany(orphanRemoval=true, mappedBy = "promotion") //promotion_product와 one to many 관계
+    private List<PromotionProduct> promotionList = new ArrayList<PromotionProduct>();
+
+    //연관관계 메소드
+    public void addPromotionProduct(PromotionProduct promotionProduct){
+        promotionList.add(promotionProduct);
+        promotionProduct.setPromotion(this);
+    }
 
     @Builder(builderMethodName = "createBuilder", builderClassName = "createBuilder")
     public Promotion(String name, String description, LocalDateTime start_date,LocalDateTime end_date,String image) {

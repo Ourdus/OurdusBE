@@ -19,11 +19,11 @@ public class PromotionProduct {
     @Column(name="PROMOTION_PRODUCT_ID" )
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name="PROMOTION_ID")
     private Promotion promotion;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name="PRODUCT_ID")
     private Product product;
 
