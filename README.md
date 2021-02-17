@@ -7,15 +7,15 @@
 - DB
   : RDS(MySQL)
   
+---
 
 ## 📙 프로모션(Promotiom) &프로모션 작품 (PromotionProduct) Entity 생성 및 조회 구현 
 ### Table
----
 Promotion table, PromotionProduct table  
 ![image](https://user-images.githubusercontent.com/55472510/108139955-7dd74580-7104-11eb-8e30-3b3c88886f25.png)  
 
-Promotion & PromotionProduct table 간의 관계 => 양방향 
-PromotionProduct & Product table 간의 관계 => 단방향 
+Promotion & PromotionProduct table 간의 관계 => 양방향  
+PromotionProduct & Product table 간의 관계 => 단방향  
  
 <구현시 막혔던 부분> 
 1. @JoinColumn(name="PRODUCT_ID") 부분에서 insertable=false로 설정해두면 값을 넣었을 때 insert가 막혀있으므로 promotion_id 값이 null로 받아와 insert 가 동작되지 않는다.
@@ -24,18 +24,18 @@ PromotionProduct & Product table 간의 관계 => 단방향
 API 명세서
 Ourdus 통합 페이지 [링크](https://github.com/Ourdus/Ourdus/wiki)  
 프로모션, 프로모션 별 작품 부분 참조   
-
---- 
+ 
+---
 
 ## 📙 리뷰 (Review) Entity 생성 및 조회 구현  
 ### Table
----
+
 Review table  
 ![image](https://user-images.githubusercontent.com/55472510/108140896-05718400-7106-11eb-913a-f5e2e4c831c1.png)
 
-User& Review table 간의 관계 => 단방향
-Product & Review table 간의 관계 => 양방향
-Order_Detail & Review table 간의 관계 => 단방향
+User& Review table 간의 관계 => 단방향  
+Product & Review table 간의 관계 => 양방향  
+Order_Detail & Review table 간의 관계 => 단방향  
 
 <구현시 막혔던 부분> 
 
@@ -46,15 +46,14 @@ Ourdus 통합 페이지 [링크](https://github.com/Ourdus/Ourdus/wiki)
 
 --- 
 
-
 ## 📙 댓글 (Comment) Entity 생성 및 조회 구현  
 ### Table
----
+
 Comment table   
 ![image](https://user-images.githubusercontent.com/55472510/108141231-a9f3c600-7106-11eb-9671-fa82362b3d45.png)
 
-User& Comment table 간의 관계 => 단방향
-Product & Comment table 간의 관계 => 양방향
+User& Comment table 간의 관계 => 단방향  
+Product & Comment table 간의 관계 => 양방향  
  
 <구현시 막혔던 부분> 
 
