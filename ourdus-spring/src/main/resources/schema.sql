@@ -58,7 +58,7 @@ CREATE TABLE product_image
 (
     image_id   bigint NOT NULL AUTO_INCREMENT,
     product_id bigint CONSTRAINT fk_product_id NOT NULL,
-    image_file blob   NOT NULL,
+    image varchar(100)  NOT NULL,
     PRIMARY KEY (image_id)
 );
 
@@ -158,3 +158,42 @@ CREATE TABLE review
     FOREIGN KEY (order_detail_id) REFERENCES order_detail (order_detail_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
     FOREIGN KEY (product_id) REFERENCES product (product_id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
+
+CREATE TABLE c_big_category
+(
+    big_category_id bigint NOT NULL AUTO_INCREMENT,
+    big_category_name varchar(20) NOT NULL,
+    PRIMARY KEY(big_category_id)
+);
+
+CREATE TABLE c_small_category
+(
+    small_category_id bigint NOT NULL AUTO_INCREMENT,
+    big_category_id bigint NOT NULL,
+    small_category_name varchar(20) NOT NULL,
+    PRIMARY KEY(small_category_id),
+    CONSTRAINT fk_big_category_id FOREIGN KEY (big_category_id) REFERENCES c_big_category (big_category_id) ON DELETE RESTRICT ON UPDATE RESTRICT
+);
+
+CREATE TABLE offline_class
+(
+   class_id bigint NOT NULL auto_increment,
+   small_category_id bigint NOT NULL ,
+   author_id bigint NOT NULL,
+   class_price int DEFAULT 0,
+   class_description MEDIUMTEXT,
+   class_hit int DEFAULT 0,
+   class_purchase int DEFAULT 0,
+   class_duration int DEFAULT 0,
+   class_level varchar(20),
+   class_place varchar(100),
+   user_max int DEFAULT 0,
+   class_like int DEFAULT 0,
+   class_rate int DEFAULT 0,
+   class_name varchar(100),
+   PRIMARY KEY(class_id),
+   FOREIGN KEY (author_id) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
+   CONSTRAINT fk_small_category_id FOREIGN KEY (small_category_id) REFERENCES c_small_category (small_category_id) ON DELETE RESTRICT ON UPDATE RESTRICT
+);
+
+

@@ -82,3 +82,18 @@ INSERT INTO comment(comment_id, comment_content, product_id,user_id) VALUES(null
 INSERT INTO comment(comment_id, comment_content, product_id,user_id) VALUES(null,'두번째 작품 댓글1',2,1);
 INSERT INTO comment(comment_id, comment_content, product_id,user_id) VALUES(null,'두번째 작품 댓글2',2,2);
 INSERT INTO comment(comment_id, comment_content, product_id,user_id) VALUES(null,'세번째 작품 댓글1',3,4);
+
+
+INSERT INTO c_big_category(big_category_id,big_category_name) VALUES(null,'art');
+INSERT INTO c_big_category(big_category_id,big_category_name) VALUES(null,'drink');
+INSERT INTO c_big_category(big_category_id,big_category_name) VALUES(null,'dessert');
+
+INSERT INTO c_small_category(small_category_id,big_category_id,small_category_name) VALUES(null,1,'necklace');
+INSERT INTO c_small_category(small_category_id,big_category_id,small_category_name) VALUES(null,1,'ring');
+INSERT INTO c_small_category(small_category_id,big_category_id,small_category_name) VALUES(null,1,'earring');
+INSERT INTO c_small_category(small_category_id,big_category_id,small_category_name) VALUES(null,2,'orange_juice');
+
+
+INSERT INTO offline_class(class_id,small_category_id,author_id) VALUES(null,3,2);
+INSERT INTO offline_class(class_id,small_category_id,author_id) VALUES(null,3,4);
+INSERT INTO offline_class(class_id,small_category_id,author_id) VALUES(null,1,1);
