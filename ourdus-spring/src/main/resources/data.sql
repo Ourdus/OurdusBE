@@ -28,11 +28,16 @@ INSERT INTO product(product_id, author_id, category_id, product_name) VALUES (nu
 INSERT INTO product(product_id, author_id, category_id, product_name) VALUES (null, 11, 1, 'product11_by_test1');
 INSERT INTO product(product_id, author_id, category_id, product_name) VALUES (null, 12, 1, 'product12_by_test1');
 
-INSERT INTO product_option(option_id, product_id, option_name, option_price) VALUES (null, 1, '1옵션1', 0);
-INSERT INTO product_option(option_id, product_id, option_name, option_price) VALUES (null, 1, '1옵션2', 100);
-INSERT INTO product_option(option_id, product_id, option_name, option_price) VALUES (null, 2, '2옵션1', 400);
-INSERT INTO product_option(option_id, product_id, option_name, option_price) VALUES (null, 2, '2옵션2', 1000);
+INSERT INTO product_parent_option(product_parent_option_id, product_id, option_name) VALUES (null, 1, '1큰옵션1');
+INSERT INTO product_parent_option(product_parent_option_id, product_id, option_name) VALUES (null, 1, '1큰옵션2');
+INSERT INTO product_parent_option(product_parent_option_id, product_id, option_name) VALUES (null, 2, '2큰옵션1');
+INSERT INTO product_parent_option(product_parent_option_id, product_id, option_name) VALUES (null, 2, '2큰옵션2');
 
+INSERT INTO product_child_option(product_child_option_id, product_parent_option_id, product_id, option_name, option_price) VALUES (null,1, 1, '1큰옵션의작은옵션1', 500);
+INSERT INTO product_child_option(product_child_option_id, product_parent_option_id, product_id, option_name, option_price) VALUES (null,1, 1, '1큰옵션의작은옵션2', 1000);
+INSERT INTO product_child_option(product_child_option_id, product_parent_option_id, product_id, option_name, option_price) VALUES (null,2, 2, '2큰옵션의작은옵션1', 0);
+INSERT INTO product_child_option(product_child_option_id, product_parent_option_id, product_id, option_name, option_price) VALUES (null,2, 2, '2큰옵션의작은옵션2', 300);
+INSERT INTO product_child_option(product_child_option_id, product_parent_option_id, product_id, option_name, option_price) VALUES (null,2, 2, '2큰옵션의작은옵션3', 800);
 
 
 INSERT INTO cart_detail(cart_id, user_id, author_id, product_id, option_info, product_num, product_detail_price) VALUES (null, 3, 1, 1, '옵션1과옵션2를선택', 2, 400);
