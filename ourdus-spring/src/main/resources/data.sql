@@ -111,3 +111,5 @@ INSERT INTO online_class(online_class_id, online_category_id, author_id, online_
 INSERT INTO online_class(online_class_id, online_category_id, author_id, online_class_name, online_class_price, online_class_description, online_class_duration, online_class_level) VALUES(null,1,2, '온라인작품2', 2000, '2온라인작품설명', 200, '어려움');
 INSERT INTO online_class(online_class_id, online_category_id, author_id, online_class_name, online_class_price, online_class_description, online_class_duration, online_class_level) VALUES(null,2,2, '온라인작품3', 3000, '3온라인작품설명', 300, '어려울걸');
 INSERT INTO online_class(online_class_id, online_category_id, author_id, online_class_name, online_class_price, online_class_description, online_class_duration, online_class_level) VALUES(null,2,3, '온라인작품4', 4000, '4온라인작품설명', 400, '보통');
+
+
