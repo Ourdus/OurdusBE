@@ -3,6 +3,7 @@ package ourdus.ourdusspring.dto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ourdus.ourdusspring.domain.ProductChildOption;
 
 @Getter
 @Setter
@@ -14,10 +15,10 @@ public class ProductChildOptionDTO {
     private int price;
 
 
-    public ProductChildOptionDTO(Long id, Long parentId, String name, int price) {
-        this.id = id;
-        this.parentId = parentId;
-        this.name = name;
-        this.price = price;
+    public ProductChildOptionDTO(ProductChildOption childOption) {
+        this.id = childOption.getId();
+        this.parentId = childOption.getPOption().getId();
+        this.name = childOption.getName();
+        this.price = childOption.getPrice();
     }
 }
