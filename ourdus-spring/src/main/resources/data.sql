@@ -102,3 +102,12 @@ INSERT INTO c_small_category(small_category_id,big_category_id,small_category_na
 INSERT INTO offline_class(class_id,small_category_id,author_id) VALUES(null,3,2);
 INSERT INTO offline_class(class_id,small_category_id,author_id) VALUES(null,3,4);
 INSERT INTO offline_class(class_id,small_category_id,author_id) VALUES(null,1,1);
+
+INSERT INTO online_class_category(online_category_id, online_category_name) VALUES(null,'유화/아크릴화');
+INSERT INTO online_class_category(online_category_id, online_category_name) VALUES(null,'수채화');
+
+
+INSERT INTO online_class(online_class_id, online_category_id, author_id, online_class_name, online_class_price, online_class_description, online_class_duration, online_class_level) VALUES(null,1,1, '온라인작품1', 1000, '1온라인작품설명', 100, '쉬움');
+INSERT INTO online_class(online_class_id, online_category_id, author_id, online_class_name, online_class_price, online_class_description, online_class_duration, online_class_level) VALUES(null,1,2, '온라인작품2', 2000, '2온라인작품설명', 200, '어려움');
+INSERT INTO online_class(online_class_id, online_category_id, author_id, online_class_name, online_class_price, online_class_description, online_class_duration, online_class_level) VALUES(null,2,2, '온라인작품3', 3000, '3온라인작품설명', 300, '어려울걸');
+INSERT INTO online_class(online_class_id, online_category_id, author_id, online_class_name, online_class_price, online_class_description, online_class_duration, online_class_level) VALUES(null,2,3, '온라인작품4', 4000, '4온라인작품설명', 400, '보통');

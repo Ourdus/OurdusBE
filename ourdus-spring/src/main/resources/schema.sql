@@ -46,8 +46,8 @@ CREATE TABLE product
 CREATE TABLE product_parent_option
 (
     product_parent_option_id bigint      NOT NULL AUTO_INCREMENT,
-    product_id        bigint      NOT NULL,
-    option_name       varchar(50) NOT NULL,
+    product_id               bigint      NOT NULL,
+    option_name              varchar(50) NOT NULL,
     PRIMARY KEY (product_parent_option_id),
     FOREIGN KEY (product_id) REFERENCES product (product_id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
@@ -55,11 +55,11 @@ CREATE TABLE product_parent_option
 
 CREATE TABLE product_child_option
 (
-    product_child_option_id bigint      NOT NULL AUTO_INCREMENT,
-    product_parent_option_id       bigint      NOT NULL,
-    product_id              bigint      NOT NULL,
-    option_name             varchar(50) NOT NULL,
-    option_price            int         NOT NULL DEFAULT 0,
+    product_child_option_id  bigint      NOT NULL AUTO_INCREMENT,
+    product_parent_option_id bigint      NOT NULL,
+    product_id               bigint      NOT NULL,
+    option_name              varchar(50) NOT NULL,
+    option_price             int         NOT NULL DEFAULT 0,
     PRIMARY KEY (product_child_option_id),
     FOREIGN KEY (product_parent_option_id) REFERENCES product_parent_option (product_parent_option_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
     FOREIGN KEY (product_id) REFERENCES product (product_id) ON DELETE RESTRICT ON UPDATE RESTRICT
@@ -212,4 +212,31 @@ CREATE TABLE offline_class
     FOREIGN KEY (small_category_id) REFERENCES c_small_category (small_category_id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 
+CREATE TABLE online_class_category
+(
+    online_category_id   bigint      NOT NULL AUTO_INCREMENT,
+    online_category_name varchar(30) NOT NULL,
+    PRIMARY KEY (online_category_id)
+);
+
+CREATE TABLE online_class
+(
+    online_class_id          bigint        NOT NULL auto_increment,
+    online_category_id       bigint        NOT NULL,
+    author_id                bigint        NOT NULL,
+    online_class_name        varchar(100)  NOT NULL,
+    online_class_price       int           NOT NULL DEFAULT 0 NOT NULL,
+    online_class_description varchar(1000) NOT NULL,
+    online_class_duration    int           NOT NULL DEFAULT 0 NOT NULL,
+    online_class_level       varchar(20)   NOT NULL,
+    online_class_start_date  datetime      NOT NULL default current_timestamp(),
+    preparation_flag         boolean       NOT NULL DEFAULT false,
+    online_class_hit         int           NOT NULL DEFAULT 0,
+    online_class_purchase    int           NOT NULL DEFAULT 0,
+    online_class_like        int           NOT NULL DEFAULT 0,
+    online_class_rate        int           NOT NULL DEFAULT 0,
+    PRIMARY KEY (online_class_id),
+    FOREIGN KEY (author_id) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
+    FOREIGN KEY (online_category_id) REFERENCES online_class_category (online_category_id) ON DELETE RESTRICT ON UPDATE RESTRICT
+);
 

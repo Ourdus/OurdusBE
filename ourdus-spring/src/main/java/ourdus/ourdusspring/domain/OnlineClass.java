@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
+import ourdus.ourdusspring.dto.OnlineClassDTO;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -114,14 +115,14 @@ public class OnlineClass {
     }
 
     @Builder(builderClassName = "createBuilder", builderMethodName = "createBuilder")
-    public OnlineClass(String name, int price, String description, int duration, String level, LocalDateTime startDate, boolean prepareFlag) {
-        this.name = name;
-        this.price = price;
-        this.description = description;
-        this.duration = duration;
-        this.level = level;
-        this.startDate = startDate;
-        this.prepareFlag = prepareFlag;
+    public OnlineClass(OnlineClassDTO onlineClassDTO) {
+        this.name = onlineClassDTO.getName();
+        this.price = onlineClassDTO.getPrice();
+        this.description = onlineClassDTO.getDescription();
+        this.duration = onlineClassDTO.getDuration();
+        this.level = onlineClassDTO.getLevel();
+        this.startDate = onlineClassDTO.getStartDate();
+        this.prepareFlag = onlineClassDTO.isPrepareFlag();
     }
 
     @Override

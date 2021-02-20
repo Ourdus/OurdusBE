@@ -49,8 +49,8 @@ public class OnlineClassService {
         onlineClassRepository.deleteById(onlineClassId);
     }
 
-    public OnlineClass update(Long categoryId, OnlineClass onlineClass){
-        OnlineClass result = onlineClassRepository.findById(onlineClass.getId()).orElseThrow(() -> new NoSuchElementException("잘못된 온라인 클래스 아이디입니다."));
+    public OnlineClass update(Long categoryId, Long classId, OnlineClass onlineClass){
+        OnlineClass result = onlineClassRepository.findById(classId).orElseThrow(() -> new NoSuchElementException("잘못된 온라인 클래스 아이디입니다."));
         if(categoryId != result.getCategory().getId()){//
             OnlineClassCategory category = onlineClassCategoryRepository.findById(categoryId).orElseThrow(() -> new NoSuchElementException("수정하려는 카테고리는 찾을 수 없는 카테고리입니다."));
             result.setCategory(category);
