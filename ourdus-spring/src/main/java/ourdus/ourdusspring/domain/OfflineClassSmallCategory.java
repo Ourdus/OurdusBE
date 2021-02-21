@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -23,6 +25,7 @@ public class OfflineClassSmallCategory {
     @JoinColumn(name="BIG_CATEGORY_ID")
     private OfflineClassBigCategory offlineClassBigCategory;
 
-    @OneToOne(mappedBy = "offlineClassSmallCategory")
-    private OfflineClass offlineClass;
+    @OneToMany(mappedBy = "offlineClassSmallCategory")
+    private List<OfflineClass> offlineClassesList= new ArrayList<>();
+
 }
