@@ -21,7 +21,7 @@ import static ourdus.ourdusspring.common.ApiResult.OK;
 
 
 @RestController
-@RequestMapping("api/w")
+@RequestMapping("api")
 public class PromotionController {
 
     private PromotionService promotionService;
@@ -33,7 +33,7 @@ public class PromotionController {
         this.promotionProductService=promotionProductService;
     }
 
-    @GetMapping("promotion")
+    @GetMapping("/w/promotion")
     public ApiResult<List<PromotionDTO>> viewPromotionList(){
         List <Promotion> promotionList=promotionService.findAll();
         List <PromotionDTO> promotionDTOList=new ArrayList<>();
@@ -46,20 +46,20 @@ public class PromotionController {
         return OK(promotionDTOList);
     }
 
-    @GetMapping("promotion/{promotion_id}")
+    @GetMapping("/w/promotion/{promotion_id}")
     public ApiResult<PromotionDTO> viewPromotion(@PathVariable("promotion_id") Long promotionId){
         Optional<Promotion> promotion=promotionService.findOne(promotionId);
         promotion.orElseThrow(()->new NoSuchElementException("해당되는 프로모션 정보가 없습니다"));
         return OK(new PromotionDTO(promotion.get()));
     }
 
-    @PostMapping("promotion/new")
+    @PostMapping("/t/w/promotion/new")
     public ApiResult<Promotion> save(@RequestBody PromotionDTO promotiondto)
     {
         return OK(promotionService.save(new Promotion(promotiondto)));
     }
 
-    @PostMapping("promotion/{promotion_id}/edit")
+    @PostMapping("/t/w/promotion/{promotion_id}/edit")
     public ApiResult<Promotion> modify(@PathVariable("promotion_id") Long promotionId,@RequestBody PromotionDTO promotiondto)
     {
         Promotion promotion= Promotion.createBuilder()
@@ -72,12 +72,12 @@ public class PromotionController {
         return OK(promotionService.update(promotionId,promotion));
     }
 
-    @DeleteMapping("promotion/{promotion_id}")
+    @DeleteMapping("/t/w/promotion/{promotion_id}")
     public ApiResult<String> deletePromotion(@PathVariable("promotion_id") Long promotionId){
         return OK(promotionService.deletePromotion(promotionId));
     }
 
-    @PostMapping("promotion/product/new")
+    @PostMapping("/t/w/promotion/product/new")
     public ApiResult<PromotionProductDTO> save(@RequestBody PromotionProductRequest promotionProductRequest)
     {
         PromotionProduct pp= PromotionProduct.builder()
@@ -87,7 +87,7 @@ public class PromotionController {
         return OK(new PromotionProductDTO(promotionProductService.save(pp,promotionId,productId)));
     }
 
-    @PostMapping("promotion/{product_id}/delete")
+    @PostMapping("/t/w/promotion/{product_id}/delete")
     public ApiResult<String> delete(@PathVariable("product_id") Long promotion_id){
         return OK(promotionProductService.delete(promotion_id));
     }

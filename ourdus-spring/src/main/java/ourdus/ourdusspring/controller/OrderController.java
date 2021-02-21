@@ -14,7 +14,7 @@ import java.util.List;
 import static ourdus.ourdusspring.common.ApiResult.OK;
 
 @RestController
-@RequestMapping("api/w")
+@RequestMapping("api")
 public class OrderController {
 
     @Autowired
@@ -23,26 +23,26 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @PostMapping("payment")
+    @PostMapping("/t/w/payment")
     public ApiResult<PaymentResult> payment(HttpServletRequest req){
         Long userid = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId"))); //id 받아오기
         //TODO userService에서 이름, 전화번호, 유저 주소 목록 불러오기
         return null;
     }
 
-    @PostMapping("payment/order")
+    @PostMapping("/t/w/payment/order")
     public ApiResult<Long> order(HttpServletRequest req, List<OrderForm> orderForms, int orderPrice, String orderAccount){
         Long userId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId"))); //id 받아오기
         return OK(orderService.order(userId, orderForms, orderPrice, orderAccount));
     }
 
 
-    @GetMapping("me/order/payment")
+    @GetMapping("/t/w/me/order/payment")
     public ApiResult<List<PaymentResult>> paymentList(HttpServletRequest req){
         return null;
     }
 
-    @GetMapping("me/order/payment/detail/{order_id}")
+    @GetMapping("/t/w/me/order/payment/detail/{order_id}")
     public ApiResult<?> paymentDetail(@PathVariable("order_id") Long orderId){
         return null;
     }
