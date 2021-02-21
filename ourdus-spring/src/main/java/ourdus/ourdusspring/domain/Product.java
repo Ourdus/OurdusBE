@@ -46,8 +46,12 @@ public class Product {
 //    @OneToMany(mappedBy = "product",orphanRemoval=true) //promotion_product와 one to many 관계
 //    private List<PromotionProduct> promotionList = new ArrayList<PromotionProduct>();
 
-//    @OneToMany(mappedBy = "product")
-//    private List<ProductOption> options;
+//    @OneToMany //TODO option의 단방향 참조 추가는 option의 정보가 있을때 가능하므로, 해당 정보들 크롤링 혹은 더미데이터를 넣은 후에 진행
+//    private List<ProductChildOpiton> cOptions = new LinkedList<>();
+
+//    @OneToMany(mappedBy="product") //TODO option의 단방향 참조 추가는 option의 정보가 있을때 가능하므로, 해당 정보들 크롤링 혹은 더미데이터를 넣은 후에 진행
+//    private List<ProductParentOpiton> pOptions = new LinkedList<>();
+
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST)
     private List<Review> reviews = new ArrayList<Review>();

@@ -12,14 +12,13 @@ import java.sql.Blob;
 @NoArgsConstructor
 public class ProductImage {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="OPTION_ID")
+    @Column(name="IMAGE_ID")
     private Long id;
 
     @ManyToOne
     @JoinColumn(name="PRODUCT_ID")
     private Product product;
 
-    @Lob
-    @Column(name="image_file")
-    private Blob imageFile;
+    @Column(name="image")
+    private String image;
 }
