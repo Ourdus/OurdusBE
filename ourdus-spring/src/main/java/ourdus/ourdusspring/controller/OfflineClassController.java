@@ -10,6 +10,7 @@ import ourdus.ourdusspring.dto.OfflineClassRequest;
 import ourdus.ourdusspring.dto.PromotionDTO;
 import ourdus.ourdusspring.service.OfflineClassService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -48,8 +49,10 @@ public class OfflineClassController {
     }
 
     @PostMapping("new")
-    public ApiResult<OfflineClassDTO> save(@RequestBody OfflineClassRequest offlineClassRequest)
+    public ApiResult<OfflineClassDTO> save(HttpServletRequest req,@RequestBody OfflineClassRequest offlineClassRequest)
     {
+        // Long authorId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId")));
+        Long authorId = 1L;
         OfflineClass offlineClass= OfflineClass
                 .builder()
                 .name(offlineClassRequest.getName())
@@ -70,13 +73,18 @@ public class OfflineClassController {
     }
 
     @DeleteMapping("{class_id}/delete")
-    public ApiResult<String> delete(@PathVariable("class_id") Long class_id){
+    public ApiResult<String> delete(HttpServletRequest req,@PathVariable("class_id") Long class_id){
+        // Long authorId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId")));
+        Long authorId = 1L;
         return OK(offlineClassService.delete(class_id));
     }
 
     @PostMapping("{class_id}/edit")
-    public ApiResult<OfflineClassDTO> modify(@PathVariable("class_id") Long class_id,@RequestBody OfflineClassRequest offlineClassRequest)
+    public ApiResult<OfflineClassDTO> modify(HttpServletRequest req, @PathVariable("class_id") Long class_id, @RequestBody OfflineClassRequest offlineClassRequest)
     {
+        // Long authorId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId")));
+        Long authorId = 1L;
+
         OfflineClass offlineClass= OfflineClass
                 .builder()
                 .name(offlineClassRequest.getName())
