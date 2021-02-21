@@ -1,11 +1,19 @@
 package ourdus.ourdusspring.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import ourdus.ourdusspring.domain.Comment;
 import ourdus.ourdusspring.domain.Product;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class ProductDTO {
 
     private Long id;
@@ -15,6 +23,7 @@ public class ProductDTO {
     private int review;
     private int hit;
     private int purchase;
+    private String info;
     private Long categoryId;
     private String categoryName;
     private Long authorId;
@@ -35,6 +44,7 @@ public class ProductDTO {
         this.review = product.getReviewNum();
         this.hit = product.getHit();
         this.purchase = product.getPurchase();
+        this.info = product.getInfo();
         this.categoryId = product.getCategory().getId();
         this.categoryName = product.getCategory().getName();
         this.authorId = product.getAuthor().getId();
@@ -43,119 +53,5 @@ public class ProductDTO {
         for(Comment comment : product.getCommentList()){
             this.addComment(comment);
         }
-    }
-
-    public ProductDTO(Long id, String name, int price, int rate, int review, int hit, int purchase, Long categoryId, String categoryName, Long authorId, String authorName, int optionNum) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.rate = rate;
-        this.review = review;
-        this.hit = hit;
-        this.purchase = purchase;
-        this.categoryId = categoryId;
-        this.categoryName = categoryName;
-        this.authorId = authorId;
-        this.authorName = authorName;
-        this.optionNum = optionNum;
-    }
-
-    public ProductDTO() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
-    public int getRate() {
-        return rate;
-    }
-
-    public void setRate(int rate) {
-        this.rate = rate;
-    }
-
-    public int getReview() {
-        return review;
-    }
-
-    public void setReview(int review) {
-        this.review = review;
-    }
-
-    public int getHit() {
-        return hit;
-    }
-
-    public void setHit(int hit) {
-        this.hit = hit;
-    }
-
-    public int getPurchase() {
-        return purchase;
-    }
-
-    public void setPurchase(int purchase) {
-        this.purchase = purchase;
-    }
-
-    public String getCategoryName() {
-        return categoryName;
-    }
-
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
-    }
-
-    public Long getAuthorId() {
-        return authorId;
-    }
-
-    public void setAuthorId(Long authorId) {
-        this.authorId = authorId;
-    }
-
-    public String getAuthorName() {
-        return authorName;
-    }
-
-    public void setAuthorName(String authorName) {
-        this.authorName = authorName;
-    }
-
-    public int getOptionNum() {
-        return optionNum;
-    }
-
-    public void setOptionNum(int optionNum) {
-        this.optionNum = optionNum;
-    }
-
-    public Long getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
     }
 }

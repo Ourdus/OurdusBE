@@ -1,54 +1,22 @@
 package ourdus.ourdusspring.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class ProductRequest {
 
     private String name;
     private int price;
+    private String info;
     private Long categoryId;
     private int optionNum;
    // private List<Product_OptionDTO> options;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
-    public Long getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
-    }
-
-    public int getOptionNum() {
-        return optionNum;
-    }
-
-    public void setOptionNum(int optionNum) {
-        this.optionNum = optionNum;
-    }
-
-    public ProductRequest(String name, int price, Long categoryId, int optionNum) {
-        this.name = name;
-        this.price = price;
-        this.categoryId = categoryId;
-        this.optionNum = optionNum;
-    }
-
-    public ProductRequest() {
-    }
 
     //    public List<Product_OptionDTO> getOptions() {
 //        return options;

@@ -76,6 +76,7 @@ public class ProductController {
                 .name(productRequest.getName())
                 .price(productRequest.getPrice())
                 .optionNum(productRequest.getOptionNum())
+                .info(productRequest.getInfo())
                 .build();
         return OK(new ProductDTO(productService.save(product, userid, productRequest.getCategoryId())));
     }
