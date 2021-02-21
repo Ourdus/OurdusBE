@@ -13,62 +13,6 @@ import javax.persistence.*;
 @Table(name="OFFLINE_CLASS")
 public class OfflineClass {
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setHit(int hit) {
-        this.hit = hit;
-    }
-
-    public void setPurchase(int purchase) {
-        this.purchase = purchase;
-    }
-
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
-
-    public void setLevel(String level) {
-        this.level = level;
-    }
-
-    public void setPlace(String place) {
-        this.place = place;
-    }
-
-    public void setMax(int max) {
-        this.max = max;
-    }
-
-    public void setLike(int like) {
-        this.like = like;
-    }
-
-    public void setRate(int rate) {
-        this.rate = rate;
-    }
-
-    public void setAuthor(User author) {
-        this.author = author;
-    }
-
-    public void setOfflineClassSmallCategory(OfflineClassSmallCategory offlineClassSmallCategory) {
-        this.offlineClassSmallCategory = offlineClassSmallCategory;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="CLASS_ID")
@@ -111,7 +55,7 @@ public class OfflineClass {
     @JoinColumn(name="AUTHOR_ID")
     private User author;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name="SMALL_CATEGORY_ID")
     private OfflineClassSmallCategory offlineClassSmallCategory;
 
@@ -171,6 +115,63 @@ public class OfflineClass {
     public OfflineClassSmallCategory getOfflineClassSmallCategory() {
         return offlineClassSmallCategory;
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setHit(int hit) {
+        this.hit = hit;
+    }
+
+    public void setPurchase(int purchase) {
+        this.purchase = purchase;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
+    }
+
+    public void setMax(int max) {
+        this.max = max;
+    }
+
+    public void setLike(int like) {
+        this.like = like;
+    }
+
+    public void setRate(int rate) {
+        this.rate = rate;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
+    }
+
+    public void setOfflineClassSmallCategory(OfflineClassSmallCategory offlineClassSmallCategory) {
+        this.offlineClassSmallCategory = offlineClassSmallCategory;
+    }
+
 
     @Builder
     public OfflineClass(String name,String description,int purchase,int duration,int hit,String level,String place, int price,int max, int like, int rate, User author, OfflineClassSmallCategory offlineClassSmallCategory ) {

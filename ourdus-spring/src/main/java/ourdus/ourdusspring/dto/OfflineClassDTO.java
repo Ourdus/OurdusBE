@@ -29,7 +29,6 @@ public class OfflineClassDTO {
     private int max;
     private int like;
     private int rate;
-    private Long authorId;
     private Long categoryId;
 
     public Long getId() {
@@ -136,14 +135,6 @@ public class OfflineClassDTO {
         this.rate = rate;
     }
 
-
-    public Long getAuthorId() {
-        return authorId;
-    }
-
-    public void setAuthorId(Long authorId) {
-        this.authorId = authorId;
-    }
 
     public Long getCategoryId() {
         return categoryId;
