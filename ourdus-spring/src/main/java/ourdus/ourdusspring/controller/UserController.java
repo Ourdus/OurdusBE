@@ -62,7 +62,7 @@ public class UserController {
         return OK(resultMap);
     }
 
-    @GetMapping("/user/info")
+    @GetMapping("/t/user/info")
     public ApiResult<UserDTO> getInfo(HttpServletRequest req){
         Long id = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId")));
         User user =userService.getUserInfo(id);
@@ -81,7 +81,7 @@ public class UserController {
         return OK(userService.delete(id));
     }
 
-    @PostMapping("/user/edit")
+    @PostMapping("/t/user/edit")
     public ApiResult<String> update(HttpServletRequest req, @RequestBody UserDTO userdto){
         Long id = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId"))); //id 받아오기
         return OK(userService.update(id,new User(userdto)));
@@ -97,7 +97,7 @@ public class UserController {
         return OK(userService.findPW(userdto.getEmail(),userdto.getTel()));
     }
 
-    @PostMapping("/user/address")
+    @PostMapping("/t/user/address")
     public ApiResult<AddressDTO> addAddress(/*HttpServletRequest req,*/ @RequestBody AddressDTO addressDTO){
 //        Long userId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId"))); //id 받아오기
         Long userId = 1L;
@@ -112,12 +112,12 @@ public class UserController {
     }
 
 
-    @DeleteMapping("/user/address/{address_id}")
+    @DeleteMapping("/t/user/address/{address_id}")
     public ApiResult<String> deleteAddress(@PathVariable("address_id") Long address_Id){
         return OK(userService.deleteAddress(address_Id));
     }
 
-    @PostMapping("/user/address/{address_id}")
+    @PostMapping("/t/user/address/{address_id}")
     public ApiResult<String> editAddress(@PathVariable("address_id") Long address_Id,@RequestBody AddressDTO addressDTO){
         Address address = Address.createBuilder()
                 .name(addressDTO.getName())
@@ -129,7 +129,7 @@ public class UserController {
         return OK(userService.editAddress(address_Id,address));
     }
 
-    @GetMapping("/user/address")
+    @GetMapping("/t/user/address")
     public ApiResult<List<AddressDTO>> getAddress(HttpServletRequest req){
         Long userId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId"))); //id 받아오기
         List<AddressDTO> addressDTOList = new ArrayList<>();

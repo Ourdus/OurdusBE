@@ -53,21 +53,21 @@ public class ReviewController {
         return OK(new ReviewDTO(review));
     }
 
-    @PostMapping("w/review/new")
+    @PostMapping("/t/w/review/new")
     public ApiResult<ReviewDTO> writeReview(@RequestBody ReviewDTO reviewDTO){
         //TODO 리뷰 작성시 Jwt토큰 확인해서 해당 userid에 orderdetailId가 존재하는지 체크
         Review review = reviewService.write(reviewDTO.getContent(), reviewDTO.getRate(), reviewDTO.getOrderDetailId());
         return OK(new ReviewDTO(review));
     }
 
-    @PostMapping("w/review/{review_id}/edit")
+    @PostMapping("/t/w/review/{review_id}/edit")
     public ApiResult<ReviewDTO> editReview(@RequestBody ReviewDTO reviewDTO, @PathVariable("review_id") Long reviewId){
         //TODO 리뷰 수정시 Jwt토큰 확인해서 해당 userid 받아서 review의 findbyuserid구현해서 존재하는지 체크
         Review review = reviewService.update(reviewDTO.getContent(), reviewDTO.getRate(), reviewId);
         return OK(new ReviewDTO(review));
     }
 
-    @PostMapping("w/review/{review_id}/delete")
+    @PostMapping("/t/w/review/{review_id}/delete")
     public ApiResult<String> deleteReview(@PathVariable("review_id") Long reviewId){
         //TODO 리뷰 삭제시 Jwt토큰 확인해서 해당 userid 받아서 review의 findbyuserid구현해서 존재하는지 체크
         reviewService.delete(reviewId);

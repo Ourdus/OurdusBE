@@ -22,7 +22,7 @@ import java.util.Optional;
 import static ourdus.ourdusspring.common.ApiResult.OK;
 
 @RestController
-@RequestMapping("api/w")
+@RequestMapping("api")
 public class ProductController {
 
 
@@ -35,7 +35,7 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping("product")
+    @GetMapping("/w/product")
     public ApiResult<List<ProductDTO>> viewAllProductList(@RequestParam("page")int page, @RequestParam("size")int size){
        Page <Product> productList = productService.findAll(PageRequest.of(page,size));
         List<ProductDTO> productDTOList=new ArrayList<ProductDTO>();
@@ -48,7 +48,7 @@ public class ProductController {
     }
 
 
-    @GetMapping("category/{category_id}")
+    @GetMapping("/w/category/{category_id}")
     public ApiResult<List<ProductDTO>> viewCategoryProductList(@PathVariable("category_id") Long categoryId) {
         Optional<List<Product>> productByCategory = productService.findAllByCategory(categoryId);
         List<ProductDTO> productDTOList = new ArrayList<ProductDTO>();
@@ -60,7 +60,7 @@ public class ProductController {
         return OK(productDTOList);
     }
 
-    @GetMapping("product/{product_id}")
+    @GetMapping("/w/product/{product_id}")
     public ApiResult<ProductDTO> viewProduct(@PathVariable("product_id") Long productId) {
         Optional<Product> product = productService.findOne(productId);
         product.orElseThrow(() -> new NoSuchElementException("해당하는 작품 정보가 없습니다"));
@@ -68,7 +68,7 @@ public class ProductController {
     }
 
 
-    @PostMapping("product/new")
+    @PostMapping("/t/w/product/new")
     public ApiResult<ProductDTO> save(HttpServletRequest req, @RequestBody ProductRequest productRequest){
         Long userid = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId"))); //id 받아오기
         Product product = Product
@@ -82,12 +82,12 @@ public class ProductController {
     }
 
 
-    @PostMapping("product/{product_id}/delete")
+    @PostMapping("/t/w/product/{product_id}/delete")
     public ApiResult<String> delete(@PathVariable("product_id") Long product_Id){
         return OK(productService.delete(product_Id));
     }
 
-    @PostMapping("/product/{product_id}/edit")
+    @PostMapping("/t/w/product/{product_id}/edit")
     public ApiResult<ProductDTO> modify(@PathVariable("product_id") Long product_Id,@RequestBody ProductRequest productRequest){
         Product product = Product
                 .builder()
@@ -98,7 +98,7 @@ public class ProductController {
         return OK(new ProductDTO(productService.modify(product_Id,product, productRequest.getCategoryId())));
     }
 
-    @PostMapping("/product/{product_id}/comment")
+    @PostMapping("/t/w/product/{product_id}/comment")
     public ApiResult<CommentDTO> addComment(HttpServletRequest req, @PathVariable("product_id") Long productId,
                                             @RequestBody CommentDTO commentDTO){
         Long userId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId")));
@@ -108,7 +108,7 @@ public class ProductController {
         return OK(new CommentDTO(productService.addComment(comment,productId,userId)));
     }
 
-    @GetMapping("/product/{product_id}/comment")
+    @GetMapping("/w/product/{product_id}/comment")
     public ApiResult<List<CommentDTO>> getComment(@PathVariable("product_id") Long productId){
         List<CommentDTO> commentDTOList= new ArrayList<>();
         productService.getCommentList(productId).stream().forEach(comment->{
@@ -117,7 +117,7 @@ public class ProductController {
         return OK(commentDTOList);
     }
 
-    @DeleteMapping("/product/{product_id}/comment/{comment_id}")
+    @DeleteMapping("/w/t/product/{product_id}/comment/{comment_id}")
     public ApiResult<String> deleteAddress(@PathVariable("product_id")Long productId,
                                            @PathVariable("comment_id")Long commentId){
         return OK(productService.removeComment(commentId/*,productId*/));
