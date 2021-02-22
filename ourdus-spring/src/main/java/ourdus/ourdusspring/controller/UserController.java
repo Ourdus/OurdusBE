@@ -52,7 +52,8 @@ public class UserController {
             res.setHeader("jwt-auth-token",token);
 
             resultMap.put("status",true);
-            resultMap.put("data",new UserDTO(loginUser));
+            resultMap.put("user",new UserDTO(loginUser));
+            resultMap.put("data",token);
             status = HttpStatus.ACCEPTED;
         }catch(RuntimeException e){
             log.error("로그인 실패",e);
