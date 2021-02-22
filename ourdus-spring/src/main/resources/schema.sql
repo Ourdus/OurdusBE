@@ -32,6 +32,7 @@ CREATE TABLE product
     author_id          bigint      NOT NULL,
     category_id        bigint      NOT NULL,
     product_name       varchar(20) NOT NULL,
+    product_info       MEDIUMTEXT  NULL,
     product_price      int         NOT NULL DEFAULT 0,
     product_rate       int         NOT NULL DEFAULT 0,
     product_review_num int         NOT NULL DEFAULT 0,

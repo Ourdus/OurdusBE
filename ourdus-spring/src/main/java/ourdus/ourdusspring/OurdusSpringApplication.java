@@ -27,11 +27,10 @@ public class OurdusSpringApplication implements WebMvcConfigurer {
 	public void addInterceptors(InterceptorRegistry registry){
 		addExcludeList();
 		registry.addInterceptor(jwtInterceptor)
-				.addPathPatterns("/api/user")
-				.addPathPatterns("/api/w/cart")
+				.addPathPatterns("/api/t/**");
 //				.addPathPatterns("/api/w/product/**/comment/**")
 //				.addPathPatterns("/api/w/review/**")
-				.excludePathPatterns(excludeList); //적용 제외 경로
+//				.excludePathPatterns(excludeList); //적용 제외 경로
 	}
 
 //	interceptor 이용해서 처리하므로 전역의 corss origin 처리해준다
