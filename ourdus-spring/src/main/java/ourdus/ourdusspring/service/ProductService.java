@@ -122,15 +122,29 @@ public class ProductService {
         return "comment delete success";
     }
 
-    public List<Product> popularList ()
+    public Page<Product> rateOrderList ()
     {
-        Sort sort=sortByrate();
-        return productRepository.findAll(sort);
+        Pageable pageable =PageRequest.of(0,10,Sort.Direction.DESC,"rate");
+        return productRepository.findAll(pageable);
     }
 
-    private Sort sortByrate()
+    public Page<Product> hitOrderList ()
     {
-        return Sort.by(Sort.Direction.DESC,"rate");
+        Pageable pageable =PageRequest.of(0,10,Sort.Direction.DESC,"hit");
+        return productRepository.findAll(pageable);
     }
+
+    public Page<Product> priceOrderList ()
+    {
+        Pageable pageable =PageRequest.of(0,10,Sort.Direction.DESC,"price");
+        return productRepository.findAll(pageable);
+    }
+
+    public Page<Product> purchaseOrderList ()
+    {
+        Pageable pageable =PageRequest.of(0,10,Sort.Direction.DESC,"purchase");
+        return productRepository.findAll(pageable);
+    }
+
 
 }

@@ -123,9 +123,45 @@ public class ProductController {
         return OK(productService.removeComment(commentId/*,productId*/));
     }
 
-    @GetMapping("product/popular")
+    @GetMapping("w/product/rate")
+    public ApiResult<List<ProductDTO>> viewRateProductList(){
+        Page <Product> productList = productService.rateOrderList();
+        List<ProductDTO> productDTOList=new ArrayList<ProductDTO>();
+        if(productList!=null){
+            productList.stream().forEach(product -> {
+                productDTOList.add(new ProductDTO(product));
+            });
+        }
+        return OK(productDTOList);
+    }
+
+    @GetMapping("w/product/price")
+    public ApiResult<List<ProductDTO>> viewPriceProductList(){
+        Page <Product> productList = productService.priceOrderList();
+        List<ProductDTO> productDTOList=new ArrayList<ProductDTO>();
+        if(productList!=null){
+            productList.stream().forEach(product -> {
+                productDTOList.add(new ProductDTO(product));
+            });
+        }
+        return OK(productDTOList);
+    }
+
+    @GetMapping("w/product/hit")
+    public ApiResult<List<ProductDTO>> viewHitProductList(){
+        Page <Product> productList = productService.hitOrderList();
+        List<ProductDTO> productDTOList=new ArrayList<ProductDTO>();
+        if(productList!=null){
+            productList.stream().forEach(product -> {
+                productDTOList.add(new ProductDTO(product));
+            });
+        }
+        return OK(productDTOList);
+    }
+
+    @GetMapping("w/product/purchase")
     public ApiResult<List<ProductDTO>> viewPopularProductList(){
-        List <Product> productList = productService.popularList();
+        Page <Product> productList = productService.purchaseOrderList();
         List<ProductDTO> productDTOList=new ArrayList<ProductDTO>();
         if(productList!=null){
             productList.stream().forEach(product -> {
