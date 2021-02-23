@@ -14,7 +14,7 @@ import java.util.List;
 import static ourdus.ourdusspring.common.ApiResult.OK;
 
 @RestController
-@RequestMapping("api/w")
+@RequestMapping("api")
 public class CartController {
 
     @Autowired
@@ -26,7 +26,7 @@ public class CartController {
         this.cartService = cartService;
     }
 
-    @GetMapping("cart/{user_id}")
+    @GetMapping("/t/w/cart/{user_id}")
     public ApiResult<List<CartDTO>> viewAllProduct(@PathVariable("user_id") Long userId /*HttpServletRequest req*/){
         //Long userId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId"))); //id 받아오기
         List<Cart> carts = cartService.findAllByUserId(userId);
@@ -38,13 +38,13 @@ public class CartController {
         return OK(cartDTOs);
     }
 
-    @PostMapping("cart/delete/{cart_id}")
+    @PostMapping("/t/w/cart/delete/{cart_id}")
     public ApiResult<String> delete(@PathVariable("cart_id") Long cartId){
         cartService.delete(cartId);
         return OK("해당 카트를 삭제하였습니다.");
     }
 
-    @PostMapping("cart-in")
+    @PostMapping("/t/w/cart-in")
     public ApiResult<String> cartIn(/*HttpServletRequest req,*/ @RequestBody CartDTO cartDTO){
 //        Long userId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId"))); //id 받아오기
         Long userId = 1L;
