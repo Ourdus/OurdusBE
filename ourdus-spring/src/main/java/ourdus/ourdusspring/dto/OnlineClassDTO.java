@@ -36,6 +36,8 @@ public class OnlineClassDTO {
 
     private int rate;
 
+    private String image;
+
     private Long authorId;
 
     private Long categoryId;
@@ -53,6 +55,7 @@ public class OnlineClassDTO {
         this.purchase = onlineClass.getPurchase();
         this.like = onlineClass.getLike();
         this.rate = onlineClass.getRate();
+        this.image = onlineClass.getImage();
         this.authorId = onlineClass.getAuthor().getId();
         this.categoryId = onlineClass.getCategory().getId();
     }

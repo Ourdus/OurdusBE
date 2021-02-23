@@ -53,7 +53,7 @@ public class OnlineClassController {
     public ApiResult<String> deleteOC(HttpServletRequest req, @PathVariable("class_id") Long classId){
         //Long authorId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId")));
         Long authorId = 1L;
-        //TODO 작가가 맞는지 로직확인
+        onlineClassService.checkAuthor(authorId, classId);
         onlineClassService.delete(classId);
         return OK("삭제완료");
     }
@@ -62,7 +62,7 @@ public class OnlineClassController {
     public ApiResult<OnlineClassDTO> modifyOC(HttpServletRequest req, @PathVariable("class_id") Long classId, @RequestBody OnlineClassDTO onlineClassDTO){
         //Long authorId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId")));
         Long authorId = 1L;
-        //TODO 작가가 맞는지 로직확인 필요
+        onlineClassService.checkAuthor(authorId, classId);
         OnlineClass onlineClass = OnlineClass.createBuilder()
                                         .onlineClassDTO(onlineClassDTO)
                                         .build();
