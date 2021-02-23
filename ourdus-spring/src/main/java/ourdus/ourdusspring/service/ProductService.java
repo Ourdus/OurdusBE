@@ -43,6 +43,8 @@ public class ProductService {
 
     public Optional<Product> findOne(Long productId){
         Optional<Product> product = productRepository.findById(productId);
+        product.get().setHit(product.get().getHit()+1);
+        //조회시 조회수 올리기
         return product;
     }
 

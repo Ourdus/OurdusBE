@@ -26,6 +26,7 @@ public class Product {
     @Column(name="PRODUCT_REVIEW_NUM")
     @ColumnDefault("0")
     private int reviewNum;
+
     @Column(name="PRODUCT_HIT")
     @ColumnDefault("0")
     private int hit;
@@ -58,6 +59,10 @@ public class Product {
   
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Comment> commentList = new ArrayList<Comment>();
+
+    public void setHit(int hit) {
+        this.hit = hit;
+    }
 
     public Long getId() {
         return id;
