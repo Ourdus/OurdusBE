@@ -3,10 +3,7 @@ package ourdus.ourdusspring.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ourdus.ourdusspring.domain.Order;
-import ourdus.ourdusspring.domain.OrderDetail;
-import ourdus.ourdusspring.domain.Product;
-import ourdus.ourdusspring.domain.User;
+import ourdus.ourdusspring.domain.*;
 import ourdus.ourdusspring.dto.OrderForm;
 import ourdus.ourdusspring.repository.OrderDetailRepository;
 import ourdus.ourdusspring.repository.OrderRepository;
@@ -44,7 +41,7 @@ public class OrderService {
         return orderDetailRepository.findById(orderdetailId).orElseThrow(() -> new NoSuchElementException("찾을수 없는 주문상세번호입니다."));
     }
 
-    public Long order(Long userId, List<OrderForm> orderForms, int price, String orderAccount) { //TODO parameter의 orderform 수정하기
+    public Long order(Long userId, List<OrderForm> orderForms, Long addressId, Address address, int price, String orderAccount) { //TODO parameter의 orderform 수정하기
         User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchElementException("유저 정보를 찾을 수 없습니다."));
         Order order = Order.createBuilder()
                 .user(user)
@@ -73,4 +70,5 @@ public class OrderService {
         OrderDetail detail = findDetaillOne(orderDetailId);
         return checkUserId == detail.getOrder().getUser().getId();
     }
+
 }

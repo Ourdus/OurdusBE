@@ -3,8 +3,10 @@ package ourdus.ourdusspring.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ourdus.ourdusspring.common.ApiResult;
+import ourdus.ourdusspring.domain.Address;
 import ourdus.ourdusspring.domain.Order;
 import ourdus.ourdusspring.domain.User;
+import ourdus.ourdusspring.dto.AddressDTO;
 import ourdus.ourdusspring.dto.OrderDTO;
 import ourdus.ourdusspring.dto.OrderForm;
 import ourdus.ourdusspring.dto.PaymentUserDTO;
@@ -35,9 +37,12 @@ public class OrderController {
     }
 
     @PostMapping("/t/w/payment/order")
-    public ApiResult<Long> order(HttpServletRequest req, List<OrderForm> orderForms, int orderPrice, String orderAccount){
+    public ApiResult<Long> order(HttpServletRequest req, List<OrderForm> orderForms, AddressDTO addressDTO, int orderPrice, String orderAccount){
         Long userId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId")));
-        return OK(orderService.order(userId, orderForms, orderPrice, orderAccount));
+        Address address = Address.createBuilder()
+                                    .addressDTO(addressDTO)
+                                    .build();
+        return OK(orderService.order(userId, orderForms, addressDTO.getId(), address, orderPrice, orderAccount));
     }
 
 

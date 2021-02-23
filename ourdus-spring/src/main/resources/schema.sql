@@ -249,4 +249,19 @@ CREATE TABLE online_class_video
     online_class_video_content varchar(100) NULL,
     PRIMARY KEY (online_class_video_id),
     FOREIGN KEY (online_class_id) REFERENCES online_class (online_class_id) ON DELETE RESTRICT ON UPDATE RESTRICT
-)
+);
+
+CREATE TABLE preparation
+(
+    preparation_id bigint NOT NULL AUTO_INCREMENT,
+    online_class_id bigint NOT NULL,
+    preparation_price int NOT NULL,
+    preparation_stock int NOT NULL,
+    PRIMARY KEY (preparation_id),
+    FOREIGN KEY (online_class_id) REFERENCES online_class (online_class_id) ON DELETE RESTRICT ON UPDATE RESTRICT
+);
+
+-- CREATE TABLE class_order
+-- (
+--
+-- );
