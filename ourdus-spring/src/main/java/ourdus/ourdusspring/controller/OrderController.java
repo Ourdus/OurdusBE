@@ -27,7 +27,7 @@ public class OrderController {
     private OrderService orderService;
     private UserService userService;
 
-    @PostMapping("/t/w/payment")
+    @GetMapping("/t/w/payment")
     public ApiResult<PaymentUserDTO> payment(HttpServletRequest req){
         Long userId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId")));
         User user = userService.getUserInfo(userId);
