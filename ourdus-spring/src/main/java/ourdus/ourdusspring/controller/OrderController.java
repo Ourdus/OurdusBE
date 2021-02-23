@@ -27,6 +27,7 @@ public class OrderController {
     public ApiResult<PaymentResult> payment(HttpServletRequest req){
         Long userid = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId"))); //id 받아오기
         //TODO userService에서 이름, 전화번호, 유저 주소 목록 불러오기
+
         return null;
     }
 

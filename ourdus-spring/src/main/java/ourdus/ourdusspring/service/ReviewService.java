@@ -60,4 +60,9 @@ public class ReviewService {
     public void delete(Long reviewId){
         reviewRepository.deleteById(reviewId);
     }
+
+    public boolean checkUser(Long tokenUserId, Long reviewId){
+        Review review = findOne(reviewId);
+        return tokenUserId == review.getUserId();
+    }
 }
