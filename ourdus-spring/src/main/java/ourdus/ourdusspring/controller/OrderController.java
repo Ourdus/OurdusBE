@@ -1,49 +1,60 @@
 package ourdus.ourdusspring.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ourdus.ourdusspring.common.ApiResult;
+import ourdus.ourdusspring.domain.Order;
+import ourdus.ourdusspring.domain.User;
+import ourdus.ourdusspring.dto.OrderDTO;
 import ourdus.ourdusspring.dto.OrderForm;
-import ourdus.ourdusspring.dto.PaymentResult;
+import ourdus.ourdusspring.dto.PaymentUserDTO;
 import ourdus.ourdusspring.service.JwtService;
 import ourdus.ourdusspring.service.OrderService;
+import ourdus.ourdusspring.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 import static ourdus.ourdusspring.common.ApiResult.OK;
 
 @RestController
 @RequestMapping("api")
+@RequiredArgsConstructor
 public class OrderController {
 
-    @Autowired
     private JwtService jwtService;
-
-    @Autowired
     private OrderService orderService;
+    private UserService userService;
 
-    @PostMapping("/t/w/payment")
-    public ApiResult<PaymentResult> payment(HttpServletRequest req){
-        Long userid = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId"))); //id 받아오기
-        //TODO userService에서 이름, 전화번호, 유저 주소 목록 불러오기
-        return null;
+    @GetMapping("/t/w/payment")
+    public ApiResult<PaymentUserDTO> payment(HttpServletRequest req){
+        Long userId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId")));
+        User user = userService.getUserInfo(userId);
+        return OK(new PaymentUserDTO(user));
     }
 
     @PostMapping("/t/w/payment/order")
     public ApiResult<Long> order(HttpServletRequest req, List<OrderForm> orderForms, int orderPrice, String orderAccount){
-        Long userId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId"))); //id 받아오기
+        Long userId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId")));
         return OK(orderService.order(userId, orderForms, orderPrice, orderAccount));
     }
 
 
     @GetMapping("/t/w/me/order/payment")
-    public ApiResult<List<PaymentResult>> paymentList(HttpServletRequest req){
-        return null;
+    public ApiResult<List<OrderDTO>> viewOrderList(HttpServletRequest req){
+        Long userId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId")));
+        List<Order> orderList = orderService.findAllByUserId(userId);
+        List<OrderDTO> orderDTOS = new ArrayList<>();
+        orderList.stream().forEach(order -> {
+            orderDTOS.add(new OrderDTO(order));
+        });
+        return OK(orderDTOS);
     }
 
     @GetMapping("/t/w/me/order/payment/detail/{order_id}")
-    public ApiResult<?> paymentDetail(@PathVariable("order_id") Long orderId){
+    public ApiResult<?> viewOrderDetail(@PathVariable("order_id") Long orderId){
+        //여기서는 OrderDTO에서 좀더 세부적인 정보들, orderForm의 내용들이나 배송받는 주소나 등등... 형식 좀더 고민해보고 넣어야할듯
         return null;
     }
 }

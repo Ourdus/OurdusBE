@@ -8,6 +8,7 @@ import ourdus.ourdusspring.common.ApiResult;
 import ourdus.ourdusspring.domain.Review;
 import ourdus.ourdusspring.dto.ReviewDTO;
 import ourdus.ourdusspring.service.JwtService;
+import ourdus.ourdusspring.service.OrderService;
 import ourdus.ourdusspring.service.ReviewService;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class ReviewController {
 
     private final JwtService jwtService;
     private final ReviewService reviewService;
+    private final OrderService orderService;
 
     @GetMapping("w/product/{product_id}/review")
     public ApiResult<List<ReviewDTO>> viewProductReviewList(@PathVariable("product_id") Long product_Id, @RequestParam("page")int page, @RequestParam("size")int size){
@@ -54,22 +56,29 @@ public class ReviewController {
     }
 
     @PostMapping("/t/w/review/new")
-    public ApiResult<ReviewDTO> writeReview(@RequestBody ReviewDTO reviewDTO){
-        //TODO 리뷰 작성시 Jwt토큰 확인해서 해당 userid에 orderdetailId가 존재하는지 체크
+    public ApiResult<ReviewDTO> writeReview(/*HttpServletRequest req,*/ @RequestBody ReviewDTO reviewDTO){
+        /*Long toeknUserid = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId")));
+        if(!orderService.userOrderCheck(toeknUserid, reviewDTO.getOrderDetailId()))
+            new ForbiddenException("접근할 수 없는 사용자입니다.");*/
+
         Review review = reviewService.write(reviewDTO.getContent(), reviewDTO.getRate(), reviewDTO.getOrderDetailId());
         return OK(new ReviewDTO(review));
     }
 
     @PostMapping("/t/w/review/{review_id}/edit")
-    public ApiResult<ReviewDTO> editReview(@RequestBody ReviewDTO reviewDTO, @PathVariable("review_id") Long reviewId){
-        //TODO 리뷰 수정시 Jwt토큰 확인해서 해당 userid 받아서 review의 findbyuserid구현해서 존재하는지 체크
+    public ApiResult<ReviewDTO> editReview(/* HttpServletRequest req,*/ @RequestBody ReviewDTO reviewDTO, @PathVariable("review_id") Long reviewId){
+        /*Long toeknUserid = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId")));
+        if(!reviewService.checkUser(toeknUserid, reviewDTO.getId()))
+            new ForbiddenException("접근할 수 없는 사용자입니다.");*/
         Review review = reviewService.update(reviewDTO.getContent(), reviewDTO.getRate(), reviewId);
         return OK(new ReviewDTO(review));
     }
 
     @PostMapping("/t/w/review/{review_id}/delete")
-    public ApiResult<String> deleteReview(@PathVariable("review_id") Long reviewId){
-        //TODO 리뷰 삭제시 Jwt토큰 확인해서 해당 userid 받아서 review의 findbyuserid구현해서 존재하는지 체크
+    public ApiResult<String> deleteReview(/* HttpServletRequest req,*/ @PathVariable("review_id") Long reviewId){
+        /*Long toeknUserid = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId")));
+        if(!reviewService.checkUser(toeknUserid, reviewDTO.getId()))
+            new ForbiddenException("접근할 수 없는 사용자입니다.");*/
         reviewService.delete(reviewId);
         return OK("리뷰가 삭제되었습니다.");
     }

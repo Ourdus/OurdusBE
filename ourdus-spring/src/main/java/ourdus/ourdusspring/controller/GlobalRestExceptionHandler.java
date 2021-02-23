@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ourdus.ourdusspring.common.ApiResult;
+import ourdus.ourdusspring.common.ForbiddenException;
 
 import java.util.NoSuchElementException;
 
@@ -36,7 +37,10 @@ public class GlobalRestExceptionHandler {
     }
 
 
-
+    @ExceptionHandler(value = {ForbiddenException.class})
+    public ResponseEntity<?> ForbiddenError(Exception e){
+        return newResponse(e, HttpStatus.FORBIDDEN);
+    }
 
 
 }
