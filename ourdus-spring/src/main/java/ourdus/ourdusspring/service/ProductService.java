@@ -1,7 +1,9 @@
 package ourdus.ourdusspring.service;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -117,4 +119,16 @@ public class ProductService {
 //        }
         return "comment delete success";
     }
+
+    public List<Product> popularList ()
+    {
+        Sort sort=sortByrate();
+        return productRepository.findAll(sort);
+    }
+
+    private Sort sortByrate()
+    {
+        return Sort.by(Sort.Direction.DESC,"rate");
+    }
+
 }

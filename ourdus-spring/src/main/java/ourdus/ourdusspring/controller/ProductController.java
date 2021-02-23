@@ -121,4 +121,16 @@ public class ProductController {
                                            @PathVariable("comment_id")Long commentId){
         return OK(productService.removeComment(commentId/*,productId*/));
     }
+
+    @GetMapping("product/popular")
+    public ApiResult<List<ProductDTO>> viewPopularProductList(){
+        List <Product> productList = productService.popularList();
+        List<ProductDTO> productDTOList=new ArrayList<ProductDTO>();
+        if(productList!=null){
+            productList.stream().forEach(product -> {
+                productDTOList.add(new ProductDTO(product));
+            });
+        }
+        return OK(productDTOList);
+    }
 }

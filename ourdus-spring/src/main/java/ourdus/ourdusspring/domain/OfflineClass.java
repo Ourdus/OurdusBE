@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import ourdus.ourdusspring.dto.OfflineClassDTO;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -114,6 +115,9 @@ public class OfflineClass {
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name="SMALL_CATEGORY_ID")
     private OfflineClassSmallCategory offlineClassSmallCategory;
+
+    @OneToMany(mappedBy = "offlineClass")
+    private List<CReservation> cReservationList;
 
 
     public Long getId() {

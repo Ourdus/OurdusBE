@@ -240,3 +240,29 @@ CREATE TABLE online_class
     FOREIGN KEY (online_category_id) REFERENCES online_class_category (online_category_id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 
+CREATE TABLE c_reservation
+(
+    booking_id  bigint NOT NULL auto_increment,
+    class_id bigint NOT NULL,
+    dates datetime NULL default current_timestamp(),
+    times datetime NULL default current_timestamp(),
+    user_no int NULL,
+    reservation_flag boolean NULL,
+    PRIMARY KEY(booking_id),
+    FOREIGN KEY (class_id) REFERENCES offline_class (class_id) ON DELETE RESTRICT ON UPDATE RESTRICT
+);
+
+CREATE TABLE c_order
+(
+    order_id  bigint NOT NULL auto_increment,
+    user_id  bigint  NOT NULL,
+    booking_id bigint NOT NULL,
+    class_id bigint NOT NULL,
+    PRIMARY KEY(order_id),
+    FOREIGN KEY (booking_id) REFERENCES c_reservation (booking_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
+    FOREIGN KEY (class_id) REFERENCES c_reservation (class_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
+    FOREIGN KEY(user_id) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE RESTRICT
+);
+
+
+
