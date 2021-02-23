@@ -34,7 +34,7 @@ public class OfflineClassComment {
     }
 
     //연관관계 매핑
-    public void setOfflineClassComment(OfflineClass offlineClass){
+    public void setOfflineClass(OfflineClass offlineClass){
         if(this.offlineClass!=null){
             this.offlineClass.getCommentList().remove(this);
         }

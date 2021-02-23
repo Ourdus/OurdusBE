@@ -138,7 +138,7 @@ public class OfflineClass {
     //연관관계 메서드
     public void addComment(OfflineClassComment comment){
         commentList.add(comment);
-        comment.setOfflineClassComment(this);
+        comment.setOfflineClass(this);
     }
 
     public Long getId() {

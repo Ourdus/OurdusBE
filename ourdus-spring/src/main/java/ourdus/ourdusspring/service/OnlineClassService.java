@@ -22,6 +22,8 @@ public class OnlineClassService {
     private final UserRepository userRepository;
     private final OnlineClassCommentRepository onlineClassCommentRepository;
 
+
+
     public List<OnlineClass> findall(){
         return onlineClassRepository.findAll();
     }

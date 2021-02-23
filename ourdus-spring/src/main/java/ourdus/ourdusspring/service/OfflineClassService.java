@@ -1,9 +1,11 @@
 package ourdus.ourdusspring.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ourdus.ourdusspring.controller.OfflineClassController;
 import ourdus.ourdusspring.domain.*;
+import ourdus.ourdusspring.repository.OfflineClassCommentRepository;
 import ourdus.ourdusspring.repository.OfflineClassRepository;
 import ourdus.ourdusspring.repository.OfflineClassSmallCategoryRepository;
 import ourdus.ourdusspring.repository.UserRepository;
@@ -14,19 +16,13 @@ import java.util.Optional;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class OfflineClassService {
 
     private final OfflineClassRepository offlineClassRepository;
     private final UserRepository userRepository;
     private final OfflineClassSmallCategoryRepository offlineClassSmallCategory;
-
-
-    public OfflineClassService (OfflineClassRepository offlineClassRepository,UserRepository userRepository,OfflineClassSmallCategoryRepository offlineClassSmallCategory)
-    {
-        this.offlineClassRepository=offlineClassRepository;
-        this.userRepository = userRepository;
-        this.offlineClassSmallCategory=offlineClassSmallCategory;
-    }
+    private final OfflineClassCommentRepository offlineClassCommentRepository;
 
     public List<OfflineClass> findAll() {return offlineClassRepository.findAll();}
 
@@ -81,6 +77,22 @@ public class OfflineClassService {
         result.setMax(offlineClass.getMax());
         result.setPurchase(offlineClass.getPurchase());
         return result;
+    }
+
+    public OfflineClassComment addComment(OfflineClassComment comment, Long classId, Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(()->new NoSuchElementException("해당하는 유저가 없습니다."));
+        OfflineClass offlineClass = offlineClassRepository.findById(classId)
+                .orElseThrow(()->new NoSuchElementException("해당하는 클래스가 없습니다."));
+        comment.setOfflineClass(offlineClass);
+        comment.setUser(user);
+        offlineClassCommentRepository.save(comment);
+        return comment;
+    }
+
+    public String removeComment(Long commentId) {
+        offlineClassCommentRepository.deleteById(commentId);
+        return "comment delete success";
     }
 
 }
