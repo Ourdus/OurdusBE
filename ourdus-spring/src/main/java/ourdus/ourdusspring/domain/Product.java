@@ -57,9 +57,11 @@ public class Product {
 //    @OneToMany(mappedBy="product") //TODO option의 단방향 참조 추가는 option의 정보가 있을때 가능하므로, 해당 정보들 크롤링 혹은 더미데이터를 넣은 후에 진행
 //    private List<ProductParentOpiton> pOptions = new LinkedList<>();
 
+    @OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST)
+    private List<ProductImage> imageList = new ArrayList<>();
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST)
-    private List<Review> reviews = new ArrayList<Review>();
+    private List<Review> reviewList = new ArrayList<Review>();
   
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Comment> commentList = new ArrayList<Comment>();
@@ -88,12 +90,18 @@ public class Product {
     *  평균 별점인 product의 rate = (rate+추가된 별점)/리뷰수 로 결정된다. */
     public void insertReview(Review review){
         reviewNum++;
-        rate = (rate + review.getRate()) / reviews.size();
+        rate = (rate + review.getRate()) / reviewList.size();
     }
+
+    public void addImage(ProductImage productImage){
+        imageList.add(productImage);
+        productImage.setProduct(this);
+    }
+
 
     //연관관계메소드
     public void addReview(Review review){
-        reviews.add(review);
+        reviewList.add(review);
         insertReview(review);
         review.setProduct(this);
     }
