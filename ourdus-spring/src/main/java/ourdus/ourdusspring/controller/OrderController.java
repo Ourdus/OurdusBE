@@ -46,4 +46,6 @@ public class OrderController {
     public ApiResult<?> paymentDetail(@PathVariable("order_id") Long orderId){
         return null;
     }
+
+
 }
