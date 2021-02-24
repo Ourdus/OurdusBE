@@ -3,9 +3,13 @@ package ourdus.ourdusspring.dto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ourdus.ourdusspring.domain.Comment;
 import ourdus.ourdusspring.domain.OnlineClass;
+import ourdus.ourdusspring.domain.OnlineClassComment;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -42,6 +46,8 @@ public class OnlineClassDTO {
 
     private Long categoryId;
 
+    private List<OnlineClassCommentDTO> commentList = new ArrayList<>();
+
     public OnlineClassDTO(OnlineClass onlineClass) {
         this.id = onlineClass.getId();
         this.name = onlineClass.getName();
@@ -58,5 +64,8 @@ public class OnlineClassDTO {
         this.image = onlineClass.getImage();
         this.authorId = onlineClass.getAuthor().getId();
         this.categoryId = onlineClass.getCategory().getId();
+        for(OnlineClassComment comment : onlineClass.getCommentList()){
+            this.commentList.add(new OnlineClassCommentDTO(comment));
+        }
     }
 }

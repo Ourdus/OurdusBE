@@ -10,6 +10,8 @@ import ourdus.ourdusspring.dto.OnlineClassDTO;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -71,6 +73,24 @@ public class OnlineClass {
     @ManyToOne
     @JoinColumn(name="ONLINE_CATEGORY_ID")
     private OnlineClassCategory category;
+
+    @OneToMany(mappedBy = "onlineClass", cascade = CascadeType.ALL)
+    private List<OnlineClassComment> commentList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "onlineClass", cascade = CascadeType.PERSIST)
+    private List<OnlineClassReview> reviews = new ArrayList<>();
+
+    //연관관계메소드
+    public void addReview(OnlineClassReview review){
+        reviews.add(review);
+        review.setOnlineClassReview(this);
+    }
+
+    //연관관계 메서드
+    public void addComment(OnlineClassComment comment){
+        commentList.add(comment);
+        comment.setOnlineClass(this);
+    }
 
     public void changePrepareFlag(boolean prepareFlag) {
         this.prepareFlag = prepareFlag;
