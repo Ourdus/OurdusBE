@@ -30,6 +30,7 @@ public class OfflineClassDTO {
     private int like;
     private int rate;
     private Long categoryId;
+    private String author_name;
 
     public Long getId() {
         return id;
@@ -143,6 +144,15 @@ public class OfflineClassDTO {
         this.categoryId = categoryId;
     }
 
+    public String getAuthor_name() {
+        return author_name;
+    }
+
+    public void setAuthor_name(String author_name) {
+        this.author_name = author_name;
+    }
+
+
     public OfflineClassDTO (OfflineClass offlineClass)
     {
         this.id=offlineClass.getId();
@@ -159,6 +169,7 @@ public class OfflineClassDTO {
         this.rate=offlineClass.getRate();
         this.price=offlineClass.getPrice();
         this.categoryId=offlineClass.getOfflineClassSmallCategory().getId();
+        this.author_name=offlineClass.getAuthor().getName();
     }
 
 }
