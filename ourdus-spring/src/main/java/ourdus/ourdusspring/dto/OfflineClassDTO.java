@@ -5,10 +5,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ourdus.ourdusspring.domain.OfflineClass;
+import ourdus.ourdusspring.domain.OfflineClassImage;
 import ourdus.ourdusspring.domain.OfflineClassSmallCategory;
 import ourdus.ourdusspring.domain.User;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -31,6 +34,7 @@ public class OfflineClassDTO {
     private int rate;
     private Long categoryId;
     private String author_name;
+    private List<String> imageList = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -170,6 +174,10 @@ public class OfflineClassDTO {
         this.price=offlineClass.getPrice();
         this.categoryId=offlineClass.getOfflineClassSmallCategory().getId();
         this.author_name=offlineClass.getAuthor().getName();
+
+        for(OfflineClassImage image: offlineClass.getImageList()){
+            this.imageList.add(image.getImage());
+        }
     }
 
 }

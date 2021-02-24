@@ -265,5 +265,14 @@ CREATE TABLE c_order
     FOREIGN KEY(user_id) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 
+CREATE TABLE offlineclass_image
+(
+    image_id   bigint       NOT NULL AUTO_INCREMENT,
+    class_id bigint       NOT NULL,
+    image      varchar(100) NOT NULL,
+    PRIMARY KEY (image_id),
+    FOREIGN KEY (class_id) REFERENCES offline_class (class_id) ON DELETE RESTRICT ON UPDATE RESTRICT
+);
+
 
 

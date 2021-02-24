@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import ourdus.ourdusspring.dto.OfflineClassDTO;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -13,6 +14,63 @@ import java.util.List;
 @Getter
 @Table(name="OFFLINE_CLASS")
 public class OfflineClass {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="CLASS_ID")
+    private Long id;
+
+    @Column(name="CLASS_NAME")
+    private String name;
+
+    @Column(name="CLASS_PRICE")
+    private int price;
+
+    @Column(name="CLASS_DESCRIPTION")
+    private String description;
+
+    @Column(name="CLASS_HIT")
+    private int hit;
+
+    @Column(name="CLASS_PURCHASE")
+    private int purchase;
+
+    @Column(name="CLASS_DURATION")
+    private int duration;
+
+    @Column(name="CLASS_LEVEL")
+    private String level;
+
+    @Column(name="CLASS_PLACE")
+    private String place;
+
+    @Column(name="USER_MAX")
+    private int max;
+
+    @Column(name="CLASS_LIKE")
+    private int like;
+
+    @Column(name="CLASS_RATE")
+    private int rate;
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name="AUTHOR_ID")
+    private User author;
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name="SMALL_CATEGORY_ID")
+    private OfflineClassSmallCategory offlineClassSmallCategory;
+
+    @OneToMany(mappedBy = "offlineClass")
+    private List<CReservation> cReservationList;
+
+    @OneToMany(mappedBy = "offlineClass", cascade = CascadeType.PERSIST)
+    private List<OfflineClassImage> imageList = new ArrayList<>();
+
+    public void addImage(OfflineClassImage Image){
+        imageList.add(Image);
+        Image.setClass(this);
+    }
 
     public void setId(Long id) {
         this.id = id;
@@ -69,56 +127,6 @@ public class OfflineClass {
     public void setOfflineClassSmallCategory(OfflineClassSmallCategory offlineClassSmallCategory) {
         this.offlineClassSmallCategory = offlineClassSmallCategory;
     }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="CLASS_ID")
-    private Long id;
-
-    @Column(name="CLASS_NAME")
-    private String name;
-
-    @Column(name="CLASS_PRICE")
-    private int price;
-
-    @Column(name="CLASS_DESCRIPTION")
-    private String description;
-
-    @Column(name="CLASS_HIT")
-    private int hit;
-
-    @Column(name="CLASS_PURCHASE")
-    private int purchase;
-
-    @Column(name="CLASS_DURATION")
-    private int duration;
-
-    @Column(name="CLASS_LEVEL")
-    private String level;
-
-    @Column(name="CLASS_PLACE")
-    private String place;
-
-    @Column(name="USER_MAX")
-    private int max;
-
-    @Column(name="CLASS_LIKE")
-    private int like;
-
-    @Column(name="CLASS_RATE")
-    private int rate;
-
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name="AUTHOR_ID")
-    private User author;
-
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name="SMALL_CATEGORY_ID")
-    private OfflineClassSmallCategory offlineClassSmallCategory;
-
-    @OneToMany(mappedBy = "offlineClass")
-    private List<CReservation> cReservationList;
-
 
     public Long getId() {
         return id;
