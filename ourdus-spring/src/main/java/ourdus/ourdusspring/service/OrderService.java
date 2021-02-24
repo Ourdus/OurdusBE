@@ -68,4 +68,9 @@ public class OrderService {
 
        return order.getId();
     }
+
+    public boolean userOrderCheck(Long checkUserId, Long orderDetailId){
+        OrderDetail detail = findDetaillOne(orderDetailId);
+        return checkUserId == detail.getOrder().getUser().getId();
+    }
 }

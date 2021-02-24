@@ -247,6 +247,7 @@ CREATE TABLE online_class_video
     online_class_video_content varchar(100) NULL,
     PRIMARY KEY (online_class_video_id),
     FOREIGN KEY (online_class_id) REFERENCES online_class (online_class_id) ON DELETE RESTRICT ON UPDATE RESTRICT
+
 );
 
 CREATE TABLE online_class_comment
@@ -300,3 +301,4 @@ CREATE TABLE offline_class_review
 --     FOREIGN KEY (offline_order_detail_id) REFERENCES offline_order_detail (offline_order_detail_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
     FOREIGN KEY (class_id) REFERENCES offline_class (class_id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
+
