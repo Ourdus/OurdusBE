@@ -16,12 +16,10 @@ public class OnlineClassCommentDTO {
     private Long id;
     private String content;
     private String userName;
-    private Long userId;
 
     public OnlineClassCommentDTO(OnlineClassComment comment) {
         this.id = comment.getId();
         this.content = comment.getContent();
         this.userName = comment.getUser().getName();
-        this.userId = comment.getUser().getId();
     }
 }

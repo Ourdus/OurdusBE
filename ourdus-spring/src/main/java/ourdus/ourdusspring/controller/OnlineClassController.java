@@ -38,7 +38,7 @@ public class OnlineClassController {
         return OK(onlineClassDTOS);
     }
 
-    @GetMapping("/oc{class_id}")
+    @GetMapping("/oc/{class_id}")
     public ApiResult<OnlineClassDTO> viewOneOC(@PathVariable("class_id") Long classId){
         return OK(new OnlineClassDTO(onlineClassService.findOne(classId)));
     }
@@ -73,10 +73,11 @@ public class OnlineClassController {
         return OK(new OnlineClassDTO(onlineClassService.update(onlineClassDTO.getCategoryId(), classId, onlineClass)));
     }
 
-    @PostMapping("/t/oc/{class_id}/comment")
-    public ApiResult<OnlineClassCommentDTO> addComment(HttpServletRequest req, @PathVariable("class_id") Long classId,
+    @PostMapping("/oc/{class_id}/comment")
+    public ApiResult<OnlineClassCommentDTO> addComment(/*HttpServletRequest req,*/ @PathVariable("class_id") Long classId,
                                                        @RequestBody OnlineClassCommentDTO commentDTO){
-        Long userId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId")));
+//        Long userId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId")));
+        Long userId = 1L;
         OnlineClassComment comment = OnlineClassComment.createBuilder()
                 .content(commentDTO.getContent())
                 .build();

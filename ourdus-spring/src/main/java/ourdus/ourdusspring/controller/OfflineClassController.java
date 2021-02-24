@@ -105,10 +105,11 @@ public class OfflineClassController {
         return OK(new OfflineClassDTO(offlineClassService.update(offlineClass,class_id)));
     }
 
-    @PostMapping("/t/c/{class_id}/comment")
-    public ApiResult<OfflineClassCommentDTO> addComment(HttpServletRequest req, @PathVariable("class_id") Long classId,
+    @PostMapping("/c/{class_id}/comment")
+    public ApiResult<OfflineClassCommentDTO> addComment(/*HttpServletRequest req,*/ @PathVariable("class_id") Long classId,
                                                        @RequestBody OfflineClassCommentDTO commentDTO){
-        Long userId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId")));
+//        Long userId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId")));
+        Long userId = 1L;
         OfflineClassComment comment = OfflineClassComment.createBuilder()
                 .content(commentDTO.getContent())
                 .build();
