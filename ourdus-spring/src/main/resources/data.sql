@@ -28,6 +28,15 @@ INSERT INTO product(product_id, author_id, category_id, product_name) VALUES (nu
 INSERT INTO product(product_id, author_id, category_id, product_name) VALUES (null, 11, 1, 'product11_by_test1');
 INSERT INTO product(product_id, author_id, category_id, product_name, product_info) VALUES (null, 12, 1, 'product12_by_test1', '작품내용입니다.');
 
+INSERT INTO product_image(image_id, product_id, image) VALUES (null, 1, '이미지1');
+INSERT INTO product_image(image_id, product_id, image) VALUES (null, 1, '이미지2');
+INSERT INTO product_image(image_id, product_id, image) VALUES (null, 1, '이미지3');
+INSERT INTO product_image(image_id, product_id, image) VALUES (null, 2, '이미지4');
+INSERT INTO product_image(image_id, product_id, image) VALUES (null, 2, '이미지5');
+INSERT INTO product_image(image_id, product_id, image) VALUES (null, 2, '이미지6');
+INSERT INTO product_image(image_id, product_id, image) VALUES (null, 3, '이미지7');
+
+
 INSERT INTO product_parent_option(product_parent_option_id, product_id, option_name) VALUES (null, 1, '1큰옵션1');
 INSERT INTO product_parent_option(product_parent_option_id, product_id, option_name) VALUES (null, 1, '1큰옵션2');
 INSERT INTO product_parent_option(product_parent_option_id, product_id, option_name) VALUES (null, 2, '2큰옵션1');
@@ -112,4 +121,26 @@ INSERT INTO online_class(online_class_id, online_category_id, author_id, online_
 INSERT INTO online_class(online_class_id, online_category_id, author_id, online_class_name, online_class_price, online_class_description, online_class_duration, online_class_level) VALUES(null,2,2, '온라인작품3', 3000, '3온라인작품설명', 300, '어려울걸');
 INSERT INTO online_class(online_class_id, online_category_id, author_id, online_class_name, online_class_price, online_class_description, online_class_duration, online_class_level) VALUES(null,2,3, '온라인작품4', 4000, '4온라인작품설명', 400, '보통');
 
+INSERT INTO online_class_comment(online_comment_id, online_comment_content, online_class_id,user_id) VALUES(null,'첫번째 온라인클래스 댓글1',1,1);
+INSERT INTO online_class_comment(online_comment_id, online_comment_content, online_class_id,user_id) VALUES(null,'첫번째 온라인클래스 댓글2',1,2);
+INSERT INTO online_class_comment(online_comment_id, online_comment_content, online_class_id,user_id) VALUES(null,'두번째 온라인클래스 댓글1',2,3);
+INSERT INTO online_class_comment(online_comment_id, online_comment_content, online_class_id,user_id) VALUES(null,'세번째 온라인클래스 댓글1',3,1);
+INSERT INTO online_class_comment(online_comment_id, online_comment_content, online_class_id,user_id) VALUES(null,'두번째 온라인클래스 댓글2',2,2);
+INSERT INTO online_class_comment(online_comment_id, online_comment_content, online_class_id,user_id) VALUES(null,'첫번째 온라인클래스 댓글3',1,4);
 
+INSERT INTO offline_class_comment(offline_comment_id, offline_comment_content, class_id,user_id) VALUES(null,'첫번째 오프라인클래스 댓글1',1,1);
+INSERT INTO offline_class_comment(offline_comment_id, offline_comment_content, class_id,user_id) VALUES(null,'첫번째 오프라인클래스 댓글2',1,2);
+INSERT INTO offline_class_comment(offline_comment_id, offline_comment_content,class_id,user_id) VALUES(null,'두번째 오프라인클래스 댓글1',2,3);
+INSERT INTO offline_class_comment(offline_comment_id, offline_comment_content, class_id,user_id) VALUES(null,'세번째 오프라인클래스 댓글1',3,1);
+INSERT INTO offline_class_comment(offline_comment_id, offline_comment_content, class_id,user_id) VALUES(null,'두번째 오프라인클래스 댓글2',2,2);
+INSERT INTO offline_class_comment(offline_comment_id, offline_comment_content, class_id,user_id) VALUES(null,'첫번째 오프라인클래스 댓글3',1,4);
+
+INSERT INTO online_class_review(user_id, online_class_id, online_review_content, online_review_rate) VALUES(1, 1, '쓸만해요', 50);
+INSERT INTO online_class_review(user_id, online_class_id, online_review_content, online_review_rate) VALUES(1, 2, '좋아해요', 45);
+INSERT INTO online_class_review(user_id, online_class_id, online_review_content, online_review_rate) VALUES(2, 1, '별로야', 44);
+INSERT INTO online_class_review(user_id, online_class_id, online_review_content, online_review_rate) VALUES(2, 3, '그냥저냥', 25);
+
+INSERT INTO offline_class_review(user_id, class_id, offline_review_content, offline_review_rate) VALUES(1, 1, '쓸만해요', 50);
+INSERT INTO offline_class_review(user_id, class_id, offline_review_content, offline_review_rate) VALUES(1, 2, '좋아해요', 45);
+INSERT INTO offline_class_review(user_id, class_id, offline_review_content, offline_review_rate) VALUES(2, 1, '별로야', 44);
+INSERT INTO offline_class_review(user_id, class_id, offline_review_content, offline_review_rate) VALUES(2, 3, '그냥저냥', 25);

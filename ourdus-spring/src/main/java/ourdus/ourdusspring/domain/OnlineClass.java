@@ -71,10 +71,10 @@ public class OnlineClass {
     @JoinColumn(name="ONLINE_CATEGORY_ID")
     private OnlineClassCategory category;
 
-    @OneToMany(mappedBy = "OnlineClass", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "onlineClass", cascade = CascadeType.ALL)
     private List<OnlineClassComment> commentList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "OnlineClass", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "onlineClass", cascade = CascadeType.PERSIST)
     private List<OnlineClassReview> reviews = new ArrayList<>();
 
     //연관관계메소드

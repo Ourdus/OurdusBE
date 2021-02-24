@@ -32,7 +32,7 @@ CREATE TABLE product
     author_id          bigint      NOT NULL,
     category_id        bigint      NOT NULL,
     product_name       varchar(20) NOT NULL,
-    product_info       MEDIUMTEXT  NULL,
+    product_info       MEDIUMTEXT NULL,
     product_price      int         NOT NULL DEFAULT 0,
     product_rate       int         NOT NULL DEFAULT 0,
     product_review_num int         NOT NULL DEFAULT 0,
@@ -191,7 +191,6 @@ CREATE TABLE c_small_category
     PRIMARY KEY (small_category_id),
     FOREIGN KEY (big_category_id) REFERENCES c_big_category (big_category_id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
-
 CREATE TABLE offline_class
 (
     class_id          bigint NOT NULL auto_increment,
@@ -212,7 +211,6 @@ CREATE TABLE offline_class
     FOREIGN KEY (author_id) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
     FOREIGN KEY (small_category_id) REFERENCES c_small_category (small_category_id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
-
 CREATE TABLE online_class_category
 (
     online_category_id   bigint      NOT NULL AUTO_INCREMENT,
@@ -222,22 +220,83 @@ CREATE TABLE online_class_category
 
 CREATE TABLE online_class
 (
-    online_class_id          bigint        NOT NULL auto_increment,
-    online_category_id       bigint        NOT NULL,
-    author_id                bigint        NOT NULL,
-    online_class_name        varchar(100)  NOT NULL,
-    online_class_price       int           NOT NULL DEFAULT 0 NOT NULL,
-    online_class_description varchar(1000) NOT NULL,
-    online_class_duration    int           NOT NULL DEFAULT 0 NOT NULL,
-    online_class_level       varchar(20)   NOT NULL,
-    online_class_start_date  datetime      NOT NULL default current_timestamp(),
-    preparation_flag         boolean       NOT NULL DEFAULT false,
-    online_class_hit         int           NOT NULL DEFAULT 0,
-    online_class_purchase    int           NOT NULL DEFAULT 0,
-    online_class_like        int           NOT NULL DEFAULT 0,
-    online_class_rate        int           NOT NULL DEFAULT 0,
+    online_class_id          bigint       NOT NULL auto_increment,
+    online_category_id       bigint       NOT NULL,
+    author_id                bigint       NOT NULL,
+    online_class_name        varchar(100) NOT NULL,
+    online_class_price       int          NOT NULL DEFAULT 0 NOT NULL,
+    online_class_description MEDIUMTEXT   NOT NULL,
+    online_class_duration    int          NOT NULL DEFAULT 0 NOT NULL,
+    online_class_level       varchar(20)  NOT NULL,
+    online_class_start_date  datetime     NOT NULL default current_timestamp(),
+    preparation_flag         boolean      NOT NULL DEFAULT false,
+    online_class_hit         int          NOT NULL DEFAULT 0,
+    online_class_purchase    int          NOT NULL DEFAULT 0,
+    online_class_like        int          NOT NULL DEFAULT 0,
+    online_class_rate        int          NOT NULL DEFAULT 0,
+    online_class_image       varchar(100) NULL,
     PRIMARY KEY (online_class_id),
     FOREIGN KEY (author_id) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
     FOREIGN KEY (online_category_id) REFERENCES online_class_category (online_category_id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 
+CREATE TABLE online_class_video
+(
+    online_class_video_id      bigint NOT NULL AUTO_INCREMENT,
+    online_class_id            bigint NOT NULL,
+    online_class_video_content varchar(100) NULL,
+    PRIMARY KEY (online_class_video_id),
+    FOREIGN KEY (online_class_id) REFERENCES online_class (online_class_id) ON DELETE RESTRICT ON UPDATE RESTRICT
+);
+
+CREATE TABLE online_class_comment
+(
+    online_comment_id      bigint      NOT NULL AUTO_INCREMENT,
+    online_comment_content varchar(50) NOT NULL,
+    online_class_id      bigint      NOT NULL,
+    user_id         bigint      NOT NULL,
+    PRIMARY KEY (online_comment_id ),
+    FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
+    FOREIGN KEY (online_class_id) REFERENCES online_class (online_class_id) ON DELETE RESTRICT ON UPDATE RESTRICT
+);
+
+CREATE TABLE offline_class_comment
+(
+    offline_comment_id      bigint      NOT NULL AUTO_INCREMENT,
+    offline_comment_content varchar(50) NOT NULL,
+    class_id      bigint      NOT NULL,
+    user_id         bigint      NOT NULL,
+    PRIMARY KEY (offline_comment_id ),
+    FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
+    FOREIGN KEY (class_id) REFERENCES offline_class (class_id) ON DELETE RESTRICT ON UPDATE RESTRICT
+);
+
+CREATE TABLE online_class_review
+(
+    online_review_id       bigint       NOT NULL AUTO_INCREMENT,
+    user_id         bigint       NOT NULL,
+--     online_order_detail_id bigint       NOT NULL,
+    online_class_id      bigint       NOT NULL,
+    online_review_content  varchar(500) NOT NULL,
+    online_review_date     datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+    online_review_rate     int          NOT NULL DEFAULT 50,
+    PRIMARY KEY (online_review_id),
+    FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
+--     FOREIGN KEY (online_order_detail_id) REFERENCES order_detail (order_detail_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
+    FOREIGN KEY (online_class_id) REFERENCES online_class (online_class_id) ON DELETE RESTRICT ON UPDATE RESTRICT
+);
+
+CREATE TABLE offline_class_review
+(
+    offline_review_id       bigint       NOT NULL AUTO_INCREMENT,
+    user_id         bigint       NOT NULL,
+--     online_order_detail_id bigint       NOT NULL,
+    class_id      bigint       NOT NULL,
+    offline_review_content  varchar(500) NOT NULL,
+    offline_review_date     datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+    offline_review_rate     int          NOT NULL DEFAULT 50,
+    PRIMARY KEY (offline_review_id),
+    FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
+--     FOREIGN KEY (offline_order_detail_id) REFERENCES offline_order_detail (offline_order_detail_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
+    FOREIGN KEY (class_id) REFERENCES offline_class (class_id) ON DELETE RESTRICT ON UPDATE RESTRICT
+);

@@ -117,10 +117,10 @@ public class OfflineClass {
     @JoinColumn(name="SMALL_CATEGORY_ID")
     private OfflineClassSmallCategory offlineClassSmallCategory;
 
-    @OneToMany(mappedBy = "OfflineClass", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "offlineClass", cascade = CascadeType.ALL)
     private List<OfflineClassComment> commentList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "OfflineClass", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "offlineClass", cascade = CascadeType.PERSIST)
     private List<OfflineClassReview> reviews = new ArrayList<>();
 
     /* rate는 작품의 평균 별점을 의미하며, (쉽게 다루기위해 저장은 *10인 int값으로 해준다.)

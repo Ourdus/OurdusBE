@@ -26,7 +26,7 @@ public class OfflineClassComment {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name="OFFLINE_CLASS_ID")
+    @JoinColumn(name="CLASS_ID")
     private OfflineClass offlineClass;
 
     public void setUser(User user) {
