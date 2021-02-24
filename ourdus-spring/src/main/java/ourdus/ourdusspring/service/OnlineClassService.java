@@ -63,6 +63,7 @@ public class OnlineClassService {
         result.setDuration(onlineClass.getDuration());
         result.setLevel(onlineClass.getLevel());
         result.setStartDate(onlineClass.getStartDate());
+        result.setImage(onlineClass.getImage());
         return result;
     }
 
@@ -81,4 +82,9 @@ public class OnlineClassService {
         onlineClassCommentRepository.deleteById(commentId);
         return "comment delete success";
     }
+    public boolean checkAuthor(Long userId, Long classId){
+        OnlineClass onlineClass = findOne(classId);
+        return userId == onlineClass.getAuthor().getId();
+    }
+
 }

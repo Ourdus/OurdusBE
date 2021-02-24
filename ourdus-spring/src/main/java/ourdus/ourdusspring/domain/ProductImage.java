@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.sql.Blob;
 
 @Entity
 @Table(name="PRODUCT_IMAGE")
@@ -21,4 +20,12 @@ public class ProductImage {
 
     @Column(name="image")
     private String image;
+
+    public void setProduct(Product product) {
+        if(this.product != null){
+            this.product.getImageList().remove(this);
+        }
+        this.product = product;
+        product.getImageList().add(this);
+    }
 }

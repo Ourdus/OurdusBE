@@ -89,4 +89,10 @@ class ReviewServiceTest {
             Review findReivew = reviewService.findOne(review.getId());
         });
     }
+
+    @Test
+    void 접근하려는유저가_리뷰를작성한유저인지테스트(){
+        Long userId = 1L;
+        assertThat(reviewService.checkUser(userId, 1L),is(true));
+    }
 }

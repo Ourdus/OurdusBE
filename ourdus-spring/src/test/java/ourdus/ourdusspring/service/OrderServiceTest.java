@@ -12,6 +12,9 @@ import ourdus.ourdusspring.dto.OrderForm;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @Transactional
@@ -56,6 +59,11 @@ class OrderServiceTest {
 
         List<OrderDetail> orderDetailList = orderService.findDetailAllByOrderId(orderId);
         System.out.println(orderDetailList);
+    }
+
+    @Test
+    void 접근하려는유저가_주문정보의유저와_동일한지_테스트(){
+        assertThat(orderService.userOrderCheck(userId, 1L), is(true));
     }
 
 }
