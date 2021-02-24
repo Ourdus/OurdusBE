@@ -61,7 +61,13 @@ public class OnlineClassService {
         result.setDuration(onlineClass.getDuration());
         result.setLevel(onlineClass.getLevel());
         result.setStartDate(onlineClass.getStartDate());
+        result.setImage(onlineClass.getImage());
         return result;
+    }
+
+    public boolean checkAuthor(Long userId, Long classId){
+        OnlineClass onlineClass = findOne(classId);
+        return userId == onlineClass.getAuthor().getId();
     }
 
 }

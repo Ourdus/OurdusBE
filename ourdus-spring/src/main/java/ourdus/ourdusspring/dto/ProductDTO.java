@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ourdus.ourdusspring.domain.Comment;
 import ourdus.ourdusspring.domain.Product;
+import ourdus.ourdusspring.domain.ProductImage;
+import ourdus.ourdusspring.domain.Review;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,10 +32,15 @@ public class ProductDTO {
     private String authorName;
     private int optionNum;
     private List<CommentDTO> commentList = new ArrayList<CommentDTO>();
+    private List<ReviewDTO> reviewDTOList = new ArrayList<>();
+    private List<String> imageList = new ArrayList<>();
 
     //연관관계 메서드
     public void addComment(Comment comment){
         this.commentList.add(new CommentDTO(comment));
+    }
+    public void addReview(Review review){
+        this.reviewDTOList.add(new ReviewDTO(review));
     }
 
     public ProductDTO(Product product) {
@@ -52,6 +59,12 @@ public class ProductDTO {
         this.optionNum = product.getOptionNum();
         for(Comment comment : product.getCommentList()){
             this.addComment(comment);
+        }
+        for(Review review : product.getReviewList()){
+            this.addReview(review);
+        }
+        for(ProductImage image: product.getImageList()){
+            this.imageList.add(image.getImage());
         }
     }
 }

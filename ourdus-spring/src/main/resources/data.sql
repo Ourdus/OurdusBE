@@ -28,6 +28,15 @@ INSERT INTO product(product_id, author_id, category_id, product_name) VALUES (nu
 INSERT INTO product(product_id, author_id, category_id, product_name) VALUES (null, 11, 1, 'product11_by_test1');
 INSERT INTO product(product_id, author_id, category_id, product_name, product_info) VALUES (null, 12, 1, 'product12_by_test1', '작품내용입니다.');
 
+INSERT INTO product_image(image_id, product_id, image) VALUES (null, 1, '이미지1');
+INSERT INTO product_image(image_id, product_id, image) VALUES (null, 1, '이미지2');
+INSERT INTO product_image(image_id, product_id, image) VALUES (null, 1, '이미지3');
+INSERT INTO product_image(image_id, product_id, image) VALUES (null, 2, '이미지4');
+INSERT INTO product_image(image_id, product_id, image) VALUES (null, 2, '이미지5');
+INSERT INTO product_image(image_id, product_id, image) VALUES (null, 2, '이미지6');
+INSERT INTO product_image(image_id, product_id, image) VALUES (null, 3, '이미지7');
+
+
 INSERT INTO product_parent_option(product_parent_option_id, product_id, option_name) VALUES (null, 1, '1큰옵션1');
 INSERT INTO product_parent_option(product_parent_option_id, product_id, option_name) VALUES (null, 1, '1큰옵션2');
 INSERT INTO product_parent_option(product_parent_option_id, product_id, option_name) VALUES (null, 2, '2큰옵션1');

@@ -50,10 +50,10 @@ public class Review {
     //연관관계 메소드
     public void setProduct(Product product) {
         if(this.product != null){
-            this.product.getReviews().remove(this);
+            this.product.getReviewList().remove(this);
         }
         this.product = product;
-        product.getReviews().add(this);
+        product.getReviewList().add(this);
         product.insertReview(this);
     }
 

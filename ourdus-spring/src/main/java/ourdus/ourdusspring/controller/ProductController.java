@@ -10,6 +10,7 @@ import ourdus.ourdusspring.domain.Product;
 import ourdus.ourdusspring.dto.CommentDTO;
 import ourdus.ourdusspring.dto.ProductDTO;
 import ourdus.ourdusspring.dto.ProductRequest;
+import ourdus.ourdusspring.dto.ProductSimpleDTO;
 import ourdus.ourdusspring.service.JwtService;
 import ourdus.ourdusspring.service.ProductService;
 
@@ -36,28 +37,28 @@ public class ProductController {
     }
 
     @GetMapping("/w/product")
-    public ApiResult<List<ProductDTO>> viewAllProductList(@RequestParam("page")int page, @RequestParam("size")int size){
+    public ApiResult<List<ProductSimpleDTO>> viewAllProductList(@RequestParam("page")int page, @RequestParam("size")int size){
        Page <Product> productList = productService.findAll(PageRequest.of(page,size));
-        List<ProductDTO> productDTOList=new ArrayList<ProductDTO>();
+        List<ProductSimpleDTO> productSimpleDTOList=new ArrayList<>();
         if(productList!=null){
             productList.stream().forEach(product -> {
-                productDTOList.add(new ProductDTO(product));
+                productSimpleDTOList.add(new ProductSimpleDTO(product));
             });
         }
-        return OK(productDTOList);
+        return OK(productSimpleDTOList);
     }
 
 
     @GetMapping("/w/category/{category_id}")
-    public ApiResult<List<ProductDTO>> viewCategoryProductList(@PathVariable("category_id") Long categoryId) {
+    public ApiResult<List<ProductSimpleDTO>> viewCategoryProductList(@PathVariable("category_id") Long categoryId) {
         Optional<List<Product>> productByCategory = productService.findAllByCategory(categoryId);
-        List<ProductDTO> productDTOList = new ArrayList<ProductDTO>();
+        List<ProductSimpleDTO> productSimpleDTOList = new ArrayList<>();
         if (productByCategory.isPresent()) {
             productByCategory.get().stream().forEach(product -> {
-                productDTOList.add(new ProductDTO(product));
+                productSimpleDTOList.add(new ProductSimpleDTO(product));
             });
         }
-        return OK(productDTOList);
+        return OK(productSimpleDTOList);
     }
 
     @GetMapping("/w/product/{product_id}")
