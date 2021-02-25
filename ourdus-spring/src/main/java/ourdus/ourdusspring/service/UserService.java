@@ -3,7 +3,6 @@ package ourdus.ourdusspring.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ourdus.ourdusspring.domain.Address;
-import ourdus.ourdusspring.domain.Product;
 import ourdus.ourdusspring.domain.User;
 import ourdus.ourdusspring.repository.AddressRepository;
 import ourdus.ourdusspring.repository.UserRepository;
@@ -94,14 +93,14 @@ public class UserService {
         return "Address delete success";
     }
 
-    public String editAddress(Long address_id,Address address) {
+    public Address editAddress(Long address_id,Address address) {
         Address result  = addressRepository.findById(address_id).orElseThrow(() -> new NoSuchElementException("address update failed") );
         result.setName(address.getName());
         result.setPhone(address.getPhone());
         result.setZipcode(address.getZipcode());
         result.setAddressMain(address.getAddressMain());
         result.setAddressSub(address.getAddressSub());
-        return "address update success";
+        return result;
     }
 
     public List<Address> getAddressList(Long userId) {
