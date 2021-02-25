@@ -3,6 +3,7 @@ package ourdus.ourdusspring.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import ourdus.ourdusspring.dto.AddressDTO;
 
 import javax.persistence.*;
 
@@ -62,12 +63,12 @@ public class Address {
     }
 
     @Builder(builderClassName = "createBuilder", builderMethodName = "createBuilder")
-    public Address(String name, String phone, String zipcode, String addressMain, String addressSub) {
-        this.name = name;
-        this.phone = phone;
-        this.zipcode = zipcode;
-        this.addressMain = addressMain;
-        this.addressSub = addressSub;
+    public Address(AddressDTO addressDTO) {
+        this.name = addressDTO.getName();
+        this.phone = addressDTO.getPhone();
+        this.zipcode = addressDTO.getZipcode();
+        this.addressMain = addressDTO.getAddressMain();
+        this.addressSub = addressDTO.getAddressSub();
     }
 
     @Builder(builderClassName = "defaultBuilder", builderMethodName = "defaultBuilder")

@@ -10,6 +10,8 @@ import ourdus.ourdusspring.dto.OnlineClassDTO;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -61,6 +63,9 @@ public class OnlineClass {
     @ColumnDefault("0")
     private int rate;
 
+    @Column(name="ONLINE_CLASS_IMAGE")
+    private String image;
+
     @ManyToOne
     @JoinColumn(name="AUTHOR_ID")
     private User author;
@@ -68,6 +73,24 @@ public class OnlineClass {
     @ManyToOne
     @JoinColumn(name="ONLINE_CATEGORY_ID")
     private OnlineClassCategory category;
+
+    @OneToMany(mappedBy = "onlineClass", cascade = CascadeType.ALL)
+    private List<OnlineClassComment> commentList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "onlineClass", cascade = CascadeType.PERSIST)
+    private List<OnlineClassReview> reviews = new ArrayList<>();
+
+    //연관관계메소드
+    public void addReview(OnlineClassReview review){
+        reviews.add(review);
+        review.setOnlineClassReview(this);
+    }
+
+    //연관관계 메서드
+    public void addComment(OnlineClassComment comment){
+        commentList.add(comment);
+        comment.setOnlineClass(this);
+    }
 
     public void changePrepareFlag(boolean prepareFlag) {
         this.prepareFlag = prepareFlag;
@@ -101,6 +124,10 @@ public class OnlineClass {
         this.category = category;
     }
 
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     @Builder(builderClassName = "defaultBuilder", builderMethodName = "defaultBuilder")
     public OnlineClass(OnlineClass createOnlineClass, User author, OnlineClassCategory category) {
         this.name = createOnlineClass.getName();
@@ -110,6 +137,7 @@ public class OnlineClass {
         this.level = createOnlineClass.getLevel();
         this.startDate = createOnlineClass.getStartDate();
         this.prepareFlag = createOnlineClass.isPrepareFlag();
+        this.image = createOnlineClass.getImage();
         this.author = author;
         this.category = category;
     }
@@ -123,6 +151,7 @@ public class OnlineClass {
         this.level = onlineClassDTO.getLevel();
         this.startDate = onlineClassDTO.getStartDate();
         this.prepareFlag = onlineClassDTO.isPrepareFlag();
+        this.image = onlineClassDTO.getImage();
     }
 
     @Override
@@ -140,6 +169,7 @@ public class OnlineClass {
                 .append("purchase", purchase)
                 .append("like", like)
                 .append("rate", rate)
+                .append("image", image)
                 .append("author", author.getId())
                 .append("category", category.getId())
                 .toString();

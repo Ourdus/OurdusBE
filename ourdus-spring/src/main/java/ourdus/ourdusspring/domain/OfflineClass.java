@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import ourdus.ourdusspring.dto.OfflineClassDTO;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -115,6 +117,29 @@ public class OfflineClass {
     @JoinColumn(name="SMALL_CATEGORY_ID")
     private OfflineClassSmallCategory offlineClassSmallCategory;
 
+    @OneToMany(mappedBy = "offlineClass", cascade = CascadeType.ALL)
+    private List<OfflineClassComment> commentList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "offlineClass", cascade = CascadeType.PERSIST)
+    private List<OfflineClassReview> reviews = new ArrayList<>();
+
+    /* rate는 작품의 평균 별점을 의미하며, (쉽게 다루기위해 저장은 *10인 int값으로 해준다.)
+     *  각 리뷰(별점을 부여)가 등록될때마다 작품의 평균 별점도 바뀌어 저장되어야한다.
+     *  별점은 총 1-5점 사이로, int값으로 저장되므로 10-50점으로 저장된다.
+     *  평균 별점인 product의 rate = (rate+추가된 별점)/리뷰수 로 결정된다. */
+
+
+    //연관관계메소드
+    public void addReview(OfflineClassReview review){
+        reviews.add(review);
+        review.setOfflineClassReview(this);
+    }
+
+    //연관관계 메서드
+    public void addComment(OfflineClassComment comment){
+        commentList.add(comment);
+        comment.setOfflineClass(this);
+    }
 
     public Long getId() {
         return id;

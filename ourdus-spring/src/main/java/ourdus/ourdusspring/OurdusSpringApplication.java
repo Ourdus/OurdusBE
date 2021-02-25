@@ -26,8 +26,8 @@ public class OurdusSpringApplication implements WebMvcConfigurer {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry){
 		addExcludeList();
-		registry.addInterceptor(jwtInterceptor)
-				.addPathPatterns("/api/t/**");
+//		registry.addInterceptor(jwtInterceptor)
+//				.addPathPatterns("/api/t/**");
 //				.addPathPatterns("/api/w/product/**/comment/**")
 //				.addPathPatterns("/api/w/review/**")
 //				.excludePathPatterns(excludeList); //적용 제외 경로
