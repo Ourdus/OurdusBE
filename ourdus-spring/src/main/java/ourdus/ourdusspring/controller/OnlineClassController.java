@@ -3,12 +3,11 @@ package ourdus.ourdusspring.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ourdus.ourdusspring.common.ApiResult;
-import ourdus.ourdusspring.domain.Comment;
 import ourdus.ourdusspring.domain.OnlineClass;
 import ourdus.ourdusspring.domain.OnlineClassComment;
-import ourdus.ourdusspring.dto.CommentDTO;
 import ourdus.ourdusspring.dto.OnlineClassCommentDTO;
 import ourdus.ourdusspring.dto.OnlineClassDTO;
+import ourdus.ourdusspring.dto.OnlineClassSimpleDTO;
 import ourdus.ourdusspring.service.JwtService;
 import ourdus.ourdusspring.service.OnlineClassService;
 
@@ -27,15 +26,15 @@ public class OnlineClassController {
     private JwtService jwtService;
 
     @GetMapping("/oc")
-    public ApiResult<List<OnlineClassDTO>> viewAllOC(){
+    public ApiResult<List<OnlineClassSimpleDTO>> viewAllOC(){
         List<OnlineClass> onlineClasses = onlineClassService.findall();
-        List<OnlineClassDTO> onlineClassDTOS = new ArrayList<>();
+        List<OnlineClassSimpleDTO> onlineClassSimpleDTOS = new ArrayList<>();
         if(onlineClasses != null){
             onlineClasses.stream().forEach(onlineClass -> {
-                onlineClassDTOS.add(new OnlineClassDTO(onlineClass));
+                onlineClassSimpleDTOS.add(new OnlineClassSimpleDTO(onlineClass));
             });
         }
-        return OK(onlineClassDTOS);
+        return OK(onlineClassSimpleDTOS);
     }
 
     @GetMapping("/oc/{class_id}")
@@ -45,7 +44,7 @@ public class OnlineClassController {
 
     @PostMapping("/t/oc/new")
     public ApiResult<OnlineClassDTO> saveOC(HttpServletRequest req, @RequestBody OnlineClassDTO onlineClassDTO){
-       // Long authorId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId")));
+//        Long authorId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId")));
         Long authorId = 1L;
         OnlineClass onlineClass = OnlineClass.createBuilder()
                                             .onlineClassDTO(onlineClassDTO)
@@ -89,7 +88,7 @@ public class OnlineClassController {
 
 
     @DeleteMapping("/t/oc/comment/{comment_id}")
-    public ApiResult<String> deleteAddress(@PathVariable("comment_id")Long commentId){
+    public ApiResult<String> deleteComment(@PathVariable("comment_id")Long commentId){
         return OK(onlineClassService.removeComment(commentId));
     }
 }

@@ -268,8 +268,6 @@ CREATE TABLE preparation
 --
 -- );
 
-);
-
 CREATE TABLE online_class_comment
 (
     online_comment_id      bigint      NOT NULL AUTO_INCREMENT,
