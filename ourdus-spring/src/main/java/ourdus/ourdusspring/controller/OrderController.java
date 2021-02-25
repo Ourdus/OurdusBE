@@ -1,6 +1,7 @@
 package ourdus.ourdusspring.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ourdus.ourdusspring.common.ApiResult;
 import ourdus.ourdusspring.domain.Order;
@@ -23,7 +24,9 @@ import static ourdus.ourdusspring.common.ApiResult.OK;
 @RequiredArgsConstructor
 public class OrderController {
 
+    @Autowired
     private JwtService jwtService;
+
     private OrderService orderService;
     private UserService userService;
 

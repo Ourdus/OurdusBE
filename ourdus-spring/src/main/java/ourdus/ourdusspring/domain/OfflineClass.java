@@ -132,7 +132,7 @@ public class OfflineClass {
     //연관관계메소드
     public void addReview(OfflineClassReview review){
         reviews.add(review);
-        review.setOfflineClassReview(this);
+        review.setOfflineClass(this);
     }
 
     //연관관계 메서드

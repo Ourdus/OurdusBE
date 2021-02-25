@@ -28,9 +28,11 @@ public class OnlineClassReview {
     @Column(name="ONLINE_REVIEW_RATE")
     @ColumnDefault("0")
     private int rate;   //rate, 부여할 수 있는 별점의 범위는 10~50이다.
-    @ManyToOne
-    @JoinColumn(name="ORDER_DETAIL_ID")
-    private OrderDetail orderDetail;
+
+//    @ManyToOne
+//    @JoinColumn(name="ORDER_DETAIL_ID")
+//    private OrderDetail orderDetail;
+
     @ManyToOne
     @JoinColumn(name="ONLINE_CLASS_ID")
     private OnlineClass onlineClass;
@@ -38,6 +40,10 @@ public class OnlineClassReview {
     @ManyToOne
     @JoinColumn(name="USER_ID")
     private User user;
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public void setContent(String content) {
         this.content = content;
@@ -48,19 +54,18 @@ public class OnlineClassReview {
     }
 
     //연관관계 메소드
-    public void setOnlineClassReview(OnlineClass onlineClass) {
+    public void setOnlineClass(OnlineClass onlineClass) {
         if(this.onlineClass != null){
             this.onlineClass.getReviews().remove(this);
         }
         this.onlineClass = onlineClass;
-        onlineClass.getReviews().add(this);
     }
 
     @Builder(builderClassName = "defaultBuilder", builderMethodName = "defaultBuilder")
     public OnlineClassReview(String content, int rate, OrderDetail orderDetail) {
         this.content = content;
         this.rate = rate;
-        this.orderDetail = orderDetail;
+//        this.orderDetail = orderDetail;
         this.user = orderDetail.getOrder().getUser();
     }
 

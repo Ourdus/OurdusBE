@@ -21,6 +21,7 @@ public class ProductSimpleDTO {
     private String authorName;
     private String mainImage;
 
+
     public ProductSimpleDTO(Product product) {
         this.id = product.getId();
         this.name = product.getName();

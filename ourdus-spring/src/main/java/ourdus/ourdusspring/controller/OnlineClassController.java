@@ -1,6 +1,7 @@
 package ourdus.ourdusspring.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ourdus.ourdusspring.common.ApiResult;
 import ourdus.ourdusspring.domain.Comment;
@@ -23,7 +24,10 @@ import static ourdus.ourdusspring.common.ApiResult.OK;
 @RequiredArgsConstructor
 public class OnlineClassController {
 
+
     private final OnlineClassService onlineClassService;
+
+    @Autowired
     private JwtService jwtService;
 
     @GetMapping("/oc")
@@ -76,19 +80,18 @@ public class OnlineClassController {
         return OK(new OnlineClassDTO(onlineClassService.update(onlineClassDTO.getCategoryId(), classId, onlineClass)));
     }
 
-    @PostMapping("/oc/{class_id}/comment")
-    public ApiResult<OnlineClassCommentDTO> addComment(/*HttpServletRequest req,*/ @PathVariable("class_id") Long classId,
+    @PostMapping("/t/oc/{class_id}/comment")
+    public ApiResult<OnlineClassCommentDTO> addComment(HttpServletRequest req,@PathVariable("class_id") Long classId,
                                                        @RequestBody OnlineClassCommentDTO commentDTO){
-//        Long userId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId")));
-        Long userId = 1L;
+        Long userId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId")));
+//        Long userId = 1L;
         OnlineClassComment comment = OnlineClassComment.createBuilder()
                 .content(commentDTO.getContent())
                 .build();
         return OK(new OnlineClassCommentDTO(onlineClassService.addComment(comment,classId,userId)));
     }
 
-
-    @DeleteMapping("/t/oc/comment/{comment_id}")
+    @DeleteMapping("/oc/comment/{comment_id}")
     public ApiResult<String> deleteAddress(@PathVariable("comment_id")Long commentId){
         return OK(onlineClassService.removeComment(commentId));
     }

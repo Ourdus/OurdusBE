@@ -32,7 +32,7 @@ public class OfflineClassDTO {
     private Long authorId;
     private Long categoryId;
     private List<OfflineClassCommentDTO> commentList = new ArrayList<>();
-
+    private List<OfflineClassReviewDTO> reviewList = new ArrayList<>();
     public OfflineClassDTO (OfflineClass offlineClass) {
         this.id=offlineClass.getId();
         this.description=offlineClass.getDescription();
@@ -50,6 +50,9 @@ public class OfflineClassDTO {
         this.categoryId=offlineClass.getOfflineClassSmallCategory().getId();
         for(OfflineClassComment comment : offlineClass.getCommentList()){
             this.commentList.add(new OfflineClassCommentDTO(comment));
+        }
+        for(OfflineClassReview review : offlineClass.getReviews()){
+            this.reviewList.add(new OfflineClassReviewDTO(review));
         }
     }
 }

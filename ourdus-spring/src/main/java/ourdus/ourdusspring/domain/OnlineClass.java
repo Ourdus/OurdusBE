@@ -83,7 +83,7 @@ public class OnlineClass {
     //연관관계메소드
     public void addReview(OnlineClassReview review){
         reviews.add(review);
-        review.setOnlineClassReview(this);
+        review.setOnlineClass(this);
     }
 
     //연관관계 메서드
