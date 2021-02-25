@@ -8,6 +8,9 @@ import ourdus.ourdusspring.domain.OfflineClass;
 import ourdus.ourdusspring.domain.OfflineClassComment;
 import ourdus.ourdusspring.domain.OnlineClassComment;
 import ourdus.ourdusspring.domain.Promotion;
+import ourdus.ourdusspring.dto.OfflineClassDTO;
+import ourdus.ourdusspring.dto.OfflineClassRequest;
+import ourdus.ourdusspring.dto.PromotionDTO;
 import ourdus.ourdusspring.dto.*;
 import ourdus.ourdusspring.service.JwtService;
 import ourdus.ourdusspring.service.OfflineClassService;
@@ -24,6 +27,9 @@ import static ourdus.ourdusspring.common.ApiResult.OK;
 @RequestMapping("api")
 public class OfflineClassController {
 
+    @Autowired
+    private JwtService jwtService;
+
     private OfflineClassService offlineClassService;
 
     @Autowired
@@ -34,7 +40,8 @@ public class OfflineClassController {
         this.offlineClassService=offlineClassService;
     }
 
-    @GetMapping("/c")
+
+    @GetMapping("c")
     public ApiResult<List<OfflineClassDTO>> viewOfflineclassList(){
         List <OfflineClass> offlineClassList=offlineClassService.findAll();
         List <OfflineClassDTO> offlineClassDTOList=new ArrayList<>();
@@ -46,13 +53,17 @@ public class OfflineClassController {
         }
         return OK(offlineClassDTOList);
     }
-    @GetMapping("/c/{class_id}")
+
+    @GetMapping("c/{class_id}")
     public ApiResult<OfflineClassDTO> viewOfflineClass(@PathVariable("class_id") Long classId){
         return OK(new OfflineClassDTO(offlineClassService.findOne(classId)));
     }
 
+
+
     @PostMapping("/t/c/new")
     public ApiResult<OfflineClassDTO> save(/*HttpServletRequest req,*/@RequestBody OfflineClassRequest offlineClassRequest)
+
     {
 //         Long authorId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId")));
         Long authorId = 1L;
@@ -75,14 +86,16 @@ public class OfflineClassController {
         return OK(new OfflineClassDTO(offlineClassService.save(offlineClass,offlineClassRequest.getCategoryId(),offlineClassRequest.getAuthorId())));
     }
 
-    @DeleteMapping("/t/c/{class_id}/delete")
+    @DeleteMapping("t/c/{class_id}/delete")
     public ApiResult<String> delete(HttpServletRequest req,@PathVariable("class_id") Long class_id){
         // Long authorId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId")));
         Long authorId = 1L;
         return OK(offlineClassService.delete(class_id));
     }
 
-    @PostMapping("/t/c/{class_id}/edit")
+
+    @PostMapping("t/c/{class_id}/edit")
+
     public ApiResult<OfflineClassDTO> modify(HttpServletRequest req, @PathVariable("class_id") Long class_id, @RequestBody OfflineClassRequest offlineClassRequest)
     {
         // Long authorId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId")));

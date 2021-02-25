@@ -15,6 +15,76 @@ import java.util.List;
 @Table(name="OFFLINE_CLASS")
 public class OfflineClass {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="CLASS_ID")
+    private Long id;
+
+    @Column(name="CLASS_NAME")
+    private String name;
+
+    @Column(name="CLASS_PRICE")
+    private int price;
+
+    @Column(name="CLASS_DESCRIPTION")
+    private String description;
+
+    @Column(name="CLASS_HIT")
+    private int hit;
+
+    @Column(name="CLASS_PURCHASE")
+    private int purchase;
+
+    @Column(name="CLASS_DURATION")
+    private int duration;
+
+    @Column(name="CLASS_LEVEL")
+    private String level;
+
+    @Column(name="CLASS_PLACE")
+    private String place;
+
+    @Column(name="USER_MAX")
+    private int max;
+
+    @Column(name="CLASS_LIKE")
+    private int like;
+
+    @Column(name="CLASS_RATE")
+    private int rate;
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name="AUTHOR_ID")
+    private User author;
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name="SMALL_CATEGORY_ID")
+    private OfflineClassSmallCategory offlineClassSmallCategory;
+
+    @OneToMany(mappedBy = "offlineClass")
+    private List<CReservation> cReservationList;
+
+    @OneToMany(mappedBy = "offlineClass", cascade = CascadeType.PERSIST)
+    private List<OfflineClassImage> imageList = new ArrayList<>();
+  
+  
+    @OneToMany(mappedBy = "offlineClass", cascade = CascadeType.ALL)
+    private List<OfflineClassComment> commentList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "offlineClass", cascade = CascadeType.PERSIST)
+    private List<OfflineClassReview> reviews = new ArrayList<>();
+
+    /* rate는 작품의 평균 별점을 의미하며, (쉽게 다루기위해 저장은 *10인 int값으로 해준다.)
+     *  각 리뷰(별점을 부여)가 등록될때마다 작품의 평균 별점도 바뀌어 저장되어야한다.
+     *  별점은 총 1-5점 사이로, int값으로 저장되므로 10-50점으로 저장된다.
+     *  평균 별점인 product의 rate = (rate+추가된 별점)/리뷰수 로 결정된다. */
+
+
+    public void addImage(OfflineClassImage Image){
+        imageList.add(Image);
+        Image.setClass(this);
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -71,63 +141,6 @@ public class OfflineClass {
         this.offlineClassSmallCategory = offlineClassSmallCategory;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="CLASS_ID")
-    private Long id;
-
-    @Column(name="CLASS_NAME")
-    private String name;
-
-    @Column(name="CLASS_PRICE")
-    private int price;
-
-    @Column(name="CLASS_DESCRIPTION")
-    private String description;
-
-    @Column(name="CLASS_HIT")
-    private int hit;
-
-    @Column(name="CLASS_PURCHASE")
-    private int purchase;
-
-    @Column(name="CLASS_DURATION")
-    private int duration;
-
-    @Column(name="CLASS_LEVEL")
-    private String level;
-
-    @Column(name="CLASS_PLACE")
-    private String place;
-
-    @Column(name="USER_MAX")
-    private int max;
-
-    @Column(name="CLASS_LIKE")
-    private int like;
-
-    @Column(name="CLASS_RATE")
-    private int rate;
-
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name="AUTHOR_ID")
-    private User author;
-
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name="SMALL_CATEGORY_ID")
-    private OfflineClassSmallCategory offlineClassSmallCategory;
-
-    @OneToMany(mappedBy = "offlineClass", cascade = CascadeType.ALL)
-    private List<OfflineClassComment> commentList = new ArrayList<>();
-
-    @OneToMany(mappedBy = "offlineClass", cascade = CascadeType.PERSIST)
-    private List<OfflineClassReview> reviews = new ArrayList<>();
-
-    /* rate는 작품의 평균 별점을 의미하며, (쉽게 다루기위해 저장은 *10인 int값으로 해준다.)
-     *  각 리뷰(별점을 부여)가 등록될때마다 작품의 평균 별점도 바뀌어 저장되어야한다.
-     *  별점은 총 1-5점 사이로, int값으로 저장되므로 10-50점으로 저장된다.
-     *  평균 별점인 product의 rate = (rate+추가된 별점)/리뷰수 로 결정된다. */
-
 
     //연관관계메소드
     public void addReview(OfflineClassReview review){
@@ -140,6 +153,7 @@ public class OfflineClass {
         commentList.add(comment);
         comment.setOfflineClass(this);
     }
+
 
     public Long getId() {
         return id;

@@ -116,6 +116,16 @@ INSERT INTO online_class(online_class_id, online_category_id, author_id, online_
 INSERT INTO online_class(online_class_id, online_category_id, author_id, online_class_name, online_class_price, online_class_description, online_class_duration, online_class_level) VALUES(null,2,2, '온라인작품3', 3000, '3온라인작품설명', 300, '어려울걸');
 INSERT INTO online_class(online_class_id, online_category_id, author_id, online_class_name, online_class_price, online_class_description, online_class_duration, online_class_level) VALUES(null,2,3, '온라인작품4', 4000, '4온라인작품설명', 400, '보통');
 
+INSERT INTO c_reservation(booking_id,class_id,user_no) values (null,3,5);
+INSERT INTO c_reservation(booking_id,class_id,user_no) values (null,2,5);
+INSERT INTO c_reservation(booking_id,class_id,user_no) values (null,3,5);
+
+INSERT INTO c_order(order_id,user_id,booking_id,class_id) values (null,2,1,3);
+INSERT INTO c_order(order_id,user_id,booking_id,class_id) values (null,1,1,3);
+INSERT INTO c_order(order_id,user_id,booking_id,class_id) values (null,3,1,3);
+INSERT INTO c_order(order_id,user_id,booking_id,class_id) values (null,5,1,2);
+INSERT INTO c_order(order_id,user_id,booking_id,class_id) values (null,7,1,2);
+
 INSERT INTO online_class_comment(online_comment_id, online_comment_content, online_class_id,user_id) VALUES(null,'첫번째 온라인클래스 댓글1',1,1);
 INSERT INTO online_class_comment(online_comment_id, online_comment_content, online_class_id,user_id) VALUES(null,'첫번째 온라인클래스 댓글2',1,2);
 INSERT INTO online_class_comment(online_comment_id, online_comment_content, online_class_id,user_id) VALUES(null,'두번째 온라인클래스 댓글1',2,3);
@@ -139,3 +149,4 @@ INSERT INTO offline_class_review(user_id, class_id, offline_review_content, offl
 INSERT INTO offline_class_review(user_id, class_id, offline_review_content, offline_review_rate) VALUES(1, 2, '좋아해요', 45);
 INSERT INTO offline_class_review(user_id, class_id, offline_review_content, offline_review_rate) VALUES(2, 1, '별로야', 44);
 INSERT INTO offline_class_review(user_id, class_id, offline_review_content, offline_review_rate) VALUES(2, 3, '그냥저냥', 25);
+
