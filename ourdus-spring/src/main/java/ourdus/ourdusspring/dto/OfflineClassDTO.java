@@ -18,7 +18,6 @@ public class OfflineClassDTO {
 
     private Long id;
     private String name;
-    private Long author_id;
     private int price;
     private String description;
     private int hit;
@@ -29,8 +28,9 @@ public class OfflineClassDTO {
     private int max;
     private int like;
     private int rate;
-    private Long authorId;
+    private String authorName;
     private Long categoryId;
+    private String categoryName;
     private List<OfflineClassCommentDTO> commentList = new ArrayList<>();
     private List<OfflineClassReviewDTO> reviewList = new ArrayList<>();
     public OfflineClassDTO (OfflineClass offlineClass) {
@@ -44,10 +44,11 @@ public class OfflineClassDTO {
         this.max=offlineClass.getMax();
         this.place=offlineClass.getPlace();
         this.purchase=offlineClass.getPurchase();
-        this.author_id=offlineClass.getAuthor().getId();
+        this.authorName=offlineClass.getAuthor().getName();
         this.rate=offlineClass.getRate();
         this.price=offlineClass.getPrice();
         this.categoryId=offlineClass.getOfflineClassSmallCategory().getId();
+        this.categoryName=offlineClass.getOfflineClassSmallCategory().getName();
         for(OfflineClassComment comment : offlineClass.getCommentList()){
             this.commentList.add(new OfflineClassCommentDTO(comment));
         }
