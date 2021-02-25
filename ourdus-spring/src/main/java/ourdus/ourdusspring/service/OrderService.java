@@ -3,28 +3,22 @@ package ourdus.ourdusspring.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ourdus.ourdusspring.domain.Order;
-import ourdus.ourdusspring.domain.OrderDetail;
-import ourdus.ourdusspring.domain.Product;
-import ourdus.ourdusspring.domain.User;
+import ourdus.ourdusspring.domain.*;
 import ourdus.ourdusspring.dto.OrderForm;
-import ourdus.ourdusspring.repository.OrderDetailRepository;
-import ourdus.ourdusspring.repository.OrderRepository;
-import ourdus.ourdusspring.repository.ProductRepository;
-import ourdus.ourdusspring.repository.UserRepository;
+import ourdus.ourdusspring.repository.*;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 @RequiredArgsConstructor
 public class OrderService {
 
     private final OrderRepository orderRepository;
     private final OrderDetailRepository orderDetailRepository;
-    private final UserRepository userRepository;
     private final ProductRepository productRepository;
+    private final UserService userService;
 
 //    public PaymentResult payment(Long userId, List<OrderDetail> orderDetails) {
 //
@@ -40,14 +34,25 @@ public class OrderService {
         return order.getOrderDetails();
     }
 
+    public Order findOne(Long orderId){
+        return orderRepository.findById(orderId).orElseThrow(() -> new NoSuchElementException("찾을 수 없는 주문번호입니다."));
+    }
+
     public OrderDetail findDetaillOne(Long orderdetailId){
         return orderDetailRepository.findById(orderdetailId).orElseThrow(() -> new NoSuchElementException("찾을수 없는 주문상세번호입니다."));
     }
 
-    public Long order(Long userId, List<OrderForm> orderForms, int price, String orderAccount) { //TODO parameter의 orderform 수정하기
-        User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchElementException("유저 정보를 찾을 수 없습니다."));
+    public Order order(Long userId, List<OrderForm> orderForms, Long addressId, Address address, int price, String orderAccount) { //TODO parameter의 orderform 수정하기
+        User user = userService.getUserInfo(userId);
+        Address findAddress;
+        if(addressId == null){
+            findAddress = userService.AddAddress(userId, address);
+        } else {
+            findAddress = userService.editAddress(addressId, address);
+        }
         Order order = Order.createBuilder()
                 .user(user)
+                .address(findAddress)
                 .price(price)
                 .account(orderAccount)
                 .build();
@@ -58,19 +63,18 @@ public class OrderService {
 
             OrderDetail orderDetail = OrderDetail.createBuilder()
                                                 .product(product)
-                                                .optionInfo(orderForm.getOptionInfo())
-                                                .productNum(orderForm.getProductNum())
-                                                .price(orderForm.getProductDetailPrice())
+                                                .orderform(orderForm)
                                                 .build();
             orderDetail.setOrder(order);
             orderDetailRepository.save(orderDetail);
         }
 
-       return order.getId();
+       return order;
     }
 
-    public boolean userOrderCheck(Long checkUserId, Long orderDetailId){
-        OrderDetail detail = findDetaillOne(orderDetailId);
-        return checkUserId == detail.getOrder().getUser().getId();
+    public boolean userOrderCheck(Long checkUserId, Long orderId){
+        Order order = findOne(orderId);
+        return checkUserId == order.getUser().getId();
     }
+
 }
