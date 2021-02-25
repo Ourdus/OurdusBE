@@ -103,11 +103,7 @@ public class UserController {
 //        Long userId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId"))); //id 받아오기
         Long userId = 1L;
         Address address = Address.createBuilder()
-                            .name(addressDTO.getName())
-                            .phone(addressDTO.getPhone())
-                            .zipcode(addressDTO.getZipcode())
-                            .addressMain(addressDTO.getAddressMain())
-                            .addressSub(addressDTO.getAddressSub())
+                            .addressDTO(addressDTO)
                             .build();
         return OK(new AddressDTO(userService.AddAddress(userId, address)));
     }
@@ -119,15 +115,11 @@ public class UserController {
     }
 
     @PostMapping("/t/user/address/{address_id}")
-    public ApiResult<String> editAddress(@PathVariable("address_id") Long address_Id,@RequestBody AddressDTO addressDTO){
+    public ApiResult<AddressDTO> editAddress(@PathVariable("address_id") Long address_Id,@RequestBody AddressDTO addressDTO){
         Address address = Address.createBuilder()
-                .name(addressDTO.getName())
-                .phone(addressDTO.getPhone())
-                .zipcode(addressDTO.getZipcode())
-                .addressMain(addressDTO.getAddressMain())
-                .addressSub(addressDTO.getAddressSub())
+                .addressDTO(addressDTO)
                 .build();
-        return OK(userService.editAddress(address_Id,address));
+        return OK(new AddressDTO(userService.editAddress(address_Id,address)));
     }
 
     @GetMapping("/t/user/address")
