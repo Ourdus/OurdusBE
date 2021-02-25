@@ -18,6 +18,18 @@ CREATE TABLE user
     UNIQUE (user_email)
 );
 
+CREATE TABLE address
+(
+    address_id      bigint      NOT NULL AUTO_INCREMENT,
+    address_name    varchar(20) NOT NULL,
+    address_phone   varchar(30) NOT NULL,
+    address_zipcode varchar(20) NOT NULL,
+    address_main    varchar(50) NOT NULL,
+    address_sub     varchar(50) NOT NULL,
+    user_id         bigint      NOT NULL,
+    PRIMARY KEY (address_id),
+    FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE RESTRICT
+);
 
 CREATE TABLE product_category
 (
@@ -95,11 +107,14 @@ CREATE TABLE orders
 (
     order_id      bigint      NOT NULL AUTO_INCREMENT,
     user_id       bigint      NOT NULL,
+    address_id    bigint      NOT NULL,
     order_date    datetime    NOT NULL DEFAULT CURRENT_TIMESTAMP(),
     order_price   int         NOT NULL DEFAULT 0,
     order_account varchar(50) NOT NULL,
     PRIMARY KEY (order_id),
-    FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE RESTRICT
+    FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
+    FOREIGN KEY (address_id) REFERENCES address (address_id) ON DELETE RESTRICT ON UPDATE RESTRICT
+
 );
 
 CREATE TABLE order_detail
@@ -117,18 +132,7 @@ CREATE TABLE order_detail
     FOREIGN KEY (product_id) REFERENCES product (product_id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 
-CREATE TABLE address
-(
-    address_id      bigint      NOT NULL AUTO_INCREMENT,
-    address_name    varchar(20) NOT NULL,
-    address_phone   varchar(30) NOT NULL,
-    address_zipcode varchar(20) NOT NULL,
-    address_main    varchar(50) NOT NULL,
-    address_sub     varchar(50) NOT NULL,
-    user_id         bigint      NOT NULL,
-    PRIMARY KEY (address_id),
-    FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE RESTRICT
-);
+
 
 create table promotion
 (
@@ -253,10 +257,10 @@ CREATE TABLE online_class_video
 
 CREATE TABLE preparation
 (
-    preparation_id bigint NOT NULL AUTO_INCREMENT,
-    online_class_id bigint NOT NULL,
-    preparation_price int NOT NULL,
-    preparation_stock int NOT NULL,
+    preparation_id    bigint NOT NULL AUTO_INCREMENT,
+    online_class_id   bigint NOT NULL,
+    preparation_price int    NOT NULL,
+    preparation_stock int    NOT NULL,
     PRIMARY KEY (preparation_id),
     FOREIGN KEY (online_class_id) REFERENCES online_class (online_class_id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
