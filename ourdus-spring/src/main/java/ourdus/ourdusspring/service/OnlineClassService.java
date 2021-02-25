@@ -3,10 +3,9 @@ package ourdus.ourdusspring.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ourdus.ourdusspring.domain.OnlineClass;
-import ourdus.ourdusspring.domain.OnlineClassCategory;
-import ourdus.ourdusspring.domain.User;
+import ourdus.ourdusspring.domain.*;
 import ourdus.ourdusspring.repository.OnlineClassCategoryRepository;
+import ourdus.ourdusspring.repository.OnlineClassCommentRepository;
 import ourdus.ourdusspring.repository.OnlineClassRepository;
 import ourdus.ourdusspring.repository.UserRepository;
 
@@ -21,6 +20,9 @@ public class OnlineClassService {
     private final OnlineClassRepository onlineClassRepository;
     private final OnlineClassCategoryRepository onlineClassCategoryRepository;
     private final UserRepository userRepository;
+    private final OnlineClassCommentRepository onlineClassCommentRepository;
+
+
 
     public List<OnlineClass> findall(){
         return onlineClassRepository.findAll();
@@ -65,6 +67,21 @@ public class OnlineClassService {
         return result;
     }
 
+    public OnlineClassComment addComment(OnlineClassComment comment, Long classId, Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(()->new NoSuchElementException("해당하는 유저가 없습니다."));
+        OnlineClass onlineClass = onlineClassRepository.findById(classId)
+                .orElseThrow(()->new NoSuchElementException("해당하는 클래스가 없습니다."));
+        comment.setOnlineClass(onlineClass);
+        comment.setUser(user);
+        onlineClassCommentRepository.save(comment);
+        return comment;
+    }
+
+    public String removeComment(Long commentId) {
+        onlineClassCommentRepository.deleteById(commentId);
+        return "comment delete success";
+    }
     public boolean checkAuthor(Long userId, Long classId){
         OnlineClass onlineClass = findOne(classId);
         return userId == onlineClass.getAuthor().getId();
