@@ -27,11 +27,11 @@ public class OfflineClassReview {
     @Column(name="OFFLINE_REVIEW_RATE")
     @ColumnDefault("0")
     private int rate;   //rate, 부여할 수 있는 별점의 범위는 10~50이다.
+//    @ManyToOne
+//    @JoinColumn(name="ORDER_DETAIL_ID")
+//    private OrderDetail orderDetail;
     @ManyToOne
-    @JoinColumn(name="ORDER_DETAIL_ID")
-    private OrderDetail orderDetail;
-    @ManyToOne
-    @JoinColumn(name="OFFLINE_CLASS_ID")
+    @JoinColumn(name="CLASS_ID")
     private OfflineClass offlineClass;
 
     @ManyToOne
@@ -47,19 +47,18 @@ public class OfflineClassReview {
     }
 
     //연관관계 메소드
-    public void setOfflineClassReview(OfflineClass offlineClass) {
+    public void setOfflineClass(OfflineClass offlineClass) {
         if(this.offlineClass != null){
             this.offlineClass.getReviews().remove(this);
         }
         this.offlineClass= offlineClass;
-        offlineClass.getReviews().add(this);
     }
 
     @Builder(builderClassName = "defaultBuilder", builderMethodName = "defaultBuilder")
     public OfflineClassReview(String content, int rate, OrderDetail orderDetail) {
         this.content = content;
         this.rate = rate;
-        this.orderDetail = orderDetail;
+//        this.orderDetail = orderDetail;
         this.user = orderDetail.getOrder().getUser();
     }
 

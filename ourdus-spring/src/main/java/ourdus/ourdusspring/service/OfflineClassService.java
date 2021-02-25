@@ -5,10 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ourdus.ourdusspring.controller.OfflineClassController;
 import ourdus.ourdusspring.domain.*;
-import ourdus.ourdusspring.repository.OfflineClassCommentRepository;
-import ourdus.ourdusspring.repository.OfflineClassRepository;
-import ourdus.ourdusspring.repository.OfflineClassSmallCategoryRepository;
-import ourdus.ourdusspring.repository.UserRepository;
+import ourdus.ourdusspring.repository.*;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -23,13 +20,12 @@ public class OfflineClassService {
     private final UserRepository userRepository;
     private final OfflineClassSmallCategoryRepository offlineClassSmallCategory;
     private final OfflineClassCommentRepository offlineClassCommentRepository;
+    private final OfflineClassReviewRepository offlineClassReviewRepository;
 
     public List<OfflineClass> findAll() {return offlineClassRepository.findAll();}
 
-    public Optional<OfflineClass> findOne(Long classID)
-    {
-        Optional<OfflineClass> result= offlineClassRepository.findById(classID);
-        return result;
+    public OfflineClass findOne(Long offlineClassId) {
+        return offlineClassRepository.findById(offlineClassId).orElseThrow(() -> new NoSuchElementException("찾으려는 온라인 클래스가 없습니다."));
     }
 
     public OfflineClass save(OfflineClass offlineClass,Long categoryId, Long authorId)

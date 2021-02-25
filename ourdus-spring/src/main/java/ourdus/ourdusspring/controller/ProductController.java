@@ -83,6 +83,7 @@ public class ProductController {
     }
 
 
+
     @PostMapping("/t/w/product/{product_id}/delete")
     public ApiResult<String> delete(@PathVariable("product_id") Long product_Id){
         return OK(productService.delete(product_Id));
@@ -119,7 +120,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/w/t/product/{product_id}/comment/{comment_id}")
-    public ApiResult<String> deleteAddress(@PathVariable("product_id")Long productId,
+    public ApiResult<String> deleteComment(@PathVariable("product_id")Long productId,
                                            @PathVariable("comment_id")Long commentId){
         return OK(productService.removeComment(commentId/*,productId*/));
     }

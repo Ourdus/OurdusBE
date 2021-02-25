@@ -4,10 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ourdus.ourdusspring.domain.*;
-import ourdus.ourdusspring.repository.OnlineClassCategoryRepository;
-import ourdus.ourdusspring.repository.OnlineClassCommentRepository;
-import ourdus.ourdusspring.repository.OnlineClassRepository;
-import ourdus.ourdusspring.repository.UserRepository;
+import ourdus.ourdusspring.repository.*;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -21,7 +18,7 @@ public class OnlineClassService {
     private final OnlineClassCategoryRepository onlineClassCategoryRepository;
     private final UserRepository userRepository;
     private final OnlineClassCommentRepository onlineClassCommentRepository;
-
+    private final OnlineClassReviewRepository onlineClassReviewRepository;
 
 
     public List<OnlineClass> findall(){
