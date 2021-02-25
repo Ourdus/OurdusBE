@@ -12,23 +12,19 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class OrderDTO {
+public class OrderSimpleDTO {
     private Long id;
     private LocalDateTime orderDate;
     private int price;
-    private String account;
     private List<OrderDetailDTO> orderDetailDTOs;
-    private AddressDTO addressDTO;
 
-    public OrderDTO(Order order) {
+    public OrderSimpleDTO(Order order) {
         this.id = order.getId();
         this.orderDate = order.getOrderDate();
         this.price = order.getPrice();
-        this.account = order.getAccount();
         this.orderDetailDTOs = new ArrayList<>();;
         order.getOrderDetails().stream().forEach(orderDetail -> {
             orderDetailDTOs.add(new OrderDetailDTO(orderDetail));
         });
-        this.addressDTO = new AddressDTO(order.getAddress());
     }
 }

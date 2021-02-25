@@ -38,10 +38,6 @@ import ourdus.ourdusspring.repository.UserRepository;
 
 import java.util.List;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-
 //import ourdus.ourdusspring.repository.SpringDataJpaUserRepository;
 
 @SpringBootTest
@@ -113,23 +109,23 @@ class UserServiceTest {
 
     @Test
     void 주소넣기_및_수정을_테스트(){
-        Address address = Address.createBuilder()
-                                .name("수령인")
-                                .phone("받는사람번호")
-                                .zipcode("우편번호")
-                                .addressMain("메인주소")
-                                .addressSub("서브주소")
-                                .build();
-        Long userId = 1L;
-        주소찾기를_테스트();
-        Address getAddress = userService.AddAddress(userId, address);
-        assertThat(address.getName(), is(equalTo(address.getName())));
-        System.out.println("*---추가");
-        주소찾기를_테스트();
-        String changeName = "바뀐이름";
-        address.setName(changeName);
-        userService.editAddress(getAddress.getId(), address);
-        주소찾기를_테스트();
+//        Address address = Address.createBuilder()
+//                                .name("수령인")
+//                                .phone("받는사람번호")
+//                                .zipcode("우편번호")
+//                                .addressMain("메인주소")
+//                                .addressSub("서브주소")
+//                                .build();
+//        Long userId = 1L;
+//        주소찾기를_테스트();
+//        Address getAddress = userService.AddAddress(userId, address);
+//        assertThat(address.getName(), is(equalTo(address.getName())));
+//        System.out.println("*---추가");
+//        주소찾기를_테스트();
+//        String changeName = "바뀐이름";
+//        address.setName(changeName);
+//        userService.editAddress(getAddress.getId(), address);
+//        주소찾기를_테스트();
 
     }
 

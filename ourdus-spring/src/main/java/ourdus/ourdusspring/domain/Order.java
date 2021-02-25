@@ -26,6 +26,10 @@ public class Order {
     @JoinColumn(name="USER_ID")
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name="ADDRESS_ID")
+    private Address address;
+
     @Column(name = "ORDER_DATE")
     @CreationTimestamp
     private LocalDateTime orderDate;
@@ -33,6 +37,7 @@ public class Order {
     private int price;
     @Column(name="ORDER_ACCOUNT")
     private String account;
+
 
     @OneToMany(mappedBy = "order")
     private List<OrderDetail> orderDetails = new ArrayList<>();
@@ -45,16 +50,18 @@ public class Order {
     }
 
     @Builder(builderMethodName = "createBuilder", builderClassName = "createBuilder")
-    public Order(User user, int price, String account) {
+    public Order(User user, Address address, int price, String account) {
         this.user = user;
+        this.address = address;
         this.price = price;
         this.account = account;
     }
 
     @Builder(builderMethodName = "defaultBuilder", builderClassName = "defaultBuilder")
-    public Order(Long id, User user, LocalDateTime orderDate, int price, String account, List<OrderDetail> orderDetails) {
+    public Order(Long id, User user, Address address, LocalDateTime orderDate, int price, String account, List<OrderDetail> orderDetails) {
         this.id = id;
         this.user = user;
+        this.address = address;
         this.orderDate = orderDate;
         this.price = price;
         this.account = account;

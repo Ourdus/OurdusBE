@@ -4,10 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import ourdus.ourdusspring.domain.OfflineClass;
 import ourdus.ourdusspring.domain.OfflineClassImage;
 import ourdus.ourdusspring.domain.OfflineClassSmallCategory;
 import ourdus.ourdusspring.domain.User;
+import ourdus.ourdusspring.domain.*;
+
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -33,6 +36,7 @@ public class OfflineClassDTO {
     private int like;
     private int rate;
     private Long categoryId;
+
     private String author_name;
     private List<String> imageList = new ArrayList<>();
 
@@ -159,6 +163,11 @@ public class OfflineClassDTO {
 
     public OfflineClassDTO (OfflineClass offlineClass)
     {
+
+    private List<OfflineClassCommentDTO> commentList = new ArrayList<>();
+    private List<OfflineClassReviewDTO> reviewList = new ArrayList<>();
+    public OfflineClassDTO (OfflineClass offlineClass) {
+
         this.id=offlineClass.getId();
         this.description=offlineClass.getDescription();
         this.hit=offlineClass.getHit();
@@ -173,11 +182,18 @@ public class OfflineClassDTO {
         this.rate=offlineClass.getRate();
         this.price=offlineClass.getPrice();
         this.categoryId=offlineClass.getOfflineClassSmallCategory().getId();
+
         this.author_name=offlineClass.getAuthor().getName();
 
         for(OfflineClassImage image: offlineClass.getImageList()){
             this.imageList.add(image.getImage());
+
+        for(OfflineClassComment comment : offlineClass.getCommentList()){
+            this.commentList.add(new OfflineClassCommentDTO(comment));
+        }
+        for(OfflineClassReview review : offlineClass.getReviews()){
+            this.reviewList.add(new OfflineClassReviewDTO(review));
+
         }
     }
-
 }

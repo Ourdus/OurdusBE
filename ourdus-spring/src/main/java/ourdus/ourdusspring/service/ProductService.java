@@ -109,16 +109,8 @@ public class ProductService {
         return product.getCommentList();
     }
 
-    public String removeComment(Long commentId/*,Long productId*/){
+    public String removeComment(Long commentId){
         commentRepository.deleteById(commentId);
-//        Product product = productRepository.findById(productId).get();
-//        if(product.getCommentList().removeIf(comment -> comment.getId().equals(commentId))){
-//            productRepository.save(product);
-//            commentRepository.deleteById(commentId);
-//            return "comment delete success";
-//        }else{
-//            throw new NoSuchElementException("comment delete fail");
-//        }
         return "comment delete success";
     }
 
