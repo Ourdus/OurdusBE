@@ -38,7 +38,7 @@ public class COrderController {
         this.cOrderService=cOrderService;
     }
 
-    @GetMapping("Order")
+    @GetMapping("order")
     public ApiResult<List<COrderDTO>> viewOrderList(){
         List<COrder> cOrderList=cOrderService.findAll();
         List <COrderDTO> cOrderDTOList=new ArrayList<>();
@@ -52,7 +52,7 @@ public class COrderController {
     }
 
 
-    @GetMapping("Order/{user_id}")
+    @GetMapping("order/{user_id}")
     public ApiResult<COrderDTO> viewUserOrder(@PathVariable("user_id") Long userId){
         Optional<COrder> cOrder=cOrderService.findOne(userId);
         cOrder.orElseThrow(()->new NoSuchElementException("해당되는 사용자의 아이디를 찾을 수 없습니다"));
@@ -61,7 +61,7 @@ public class COrderController {
 
 
 
-    @PostMapping("Order/new")
+    @PostMapping("order/new")
     public ApiResult<String> save(HttpServletRequest req, @RequestBody COrderDTO cOrderDTO)
     {
         // Long authorId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId")));
@@ -72,7 +72,7 @@ public class COrderController {
         return OK(cOrderService.save(cOrder,cOrderDTO.getUserId(),cOrderDTO.getBookingId(),cOrderDTO.getClassId()));
     }
 
-    @PostMapping("Order/{user_id}/delete")
+    @PostMapping("order/{user_id}/delete")
     public ApiResult<String> delete(HttpServletRequest req,@PathVariable("user_id") Long userId)
     {
         // Long authorId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId")));

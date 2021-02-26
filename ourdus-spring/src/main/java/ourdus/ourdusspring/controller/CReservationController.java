@@ -35,7 +35,7 @@ public class CReservationController {
         this.cReservationService=cReservationService;
     }
 
-    @PostMapping("")
+    @PostMapping("reservation")
     public ApiResult<List<CReservationDTO>> viewReservationList(){
         List<CReservation> cReservationList=cReservationService.findAll();
         List <CReservationDTO> cReservationDTOList=new ArrayList<>();
