@@ -15,35 +15,22 @@ import java.util.List;
 public class OnlineClassDTO {
 
     private Long id;
-
     private String name;
-
     private int price;
-
     private String description;
-
     private int duration;
-
     private String level;
-
     private LocalDateTime startDate;
-
     private boolean prepareFlag;
-
     private int hit;
-
     private int purchase;
-
     private int like;
-
     private int rate;
-
     private String image;
-
     private Long authorId;
-
+    private String authorName;
     private Long categoryId;
-
+    private String categoryName;
     private List<OnlineClassCommentDTO> commentList = new ArrayList<>();
 
     private List<OnlineClassReviewDTO> reviewList = new ArrayList<>();
@@ -63,7 +50,9 @@ public class OnlineClassDTO {
         this.rate = onlineClass.getRate();
         this.image = onlineClass.getImage();
         this.authorId = onlineClass.getAuthor().getId();
+        this.authorName = onlineClass.getAuthor().getName();
         this.categoryId = onlineClass.getCategory().getId();
+        this.categoryName = onlineClass.getCategory().getName();
         for(OnlineClassComment comment : onlineClass.getCommentList()){
             this.commentList.add(new OnlineClassCommentDTO(comment));
         }

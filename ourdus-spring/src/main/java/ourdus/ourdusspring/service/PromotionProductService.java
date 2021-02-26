@@ -32,9 +32,6 @@ public class PromotionProductService {
         Product product = productRepository.findById(productId).orElseThrow(()-> new NoSuchElementException("해당 작품이 존재하지 않습니다"));
         Promotion promotion = promotionRepository.findById(promotionId).orElseThrow(()->new NoSuchElementException("해당 번호의 프로모션이 존재하지 않습니다"));
 
-        System.out.println(product.getId());
-        System.out.println(product.getName());
-        System.out.println(promotion.getId());
         PromotionProduct pp= PromotionProduct.builder()
                 .product(product)
                 .promotion(promotion)

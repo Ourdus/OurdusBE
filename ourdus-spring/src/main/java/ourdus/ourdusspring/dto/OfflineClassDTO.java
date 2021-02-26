@@ -4,7 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import ourdus.ourdusspring.domain.OfflineClass;
+import ourdus.ourdusspring.domain.OfflineClassImage;
+import ourdus.ourdusspring.domain.OfflineClassSmallCategory;
+import ourdus.ourdusspring.domain.User;
 import ourdus.ourdusspring.domain.*;
+
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -33,6 +39,7 @@ public class OfflineClassDTO {
     private String categoryName;
     private List<OfflineClassCommentDTO> commentList = new ArrayList<>();
     private List<OfflineClassReviewDTO> reviewList = new ArrayList<>();
+    private List<String> imageList = new ArrayList<>();
     public OfflineClassDTO (OfflineClass offlineClass) {
         this.id=offlineClass.getId();
         this.description=offlineClass.getDescription();
@@ -56,4 +63,5 @@ public class OfflineClassDTO {
             this.reviewList.add(new OfflineClassReviewDTO(review));
         }
     }
+
 }

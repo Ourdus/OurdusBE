@@ -42,6 +42,9 @@ public class User {
     @OneToMany(mappedBy = "user") //반대쪽 매핑이 Address.user라서
     private List<Address> addressList = new ArrayList<Address>();
 
+    @OneToMany(mappedBy = "user")
+    private List<COrder> cOrderList=new ArrayList<>();
+
     //연관관계 메서드
     public void addAddress(Address address){
         addressList.add(address);

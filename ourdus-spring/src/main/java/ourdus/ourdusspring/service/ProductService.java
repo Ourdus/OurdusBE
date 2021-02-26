@@ -1,7 +1,9 @@
 package ourdus.ourdusspring.service;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,6 +43,8 @@ public class ProductService {
 
     public Optional<Product> findOne(Long productId){
         Optional<Product> product = productRepository.findById(productId);
+        product.get().setHit(product.get().getHit()+1);
+        //조회시 조회수 올리기
         return product;
     }
 
@@ -109,4 +113,30 @@ public class ProductService {
         commentRepository.deleteById(commentId);
         return "comment delete success";
     }
+
+    public Page<Product> rateOrderList ()
+    {
+        Pageable pageable =PageRequest.of(0,10,Sort.Direction.DESC,"rate");
+        return productRepository.findAll(pageable);
+    }
+
+    public Page<Product> hitOrderList ()
+    {
+        Pageable pageable =PageRequest.of(0,10,Sort.Direction.DESC,"hit");
+        return productRepository.findAll(pageable);
+    }
+
+    public Page<Product> priceOrderList ()
+    {
+        Pageable pageable =PageRequest.of(0,10,Sort.Direction.DESC,"price");
+        return productRepository.findAll(pageable);
+    }
+
+    public Page<Product> purchaseOrderList ()
+    {
+        Pageable pageable =PageRequest.of(0,10,Sort.Direction.DESC,"purchase");
+        return productRepository.findAll(pageable);
+    }
+
+
 }

@@ -124,4 +124,52 @@ public class ProductController {
                                            @PathVariable("comment_id")Long commentId){
         return OK(productService.removeComment(commentId/*,productId*/));
     }
+
+    @GetMapping("w/product/rate")
+    public ApiResult<List<ProductSimpleDTO>> viewRateProductList(){
+        Page <Product> productList = productService.rateOrderList();
+        List<ProductSimpleDTO> productDTOList=new ArrayList<ProductSimpleDTO>();
+        if(productList!=null){
+            productList.stream().forEach(product -> {
+                productDTOList.add(new ProductSimpleDTO(product));
+            });
+        }
+        return OK(productDTOList);
+    }
+
+    @GetMapping("w/product/price")
+    public ApiResult<List<ProductSimpleDTO>> viewPriceProductList(){
+        Page <Product> productList = productService.priceOrderList();
+        List<ProductSimpleDTO> productDTOList=new ArrayList<ProductSimpleDTO>();
+        if(productList!=null){
+            productList.stream().forEach(product -> {
+                productDTOList.add(new ProductSimpleDTO(product));
+            });
+        }
+        return OK(productDTOList);
+    }
+
+    @GetMapping("w/product/hit")
+    public ApiResult<List<ProductSimpleDTO>> viewHitProductList(){
+        Page <Product> productList = productService.hitOrderList();
+        List<ProductSimpleDTO> productDTOList=new ArrayList<ProductSimpleDTO>();
+        if(productList!=null){
+            productList.stream().forEach(product -> {
+                productDTOList.add(new ProductSimpleDTO(product));
+            });
+        }
+        return OK(productDTOList);
+    }
+
+    @GetMapping("w/product/purchase")
+    public ApiResult<List<ProductSimpleDTO>> viewPopularProductList(){
+        Page <Product> productList = productService.purchaseOrderList();
+        List<ProductSimpleDTO> productDTOList=new ArrayList<ProductSimpleDTO>();
+        if(productList!=null){
+            productList.stream().forEach(product -> {
+                productDTOList.add(new ProductSimpleDTO(product));
+            });
+        }
+        return OK(productDTOList);
+    }
 }

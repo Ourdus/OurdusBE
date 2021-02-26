@@ -28,6 +28,7 @@ public class Product {
     @Column(name="PRODUCT_REVIEW_NUM")
     @ColumnDefault("0")
     private int reviewNum;
+
     @Column(name="PRODUCT_HIT")
     @ColumnDefault("0")
     private int hit;
@@ -65,6 +66,64 @@ public class Product {
   
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Comment> commentList = new ArrayList<Comment>();
+
+
+    public void setHit(int hit) {
+        this.hit = hit;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public int getRate() {
+        return rate;
+    }
+
+    public int getReviewNum() {
+        return reviewNum;
+    }
+
+    public int getHit() {
+        return hit;
+    }
+
+    public int getPurchase() {
+        return purchase;
+    }
+
+    public int getOptionNum() {
+        return optionNum;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public User getAuthor() {
+        return author;
+    }
+
+//    public List<Review> getReviews() {
+//        return reviews;
+//    }
+
+    //    public List<ProductOption> getOptions() {
+//        return options;
+//    }
+
+    public List<Comment> getCommentList() {
+        return commentList;
+    }
+
 
     public void setName(String name) {
         this.name = name;
