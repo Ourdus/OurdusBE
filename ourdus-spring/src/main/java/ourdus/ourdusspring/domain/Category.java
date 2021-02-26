@@ -14,6 +14,9 @@ public class Category {
     @Column(name="CATEGORY_NAME")
     private String name;
 
+    @Column(name="CATEGORY_IMAGE")
+    private String image;
+
    /* @OneToMany(mappedBy = "category")
     private List<Product> products;*/
 
@@ -31,6 +34,14 @@ public class Category {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
 //    public List<Product> getProducts() {

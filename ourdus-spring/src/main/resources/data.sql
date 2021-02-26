@@ -17,8 +17,8 @@ INSERT INTO address(address_id, address_name, address_phone, address_zipcode,add
 INSERT INTO address(address_id, address_name, address_phone, address_zipcode,address_main,address_sub, user_id) VALUES(null, '주소1', '010231221121', '123532', '주소1121', '세부주소111', 3);
 INSERT INTO address(address_id, address_name, address_phone, address_zipcode,address_main,address_sub, user_id) VALUES(null, '주소1', '010231221121', '123532', '주소1121', '세부주소111', 4);
 
-INSERT INTO product_category(category_id, category_name) VALUES (null, '음료');
-INSERT INTO product_category(category_id, category_name) VALUES (null, '디저트');
+INSERT INTO product_category(category_id, category_name,category_image) VALUES (null, '음료','image');
+INSERT INTO product_category(category_id, category_name,category_image) VALUES (null, '디저트','image');
 
 
 INSERT INTO product(product_id, author_id, category_id, product_name) VALUES (null, 1, 1, 'product1_by_test0');

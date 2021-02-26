@@ -138,5 +138,9 @@ public class ProductService {
         return productRepository.findAll(pageable);
     }
 
+    public List <Category> findAll(){
+        return categoryRepository.findAll();
+    }
+
 
 }

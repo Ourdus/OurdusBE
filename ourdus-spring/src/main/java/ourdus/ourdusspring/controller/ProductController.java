@@ -5,12 +5,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 import ourdus.ourdusspring.common.ApiResult;
+import ourdus.ourdusspring.domain.Category;
 import ourdus.ourdusspring.domain.Comment;
 import ourdus.ourdusspring.domain.Product;
-import ourdus.ourdusspring.dto.CommentDTO;
-import ourdus.ourdusspring.dto.ProductDTO;
-import ourdus.ourdusspring.dto.ProductRequest;
-import ourdus.ourdusspring.dto.ProductSimpleDTO;
+import ourdus.ourdusspring.dto.*;
 import ourdus.ourdusspring.service.JwtService;
 import ourdus.ourdusspring.service.ProductService;
 
@@ -171,5 +169,17 @@ public class ProductController {
             });
         }
         return OK(productDTOList);
+    }
+
+    @GetMapping("w/category")
+    public ApiResult<List<CategoryDTO>> viewCategoryList(){
+        List <Category> categoryList= productService.findAll();
+        List<CategoryDTO> categoryDTOList=new ArrayList<CategoryDTO>();
+        if(categoryList!=null){
+            categoryList.stream().forEach(category -> {
+                categoryDTOList.add(new CategoryDTO(category));
+            });
+        }
+        return OK(categoryDTOList);
     }
 }

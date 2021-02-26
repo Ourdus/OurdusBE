@@ -35,6 +35,7 @@ CREATE TABLE product_category
 (
     category_id   bigint      NOT NULL AUTO_INCREMENT,
     category_name varchar(20) NOT NULL,
+    category_image varchar(100) ,
     PRIMARY KEY (category_id)
 );
 

@@ -24,7 +24,7 @@ public class UserDTO {
     private LocalDateTime regDate;
     private int point;
     private Boolean writerFlag;
-    private List<AddressDTO> addressList = new ArrayList<AddressDTO>();
+    private List<AddressDTO> addressList = new ArrayList<AddressDTO>(3);
 
     //연관관계 메서드
     public void addAddress(Address address){
