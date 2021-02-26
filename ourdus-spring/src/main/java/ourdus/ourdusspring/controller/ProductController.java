@@ -126,48 +126,48 @@ public class ProductController {
     }
 
     @GetMapping("w/product/rate")
-    public ApiResult<List<ProductDTO>> viewRateProductList(){
+    public ApiResult<List<ProductSimpleDTO>> viewRateProductList(){
         Page <Product> productList = productService.rateOrderList();
-        List<ProductDTO> productDTOList=new ArrayList<ProductDTO>();
+        List<ProductSimpleDTO> productDTOList=new ArrayList<ProductSimpleDTO>();
         if(productList!=null){
             productList.stream().forEach(product -> {
-                productDTOList.add(new ProductDTO(product));
+                productDTOList.add(new ProductSimpleDTO(product));
             });
         }
         return OK(productDTOList);
     }
 
     @GetMapping("w/product/price")
-    public ApiResult<List<ProductDTO>> viewPriceProductList(){
+    public ApiResult<List<ProductSimpleDTO>> viewPriceProductList(){
         Page <Product> productList = productService.priceOrderList();
-        List<ProductDTO> productDTOList=new ArrayList<ProductDTO>();
+        List<ProductSimpleDTO> productDTOList=new ArrayList<ProductSimpleDTO>();
         if(productList!=null){
             productList.stream().forEach(product -> {
-                productDTOList.add(new ProductDTO(product));
+                productDTOList.add(new ProductSimpleDTO(product));
             });
         }
         return OK(productDTOList);
     }
 
     @GetMapping("w/product/hit")
-    public ApiResult<List<ProductDTO>> viewHitProductList(){
+    public ApiResult<List<ProductSimpleDTO>> viewHitProductList(){
         Page <Product> productList = productService.hitOrderList();
-        List<ProductDTO> productDTOList=new ArrayList<ProductDTO>();
+        List<ProductSimpleDTO> productDTOList=new ArrayList<ProductSimpleDTO>();
         if(productList!=null){
             productList.stream().forEach(product -> {
-                productDTOList.add(new ProductDTO(product));
+                productDTOList.add(new ProductSimpleDTO(product));
             });
         }
         return OK(productDTOList);
     }
 
     @GetMapping("w/product/purchase")
-    public ApiResult<List<ProductDTO>> viewPopularProductList(){
+    public ApiResult<List<ProductSimpleDTO>> viewPopularProductList(){
         Page <Product> productList = productService.purchaseOrderList();
-        List<ProductDTO> productDTOList=new ArrayList<ProductDTO>();
+        List<ProductSimpleDTO> productDTOList=new ArrayList<ProductSimpleDTO>();
         if(productList!=null){
             productList.stream().forEach(product -> {
-                productDTOList.add(new ProductDTO(product));
+                productDTOList.add(new ProductSimpleDTO(product));
             });
         }
         return OK(productDTOList);

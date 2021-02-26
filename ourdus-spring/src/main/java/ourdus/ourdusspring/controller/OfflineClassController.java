@@ -32,8 +32,8 @@ public class OfflineClassController {
 
     private OfflineClassService offlineClassService;
 
-    @Autowired
-    private JwtService jwtService;
+//    @Autowired
+//    private JwtService jwtService;
 
     public OfflineClassController(OfflineClassService offlineClassService)
     {

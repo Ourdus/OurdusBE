@@ -112,9 +112,9 @@ public class Product {
         return author;
     }
 
-    public List<Review> getReviews() {
-        return reviews;
-    }
+//    public List<Review> getReviews() {
+//        return reviews;
+//    }
 
     //    public List<ProductOption> getOptions() {
 //        return options;

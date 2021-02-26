@@ -160,40 +160,41 @@ public class OfflineClassDTO {
         this.author_name = author_name;
     }
 
-
-    public OfflineClassDTO (OfflineClass offlineClass)
-    {
-
     private List<OfflineClassCommentDTO> commentList = new ArrayList<>();
     private List<OfflineClassReviewDTO> reviewList = new ArrayList<>();
-    public OfflineClassDTO (OfflineClass offlineClass) {
 
-        this.id=offlineClass.getId();
-        this.description=offlineClass.getDescription();
-        this.hit=offlineClass.getHit();
-        this.name=offlineClass.getName();
-        this.duration=offlineClass.getDuration();
-        this.level=offlineClass.getLevel();
-        this.like=offlineClass.getLike();
-        this.max=offlineClass.getMax();
-        this.place=offlineClass.getPlace();
-        this.purchase=offlineClass.getPurchase();
-        this.author_id=offlineClass.getAuthor().getId();
-        this.rate=offlineClass.getRate();
-        this.price=offlineClass.getPrice();
-        this.categoryId=offlineClass.getOfflineClassSmallCategory().getId();
 
-        this.author_name=offlineClass.getAuthor().getName();
+    public OfflineClassDTO(OfflineClass offlineClass) {
 
-        for(OfflineClassImage image: offlineClass.getImageList()){
+        this.id = offlineClass.getId();
+        this.description = offlineClass.getDescription();
+        this.hit = offlineClass.getHit();
+        this.name = offlineClass.getName();
+        this.duration = offlineClass.getDuration();
+        this.level = offlineClass.getLevel();
+        this.like = offlineClass.getLike();
+        this.max = offlineClass.getMax();
+        this.place = offlineClass.getPlace();
+        this.purchase = offlineClass.getPurchase();
+        this.author_id = offlineClass.getAuthor().getId();
+        this.rate = offlineClass.getRate();
+        this.price = offlineClass.getPrice();
+        this.categoryId = offlineClass.getOfflineClassSmallCategory().getId();
+
+        this.author_name = offlineClass.getAuthor().getName();
+
+        for (OfflineClassImage image : offlineClass.getImageList()) {
             this.imageList.add(image.getImage());
 
-        for(OfflineClassComment comment : offlineClass.getCommentList()){
-            this.commentList.add(new OfflineClassCommentDTO(comment));
-        }
-        for(OfflineClassReview review : offlineClass.getReviews()){
-            this.reviewList.add(new OfflineClassReviewDTO(review));
+            for (OfflineClassComment comment : offlineClass.getCommentList()) {
+                this.commentList.add(new OfflineClassCommentDTO(comment));
+            }
+            for (OfflineClassReview review : offlineClass.getReviews()) {
+                this.reviewList.add(new OfflineClassReviewDTO(review));
 
+
+            }
         }
     }
+
 }
