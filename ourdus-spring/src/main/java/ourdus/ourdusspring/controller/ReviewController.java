@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 import ourdus.ourdusspring.common.ApiResult;
 import ourdus.ourdusspring.domain.Review;
+import ourdus.ourdusspring.dto.OnlineClassReviewDTO;
 import ourdus.ourdusspring.dto.ReviewDTO;
 import ourdus.ourdusspring.service.JwtService;
 import ourdus.ourdusspring.service.OrderService;
@@ -25,6 +26,7 @@ public class ReviewController {
     private final ReviewService reviewService;
     private final OrderService orderService;
 
+    //작품리뷰
     @GetMapping("w/product/{product_id}/review")
     public ApiResult<List<ReviewDTO>> viewProductReviewList(@PathVariable("product_id") Long product_Id, @RequestParam("page")int page, @RequestParam("size")int size){
         Page<Review> reviews = reviewService.findAllByProductId(PageRequest.of(page, size), product_Id);
@@ -82,4 +84,7 @@ public class ReviewController {
         reviewService.delete(reviewId);
         return OK("리뷰가 삭제되었습니다.");
     }
+
+    //온라인 리뷰
+
 }

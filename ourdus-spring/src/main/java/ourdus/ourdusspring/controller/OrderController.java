@@ -1,5 +1,6 @@
 package ourdus.ourdusspring.controller;
 
+
 import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +26,13 @@ public class OrderController {
     @Autowired
     private JwtService jwtService;
 
-    private final OrderService orderService;
-    private final UserService userService;
+    @Autowired
+    private OrderService orderService;
+
+    @Autowired
+    private UserService userService;
+
+
 
     @GetMapping("/t/w/payment")
     public ApiResult<PaymentUserDTO> paymentUserInfo(/*HttpServletRequest req*/){

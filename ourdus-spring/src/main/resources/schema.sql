@@ -354,4 +354,3 @@ CREATE TABLE offline_class_review
 --     FOREIGN KEY (offline_order_detail_id) REFERENCES offline_order_detail (offline_order_detail_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
     FOREIGN KEY (class_id) REFERENCES offline_class (class_id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
-

@@ -17,7 +17,7 @@ public class OfflineClassReviewDTO {
     private Long id;
     private String content;
     private LocalDateTime date;
-    //    private int rate;
+    private int rate;
     private Long classId;
     //    private Long orderDetailId;
     private Long userId;
@@ -27,7 +27,7 @@ public class OfflineClassReviewDTO {
         this.id = review.getId();
         this.content = review.getContent();
         this.date = review.getDate();
-//        this.rate = review.getRate();
+        this.rate = review.getRate();
         this.classId = review.getOfflineClass().getId();
 //        this.orderDetailId = review.getOrderDetail().getId();
         this.userId = review.getUser().getId();
