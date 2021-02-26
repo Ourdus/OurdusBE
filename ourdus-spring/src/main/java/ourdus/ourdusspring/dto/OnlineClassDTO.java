@@ -4,7 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ourdus.ourdusspring.domain.*;
-
+import ourdus.ourdusspring.domain.OnlineClass;
+import ourdus.ourdusspring.domain.OnlineClassComment;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,6 @@ public class OnlineClassDTO {
     private Long categoryId;
     private String categoryName;
     private List<OnlineClassCommentDTO> commentList = new ArrayList<>();
-
     private List<OnlineClassReviewDTO> reviewList = new ArrayList<>();
 
     public OnlineClassDTO(OnlineClass onlineClass) {
