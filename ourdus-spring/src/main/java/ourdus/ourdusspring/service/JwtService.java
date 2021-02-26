@@ -63,4 +63,8 @@ public class JwtService {
         //claims는 map의 구현체
         return claims.getBody();
     }
+
+    public Long getId(final String jwt){
+        return Long.valueOf(String.valueOf(get(jwt).get("UserId")));
+    }
 }

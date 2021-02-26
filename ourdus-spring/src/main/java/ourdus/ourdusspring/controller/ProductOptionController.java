@@ -1,12 +1,11 @@
 package ourdus.ourdusspring.controller;
 
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import org.springframework.web.bind.annotation.*;
 import ourdus.ourdusspring.common.ApiResult;
 import ourdus.ourdusspring.domain.ProductChildOption;
 import ourdus.ourdusspring.domain.ProductParentOption;
+import ourdus.ourdusspring.dto.OptionRequest;
 import ourdus.ourdusspring.dto.ProductChildOptionDTO;
 import ourdus.ourdusspring.dto.ProductChildOptionRequest;
 import ourdus.ourdusspring.dto.ProductParentOptionDTO;
@@ -57,9 +56,3 @@ public class ProductOptionController {
 
 }
 
-@Getter
-@Setter
-class OptionRequest {
-    private List<String> names;
-    private List<ProductChildOptionRequest> childOptionRequests;
-}
