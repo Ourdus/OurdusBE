@@ -40,6 +40,7 @@ public class OfflineClassDTO {
     private List<OfflineClassCommentDTO> commentList = new ArrayList<>();
     private List<OfflineClassReviewDTO> reviewList = new ArrayList<>();
     private List<String> imageList = new ArrayList<>();
+
     public OfflineClassDTO (OfflineClass offlineClass) {
         this.id=offlineClass.getId();
         this.description=offlineClass.getDescription();
@@ -61,6 +62,9 @@ public class OfflineClassDTO {
         }
         for(OfflineClassReview review : offlineClass.getReviews()){
             this.reviewList.add(new OfflineClassReviewDTO(review));
+        }
+        for(OfflineClassImage image : offlineClass.getImageList()){
+            this.imageList.add(image.getImage());
         }
     }
 
