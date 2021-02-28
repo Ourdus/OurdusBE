@@ -8,6 +8,7 @@ import ourdus.ourdusspring.domain.product.review.Review;
 import ourdus.ourdusspring.domain.user.User;
 import ourdus.ourdusspring.domain.product.category.Category;
 import ourdus.ourdusspring.domain.product.comment.Comment;
+import ourdus.ourdusspring.dto.product.ProductRequest;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -72,8 +73,8 @@ public class Product {
     private List<Comment> commentList = new ArrayList<Comment>();
 
 
-    public void setHit(int hit) {
-        this.hit = hit;
+    public void changeHit() {
+        this.hit++;
     }
 
     public Long getId() {
@@ -185,4 +186,11 @@ public class Product {
         this.info = info;
     }
 
+    @Builder(builderMethodName = "createBuilder", builderClassName = "createBuilder")
+    public Product(ProductRequest productRequest) {
+        this.name = productRequest.getName();
+        this.price = productRequest.getPrice();
+        this.optionNum = productRequest.getOptionNum();
+        this.info = productRequest.getInfo();
+    }
 }

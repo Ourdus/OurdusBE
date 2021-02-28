@@ -38,22 +38,12 @@ public class OfflineClassService {
         User author=userRepository.findById(authorId).orElseThrow(()->new NoSuchElementException("해당하는 아이디를 찾을 수 없습니다"));
         OfflineClassSmallCategory ocsc=offlineClassSmallCategory.findById(categoryId).orElseThrow(()->new NoSuchElementException("해당 카테고리 아이디를 찾을 수 없습니다"));
 
-        OfflineClass olc= OfflineClass.builder()
-                .name(offlineClass.getName())
-                .description(offlineClass.getDescription())
-                .price(offlineClass.getPrice())
-                .duration(offlineClass.getDuration())
-                .hit(offlineClass.getHit())
-                .max(offlineClass.getMax())
-                .level(offlineClass.getLevel())
-                .rate(offlineClass.getRate())
-                .like(offlineClass.getLike())
-                .place(offlineClass.getPlace())
-                .purchase(offlineClass.getPurchase())
-                .price(offlineClass.getPrice())
-                .author(author)
+        OfflineClass olc= OfflineClass.defaultBuilder()
+                .offlineClass(offlineClass)
                 .offlineClassSmallCategory(ocsc)
+                .author(author)
                 .build();
+
         OfflineClass result= offlineClassRepository.save(olc);
         return result;
     }
@@ -70,13 +60,10 @@ public class OfflineClassService {
         result.setDescription(offlineClass.getDescription());
         result.setPrice(offlineClass.getPrice());
         result.setName(offlineClass.getName());
-        result.setHit(offlineClass.getHit());
         result.setDuration(offlineClass.getDuration());
         result.setLevel(offlineClass.getLevel());
-        result.setLike(offlineClass.getLike());
         result.setPlace(offlineClass.getPlace());
         result.setMax(offlineClass.getMax());
-        result.setPurchase(offlineClass.getPurchase());
         return result;
     }
 

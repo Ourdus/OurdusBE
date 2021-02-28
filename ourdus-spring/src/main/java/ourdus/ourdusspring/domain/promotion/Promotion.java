@@ -71,22 +71,14 @@ public class Promotion {
     }
 
     @Builder(builderMethodName = "createBuilder", builderClassName = "createBuilder")
-    public Promotion(String name, String description, LocalDateTime start_date,LocalDateTime end_date,String image) {
-        this.name=name;
-        this.description=description;
-        this.start_date=start_date;
-        this.end_date=end_date;
-        this.image=image;
-    }
-
-    public Promotion (PromotionDTO promotiondto){
-        this.id=promotiondto.getId();
+    public Promotion(PromotionDTO promotiondto) {
         this.description=promotiondto.getDescription();
         this.name= promotiondto.getName();
         this.start_date=promotiondto.getStart_date();
         this.end_date=promotiondto.getEnd_date();
         this.image= promotiondto.getImage();
     }
+
 
 //    @Builder(builderMethodName = "defaultBuilder", builderClassName = "defaultBuilder")
 //    public Promotion(Long id,String name, String description,String image) {

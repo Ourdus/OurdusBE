@@ -24,28 +24,16 @@ public class OfflineClassController {
 
     @Autowired
     private JwtService jwtService;
-
+    @Autowired
     private OfflineClassService offlineClassService;
-
-//    @Autowired
-//    private JwtService jwtService;
-
-    public OfflineClassController(OfflineClassService offlineClassService)
-    {
-        this.offlineClassService=offlineClassService;
-    }
-
 
     @GetMapping("c")
     public ApiResult<List<OfflineClassDTO>> viewOfflineclassList(){
         List <OfflineClass> offlineClassList=offlineClassService.findAll();
         List <OfflineClassDTO> offlineClassDTOList=new ArrayList<>();
-        if(offlineClassList!=null)
-        {
-            offlineClassList.stream().forEach(offlineClass -> {
-                offlineClassDTOList.add(new OfflineClassDTO(offlineClass));
-            });
-        }
+        offlineClassList.stream().forEach(offlineClass -> {
+            offlineClassDTOList.add(new OfflineClassDTO(offlineClass));
+        });
         return OK(offlineClassDTOList);
     }
 
@@ -54,8 +42,6 @@ public class OfflineClassController {
         return OK(new OfflineClassDTO(offlineClassService.findOne(classId)));
     }
 
-
-
     @PostMapping("/t/c/new")
     public ApiResult<OfflineClassDTO> save(/*HttpServletRequest req,*/@RequestBody OfflineClassRequest offlineClassRequest)
 
@@ -63,19 +49,8 @@ public class OfflineClassController {
 //         Long authorId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId")));
         Long authorId = 1L;
         OfflineClass offlineClass= OfflineClass
-                .builder()
-                .name(offlineClassRequest.getName())
-                .description(offlineClassRequest.getDescription())
-                .price(offlineClassRequest.getPrice())
-                .duration(offlineClassRequest.getDuration())
-                .hit(offlineClassRequest.getHit())
-                .max(offlineClassRequest.getMax())
-                .level(offlineClassRequest.getLevel())
-                .rate(offlineClassRequest.getRate())
-                .like(offlineClassRequest.getLike())
-                .place(offlineClassRequest.getPlace())
-                .purchase(offlineClassRequest.getPurchase())
-                .price(offlineClassRequest.getPrice())
+                .createBuilder()
+                .offlineClassRequest(offlineClassRequest)
                 .build();
 
         return OK(new OfflineClassDTO(offlineClassService.save(offlineClass,offlineClassRequest.getCategoryId(),offlineClassRequest.getAuthorId())));
@@ -97,19 +72,8 @@ public class OfflineClassController {
         Long authorId = 1L;
 
         OfflineClass offlineClass= OfflineClass
-                .builder()
-                .name(offlineClassRequest.getName())
-                .description(offlineClassRequest.getDescription())
-                .price(offlineClassRequest.getPrice())
-                .duration(offlineClassRequest.getDuration())
-                .hit(offlineClassRequest.getHit())
-                .max(offlineClassRequest.getMax())
-                .level(offlineClassRequest.getLevel())
-                .rate(offlineClassRequest.getRate())
-                .like(offlineClassRequest.getLike())
-                .place(offlineClassRequest.getPlace())
-                .purchase(offlineClassRequest.getPurchase())
-                .price(offlineClassRequest.getPrice())
+                .createBuilder()
+                .offlineClassRequest(offlineClassRequest)
                 .build();
         return OK(new OfflineClassDTO(offlineClassService.update(offlineClass,class_id)));
     }

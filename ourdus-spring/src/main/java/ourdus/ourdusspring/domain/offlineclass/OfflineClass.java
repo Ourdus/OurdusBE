@@ -3,11 +3,13 @@ package ourdus.ourdusspring.domain.offlineclass;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 import ourdus.ourdusspring.domain.offlineclass.category.OfflineClassSmallCategory;
 import ourdus.ourdusspring.domain.offlineclass.comment.OfflineClassComment;
 import ourdus.ourdusspring.domain.offlineclass.order.CReservation;
 import ourdus.ourdusspring.domain.offlineclass.review.OfflineClassReview;
 import ourdus.ourdusspring.domain.user.User;
+import ourdus.ourdusspring.dto.offlineclass.OfflineClassRequest;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -34,9 +36,11 @@ public class OfflineClass {
     private String description;
 
     @Column(name="CLASS_HIT")
+    @ColumnDefault("0")
     private int hit;
 
     @Column(name="CLASS_PURCHASE")
+    @ColumnDefault("0")
     private int purchase;
 
     @Column(name="CLASS_DURATION")
@@ -52,9 +56,11 @@ public class OfflineClass {
     private int max;
 
     @Column(name="CLASS_LIKE")
+    @ColumnDefault("0")
     private int like;
 
     @Column(name="CLASS_RATE")
+    @ColumnDefault("0")
     private int rate;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
@@ -89,9 +95,6 @@ public class OfflineClass {
         Image.setClass(this);
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public void setName(String name) {
         this.name = name;
@@ -158,80 +161,27 @@ public class OfflineClass {
         comment.setOfflineClass(this);
     }
 
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public int getHit() {
-        return hit;
-    }
-
-    public int getPurchase() {
-        return purchase;
-    }
-
-    public int getDuration() {
-        return duration;
-    }
-
-    public String getLevel() {
-        return level;
-    }
-
-    public String getPlace() {
-        return place;
-    }
-
-    public int getMax() {
-        return max;
-    }
-
-    public int getLike() {
-        return like;
-    }
-
-    public int getRate() {
-        return rate;
-    }
-
-    public User getAuthor() {
-        return author;
-    }
-
-    public OfflineClassSmallCategory getOfflineClassSmallCategory() {
-        return offlineClassSmallCategory;
-    }
-
-    @Builder
-    public OfflineClass(String name,String description,int purchase,int duration,int hit,String level,String place, int price,int max, int like, int rate, User author, OfflineClassSmallCategory offlineClassSmallCategory ) {
+    @Builder(builderClassName = "defaultBuilder", builderMethodName = "defaultBuilder")
+    public OfflineClass(OfflineClass offlineClass, User author, OfflineClassSmallCategory offlineClassSmallCategory) {
         this.author=author;
         this.offlineClassSmallCategory=offlineClassSmallCategory;
-        this.hit=hit;
-        this.description=description;
-        this.duration=duration;
-        this.level=level;
-        this.max=max;
-        this.place=place;
-        this.rate=rate;
-        this.like=like;
-        this.price=price;
-        this.name=name;
-        this.purchase=purchase;
+        this.description=offlineClass.getDescription();
+        this.duration=offlineClass.getDuration();
+        this.level=offlineClass.getLevel();
+        this.max=offlineClass.getMax();
+        this.place=offlineClass.getPlace();
+        this.price=offlineClass.getPrice();
+        this.name=offlineClass.getName();
     }
 
-
-
+    @Builder(builderMethodName = "createBuilder", builderClassName = "createBuilder")
+    public OfflineClass(OfflineClassRequest offlineClassRequest) {
+        this.name = offlineClassRequest.getName();
+        this.price = offlineClassRequest.getPrice();
+        this.description = offlineClassRequest.getDescription();
+        this.duration = offlineClassRequest.getDuration();
+        this.level = offlineClassRequest.getLevel();
+        this.place = offlineClassRequest.getPlace();
+        this.max = offlineClassRequest.getMax();
+    }
 }

@@ -5,9 +5,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 import ourdus.ourdusspring.common.ApiResult;
+import ourdus.ourdusspring.domain.product.Product;
 import ourdus.ourdusspring.domain.product.category.Category;
 import ourdus.ourdusspring.domain.product.comment.Comment;
-import ourdus.ourdusspring.domain.product.Product;
 import ourdus.ourdusspring.dto.product.ProductDTO;
 import ourdus.ourdusspring.dto.product.ProductRequest;
 import ourdus.ourdusspring.dto.product.ProductSimpleDTO;
@@ -19,8 +19,6 @@ import ourdus.ourdusspring.service.product.ProductService;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 
 import static ourdus.ourdusspring.common.ApiResult.OK;
 
@@ -53,21 +51,20 @@ public class ProductController {
 
     @GetMapping("/w/category/{category_id}")
     public ApiResult<List<ProductSimpleDTO>> viewCategoryProductList(@PathVariable("category_id") Long categoryId) {
-        Optional<List<Product>> productByCategory = productService.findAllByCategory(categoryId);
+        List<Product> productByCategory = productService.findAllByCategory(categoryId);
         List<ProductSimpleDTO> productSimpleDTOList = new ArrayList<>();
-        if (productByCategory.isPresent()) {
-            productByCategory.get().stream().forEach(product -> {
-                productSimpleDTOList.add(new ProductSimpleDTO(product));
-            });
-        }
+
+        productByCategory.stream().forEach(product -> {
+            productSimpleDTOList.add(new ProductSimpleDTO(product));
+        });
+
         return OK(productSimpleDTOList);
     }
 
     @GetMapping("/w/product/{product_id}")
     public ApiResult<ProductDTO> viewProduct(@PathVariable("product_id") Long productId) {
-        Optional<Product> product = productService.findOne(productId);
-        product.orElseThrow(() -> new NoSuchElementException("해당하는 작품 정보가 없습니다"));
-        return OK(new ProductDTO(product.get()));
+        Product product = productService.findOne(productId);
+        return OK(new ProductDTO(product));
     }
 
 
@@ -75,11 +72,8 @@ public class ProductController {
     public ApiResult<ProductDTO> save(HttpServletRequest req, @RequestBody ProductRequest productRequest){
         Long userid = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId"))); //id 받아오기
         Product product = Product
-                .builder()
-                .name(productRequest.getName())
-                .price(productRequest.getPrice())
-                .optionNum(productRequest.getOptionNum())
-                .info(productRequest.getInfo())
+                .createBuilder()
+                .productRequest(productRequest)
                 .build();
         return OK(new ProductDTO(productService.save(product, userid, productRequest.getCategoryId())));
     }
@@ -94,10 +88,8 @@ public class ProductController {
     @PostMapping("/t/w/product/{product_id}/edit")
     public ApiResult<ProductDTO> modify(@PathVariable("product_id") Long product_Id,@RequestBody ProductRequest productRequest){
         Product product = Product
-                .builder()
-                .name(productRequest.getName())
-                .price(productRequest.getPrice())
-                .optionNum(productRequest.getOptionNum())
+                .createBuilder()
+                .productRequest(productRequest)
                 .build();
         return OK(new ProductDTO(productService.modify(product_Id,product, productRequest.getCategoryId())));
     }

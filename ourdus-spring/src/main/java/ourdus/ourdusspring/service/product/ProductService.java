@@ -7,18 +7,17 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ourdus.ourdusspring.domain.product.Product;
 import ourdus.ourdusspring.domain.product.category.Category;
 import ourdus.ourdusspring.domain.product.comment.Comment;
-import ourdus.ourdusspring.domain.product.Product;
 import ourdus.ourdusspring.domain.user.User;
+import ourdus.ourdusspring.repository.product.ProductRepository;
 import ourdus.ourdusspring.repository.product.category.CategoryRepository;
 import ourdus.ourdusspring.repository.product.comment.CommentRepository;
-import ourdus.ourdusspring.repository.product.ProductRepository;
 import ourdus.ourdusspring.repository.user.UserRepository;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -41,14 +40,14 @@ public class ProductService {
         return productRepository.findAll(pageable);
     }
 
-    public Optional<Product> findOne(Long productId){
-        Optional<Product> product = productRepository.findById(productId);
-        product.get().setHit(product.get().getHit()+1);
+    public Product findOne(Long productId){
+        Product product = productRepository.findById(productId).orElseThrow(() -> new NoSuchElementException("찾으려는 작품 아이디가 없습다."));
+        product.changeHit();
         //조회시 조회수 올리기
         return product;
     }
 
-    public Optional<List<Product>> findAllByCategory(Long categoryId){
+    public List<Product> findAllByCategory(Long categoryId){
         return productRepository.findAllByCategoryId(categoryId);
     }
 

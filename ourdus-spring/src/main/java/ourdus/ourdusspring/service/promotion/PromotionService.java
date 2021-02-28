@@ -7,7 +7,6 @@ import ourdus.ourdusspring.repository.promotion.PromotionRepository;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -25,10 +24,9 @@ public class PromotionService {
         return  promotionRepository.findAll();
     }
 
-    public Optional<Promotion> findOne(Long promotionID)
+    public Promotion findOne(Long promotionID)
     {
-        Optional<Promotion> result= promotionRepository.findById(promotionID);
-        return result;
+        return promotionRepository.findById(promotionID).orElseThrow(() -> new NoSuchElementException("해당되는 프로모션 정보가 없습니다"));
     }
 
     public Promotion save(Promotion promotion)

@@ -4,7 +4,6 @@ package ourdus.ourdusspring.controller.product.promotion;
 import org.springframework.web.bind.annotation.*;
 import ourdus.ourdusspring.common.ApiResult;
 import ourdus.ourdusspring.domain.promotion.Promotion;
-
 import ourdus.ourdusspring.domain.promotion.PromotionProduct;
 import ourdus.ourdusspring.dto.promotion.PromotionDTO;
 import ourdus.ourdusspring.dto.promotion.PromotionProductDTO;
@@ -14,8 +13,6 @@ import ourdus.ourdusspring.service.promotion.PromotionService;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 
 import static ourdus.ourdusspring.common.ApiResult.OK;
 
@@ -48,9 +45,8 @@ public class PromotionController {
 
     @GetMapping("/w/promotion/{promotion_id}")
     public ApiResult<PromotionDTO> viewPromotion(@PathVariable("promotion_id") Long promotionId){
-        Optional<Promotion> promotion=promotionService.findOne(promotionId);
-        promotion.orElseThrow(()->new NoSuchElementException("해당되는 프로모션 정보가 없습니다"));
-        return OK(new PromotionDTO(promotion.get()));
+        Promotion promotion=promotionService.findOne(promotionId);
+        return OK(new PromotionDTO(promotion));
     }
 
     @PostMapping("/t/w/promotion/new")
@@ -63,11 +59,7 @@ public class PromotionController {
     public ApiResult<Promotion> modify(@PathVariable("promotion_id") Long promotionId,@RequestBody PromotionDTO promotiondto)
     {
         Promotion promotion= Promotion.createBuilder()
-                .name(promotiondto.getName())
-                .image(promotiondto.getImage())
-                .start_date(promotiondto.getStart_date())
-                .end_date(promotiondto.getEnd_date())
-                .description(promotiondto.getDescription())
+                .promotiondto(promotiondto)
                 .build();
         return OK(promotionService.update(promotionId,promotion));
     }
