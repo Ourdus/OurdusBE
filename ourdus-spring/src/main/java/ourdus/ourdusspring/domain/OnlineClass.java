@@ -40,8 +40,7 @@ public class OnlineClass {
     private String level;
 
     @Column(name="ONLINE_CLASS_START_DATE")
-    @CreationTimestamp
-    private LocalDateTime startDate;
+    private String startDate;
 
     @Column(name="PREPARATION_FLAG")
     @ColumnDefault("false")
@@ -116,7 +115,7 @@ public class OnlineClass {
         this.level = level;
     }
 
-    public void setStartDate(LocalDateTime startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 

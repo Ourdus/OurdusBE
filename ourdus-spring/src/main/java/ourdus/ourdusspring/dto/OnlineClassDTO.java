@@ -21,7 +21,7 @@ public class OnlineClassDTO {
     private String description;
     private int duration;
     private String level;
-    private LocalDateTime startDate;
+    private String startDate;
     private boolean prepareFlag;
     private int hit;
     private int purchase;
