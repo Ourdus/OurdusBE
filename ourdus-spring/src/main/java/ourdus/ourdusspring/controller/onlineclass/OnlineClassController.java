@@ -33,11 +33,12 @@ public class OnlineClassController {
     public ApiResult<List<OnlineClassSimpleDTO>> viewAllOC(){
         List<OnlineClass> onlineClasses = onlineClassService.findall();
         List<OnlineClassSimpleDTO> onlineClassSimpleDTOS = new ArrayList<>();
-        if(onlineClasses != null){
-            onlineClasses.stream().forEach(onlineClass -> {
-                onlineClassSimpleDTOS.add(new OnlineClassSimpleDTO(onlineClass));
-            });
-        }
+        onlineClasses.stream()
+                .filter(onlineClass -> onlineClass != null)
+                .forEach(onlineClass -> {
+            onlineClassSimpleDTOS.add(new OnlineClassSimpleDTO(onlineClass));
+        });
+
         return OK(onlineClassSimpleDTOS);
     }
 

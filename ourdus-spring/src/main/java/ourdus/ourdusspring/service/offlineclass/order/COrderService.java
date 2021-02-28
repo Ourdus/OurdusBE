@@ -33,9 +33,9 @@ public class COrderService {
         return cOrderRepository.findAll();
     }
 
-    public Optional<COrder> findOne(Long userId)
+    public COrder findOne(Long userId)
     {
-        Optional <COrder> result= cOrderRepository.findById(userId);
+        COrder result= cOrderRepository.findById(userId).orElseThrow(() -> new NoSuchElementException("해당하는 오프라인 클래스 주문이 없습니다."));
         return result;
     }
 

@@ -31,7 +31,9 @@ public class CartController {
         //Long userId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId"))); //id 받아오기
         List<Cart> carts = cartService.findAllByUserId(userId);
         List<CartDTO> cartDTOs = new ArrayList<>();
-        carts.stream().forEach(cart -> {
+        carts.stream()
+                .filter(cart -> cart != null)
+                .forEach(cart -> {
             cartDTOs.add(new CartDTO(cart));
         });
 
@@ -49,9 +51,7 @@ public class CartController {
 //        Long userId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId"))); //id 받아오기
         Long userId = 1L;
         Cart cart = Cart.createBuilder()
-                .optionInfo(cartDTO.getOptionInfo())
-                .productNum(cartDTO.getProductNum())
-                .price(cartDTO.getProductDetailPrice())
+                .cartDTO(cartDTO)
                 .build();
         cartService.save(cart, userId, cartDTO.getProductId());
         return OK("장바구니에 담겼습니다.");

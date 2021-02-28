@@ -30,11 +30,11 @@ public class ReviewController {
     public ApiResult<List<ReviewDTO>> viewProductReviewList(@PathVariable("product_id") Long product_Id, @RequestParam("page")int page, @RequestParam("size")int size){
         Page<Review> reviews = reviewService.findAllByProductId(PageRequest.of(page, size), product_Id);
         List<ReviewDTO> reviewDTOList=new ArrayList<ReviewDTO>();
-        if(reviews!=null){
-            reviews.stream().forEach(review -> {
-                reviewDTOList.add(new ReviewDTO(review));
-            });
-        }
+        reviews.stream()
+                .filter(review -> review != null)
+                .forEach(review -> {
+            reviewDTOList.add(new ReviewDTO(review));
+        });
         return OK(reviewDTOList);
     }
 
@@ -42,11 +42,11 @@ public class ReviewController {
     public ApiResult<List<ReviewDTO>> viewReviewList(@RequestParam("page")int page, @RequestParam("size")int size){
         Page<Review> reviews = reviewService.findAll(PageRequest.of(page, size));
         List<ReviewDTO> reviewDTOList=new ArrayList<ReviewDTO>();
-        if(reviews!=null){
-            reviews.stream().forEach(review -> {
-                reviewDTOList.add(new ReviewDTO(review));
-            });
-        }
+        reviews.stream()
+                .filter(review -> review != null)
+                .forEach(review -> {
+            reviewDTOList.add(new ReviewDTO(review));
+        });
         return OK(reviewDTOList);
     }
 
@@ -83,7 +83,5 @@ public class ReviewController {
         reviewService.delete(reviewId);
         return OK("리뷰가 삭제되었습니다.");
     }
-
-    //온라인 리뷰
 
 }

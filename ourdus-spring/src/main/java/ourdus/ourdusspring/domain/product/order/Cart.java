@@ -8,6 +8,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.annotations.CreationTimestamp;
 import ourdus.ourdusspring.domain.product.Product;
 import ourdus.ourdusspring.domain.user.User;
+import ourdus.ourdusspring.dto.product.order.CartDTO;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -45,10 +46,10 @@ public class Cart {
     private LocalDateTime cartDate;
 
     @Builder(builderClassName = "createBuilder", builderMethodName = "createBuilder")
-    public Cart(String optionInfo, int productNum, int price) {
-        this.optionInfo = optionInfo;
-        this.productNum = productNum;
-        this.price = price;
+    public Cart(CartDTO cartDTO) {
+        this.optionInfo = cartDTO.getOptionInfo();
+        this.productNum = cartDTO.getProductNum();
+        this.price = cartDTO.getProductDetailPrice();
     }
 
     @Builder(builderClassName = "defaultBuilder", builderMethodName = "defaultBuilder")

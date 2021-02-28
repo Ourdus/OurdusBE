@@ -31,7 +31,9 @@ public class OfflineClassController {
     public ApiResult<List<OfflineClassDTO>> viewOfflineclassList(){
         List <OfflineClass> offlineClassList=offlineClassService.findAll();
         List <OfflineClassDTO> offlineClassDTOList=new ArrayList<>();
-        offlineClassList.stream().forEach(offlineClass -> {
+        offlineClassList.stream()
+                .filter(offlineClass -> offlineClass != null)
+                .forEach(offlineClass -> {
             offlineClassDTOList.add(new OfflineClassDTO(offlineClass));
         });
         return OK(offlineClassDTOList);

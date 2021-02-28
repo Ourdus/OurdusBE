@@ -62,7 +62,9 @@ public class OrderController {
         Long userId = 1L;
         List<Order> orderList = orderService.findAllByUserId(userId);
         List<OrderSimpleDTO> orderSimpleDTOS = new ArrayList<>();
-        orderList.stream().forEach(order -> {
+        orderList.stream()
+                .filter(order -> order != null)
+                .forEach(order -> {
             orderSimpleDTOS.add(new OrderSimpleDTO(order));
         });
         return OK(orderSimpleDTOS);

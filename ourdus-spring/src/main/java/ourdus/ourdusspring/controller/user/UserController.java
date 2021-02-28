@@ -66,7 +66,7 @@ public class UserController {
     @GetMapping("/t/user/info")
     public ApiResult<UserDTO> getInfo(HttpServletRequest req){
         Long id = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId")));
-        User user =userService.getUserInfo(id);
+        User user = userService.getUserInfo(id);
         return OK(new UserDTO(user));
     }
 
@@ -126,7 +126,9 @@ public class UserController {
     public ApiResult<List<AddressDTO>> getAddress(HttpServletRequest req){
         Long userId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId"))); //id 받아오기
         List<AddressDTO> addressDTOList = new ArrayList<>();
-        userService.getAddressList(userId).stream().forEach(address -> {
+        userService.getAddressList(userId).stream()
+                .filter(address -> address != null)
+                .forEach(address -> {
             addressDTOList.add(new AddressDTO(address));
         });
         return OK(addressDTOList);

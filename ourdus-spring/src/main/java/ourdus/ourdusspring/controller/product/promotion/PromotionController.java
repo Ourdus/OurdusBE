@@ -34,12 +34,11 @@ public class PromotionController {
     public ApiResult<List<PromotionDTO>> viewPromotionList(){
         List <Promotion> promotionList=promotionService.findAll();
         List <PromotionDTO> promotionDTOList=new ArrayList<>();
-        if(promotionList!=null)
-        {
-            promotionList.stream().forEach(promotion -> {
+        promotionList.stream()
+                    .filter(promotion -> promotion != null)
+                    .forEach(promotion -> {
                 promotionDTOList.add(new PromotionDTO(promotion));
             });
-        }
         return OK(promotionDTOList);
     }
 
@@ -74,8 +73,8 @@ public class PromotionController {
     {
         PromotionProduct pp= PromotionProduct.builder()
                 .build();
-        Long promotionId=promotionProductRequest.getPromotionId();
-        Long productId=promotionProductRequest.getProductId();
+        Long promotionId = promotionProductRequest.getPromotionId();
+        Long productId = promotionProductRequest.getProductId();
         return OK(new PromotionProductDTO(promotionProductService.save(pp,promotionId,productId)));
     }
 

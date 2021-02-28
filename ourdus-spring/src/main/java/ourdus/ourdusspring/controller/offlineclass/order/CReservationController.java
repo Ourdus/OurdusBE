@@ -26,21 +26,16 @@ public class CReservationController {
     @Autowired
     private CReservationService cReservationService;
 
-    public CReservationController (CReservationService cReservationService)
-    {
-        this.cReservationService=cReservationService;
-    }
-
     @PostMapping("reservation")
     public ApiResult<List<CReservationDTO>> viewReservationList(){
         List<CReservation> cReservationList=cReservationService.findAll();
         List <CReservationDTO> cReservationDTOList=new ArrayList<>();
-        if(cReservationList!=null)
-        {
-            cReservationList.stream().forEach(cReservation -> {
-                cReservationDTOList.add(new CReservationDTO(cReservation));
-            });
-        }
+
+        cReservationList.stream()
+                .filter(cReservation -> cReservation != null)
+                .forEach(cReservation -> {
+            cReservationDTOList.add(new CReservationDTO(cReservation));
+        });
         return OK(cReservationDTOList);
     }
 

@@ -40,11 +40,13 @@ public class ProductController {
     public ApiResult<List<ProductSimpleDTO>> viewAllProductList(@RequestParam("page")int page, @RequestParam("size")int size){
        Page <Product> productList = productService.findAll(PageRequest.of(page,size));
         List<ProductSimpleDTO> productSimpleDTOList=new ArrayList<>();
-        if(productList!=null){
-            productList.stream().forEach(product -> {
-                productSimpleDTOList.add(new ProductSimpleDTO(product));
-            });
-        }
+
+        productList.stream()
+                .filter(product -> product != null)
+                .forEach(product -> {
+            productSimpleDTOList.add(new ProductSimpleDTO(product));
+        });
+
         return OK(productSimpleDTOList);
     }
 
@@ -53,11 +55,11 @@ public class ProductController {
     public ApiResult<List<ProductSimpleDTO>> viewCategoryProductList(@PathVariable("category_id") Long categoryId) {
         List<Product> productByCategory = productService.findAllByCategory(categoryId);
         List<ProductSimpleDTO> productSimpleDTOList = new ArrayList<>();
-
-        productByCategory.stream().forEach(product -> {
+        productByCategory.stream()
+                .filter(product -> product != null)
+                .forEach(product -> {
             productSimpleDTOList.add(new ProductSimpleDTO(product));
         });
-
         return OK(productSimpleDTOList);
     }
 
@@ -123,11 +125,13 @@ public class ProductController {
     public ApiResult<List<ProductSimpleDTO>> viewRateProductList(){
         Page <Product> productList = productService.rateOrderList();
         List<ProductSimpleDTO> productDTOList=new ArrayList<ProductSimpleDTO>();
-        if(productList!=null){
-            productList.stream().forEach(product -> {
-                productDTOList.add(new ProductSimpleDTO(product));
-            });
-        }
+
+        productList.stream()
+                .filter(product -> product != null)
+                .forEach(product -> {
+            productDTOList.add(new ProductSimpleDTO(product));
+        });
+
         return OK(productDTOList);
     }
 
@@ -135,11 +139,12 @@ public class ProductController {
     public ApiResult<List<ProductSimpleDTO>> viewPriceProductList(){
         Page <Product> productList = productService.priceOrderList();
         List<ProductSimpleDTO> productDTOList=new ArrayList<ProductSimpleDTO>();
-        if(productList!=null){
-            productList.stream().forEach(product -> {
-                productDTOList.add(new ProductSimpleDTO(product));
-            });
-        }
+        productList.stream()
+                .filter(product -> product != null)
+                .forEach(product -> {
+            productDTOList.add(new ProductSimpleDTO(product));
+        });
+
         return OK(productDTOList);
     }
 
@@ -147,11 +152,12 @@ public class ProductController {
     public ApiResult<List<ProductSimpleDTO>> viewHitProductList(){
         Page <Product> productList = productService.hitOrderList();
         List<ProductSimpleDTO> productDTOList=new ArrayList<ProductSimpleDTO>();
-        if(productList!=null){
-            productList.stream().forEach(product -> {
-                productDTOList.add(new ProductSimpleDTO(product));
-            });
-        }
+
+        productList.stream()
+                .filter(product -> product != null)
+                .forEach(product -> {
+            productDTOList.add(new ProductSimpleDTO(product));
+        });
         return OK(productDTOList);
     }
 
@@ -159,11 +165,11 @@ public class ProductController {
     public ApiResult<List<ProductSimpleDTO>> viewPopularProductList(){
         Page <Product> productList = productService.purchaseOrderList();
         List<ProductSimpleDTO> productDTOList=new ArrayList<ProductSimpleDTO>();
-        if(productList!=null){
-            productList.stream().forEach(product -> {
-                productDTOList.add(new ProductSimpleDTO(product));
-            });
-        }
+        productList.stream()
+                .filter(product -> product != null)
+                .forEach(product -> {
+            productDTOList.add(new ProductSimpleDTO(product));
+        });
         return OK(productDTOList);
     }
 
@@ -171,11 +177,11 @@ public class ProductController {
     public ApiResult<List<CategoryDTO>> viewCategoryList(){
         List <Category> categoryList= productService.findAll();
         List<CategoryDTO> categoryDTOList=new ArrayList<CategoryDTO>();
-        if(categoryList!=null){
-            categoryList.stream().forEach(category -> {
-                categoryDTOList.add(new CategoryDTO(category));
-            });
-        }
+        categoryList.stream()
+                .filter(category -> category != null)
+                .forEach(category -> {
+            categoryDTOList.add(new CategoryDTO(category));
+        });
         return OK(categoryDTOList);
     }
 }
