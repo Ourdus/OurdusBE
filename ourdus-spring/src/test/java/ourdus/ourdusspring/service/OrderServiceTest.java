@@ -6,11 +6,12 @@ import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-import ourdus.ourdusspring.domain.Address;
-import ourdus.ourdusspring.domain.Order;
-import ourdus.ourdusspring.domain.OrderDetail;
-import ourdus.ourdusspring.dto.AddressDTO;
-import ourdus.ourdusspring.dto.OrderForm;
+import ourdus.ourdusspring.domain.user.Address;
+import ourdus.ourdusspring.domain.product.order.Order;
+import ourdus.ourdusspring.domain.product.order.OrderDetail;
+import ourdus.ourdusspring.dto.user.AddressDTO;
+import ourdus.ourdusspring.dto.product.order.OrderForm;
+import ourdus.ourdusspring.service.product.order.OrderService;
 
 import java.util.ArrayList;
 import java.util.List;

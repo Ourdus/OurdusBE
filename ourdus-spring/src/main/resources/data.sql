@@ -34,13 +34,13 @@ INSERT INTO product(product_id, author_id, category_id, product_name) VALUES (nu
 INSERT INTO product(product_id, author_id, category_id, product_name) VALUES (null, 11, 1, 'product11_by_test1');
 INSERT INTO product(product_id, author_id, category_id, product_name, product_info) VALUES (null, 12, 1, 'product12_by_test1', '작품내용입니다.');
 
-INSERT INTO product_image(image_id, product_id, image) VALUES (null, 1, '이미지1');
-INSERT INTO product_image(image_id, product_id, image) VALUES (null, 1, '이미지2');
-INSERT INTO product_image(image_id, product_id, image) VALUES (null, 1, '이미지3');
-INSERT INTO product_image(image_id, product_id, image) VALUES (null, 2, '이미지4');
-INSERT INTO product_image(image_id, product_id, image) VALUES (null, 2, '이미지5');
-INSERT INTO product_image(image_id, product_id, image) VALUES (null, 2, '이미지6');
-INSERT INTO product_image(image_id, product_id, image) VALUES (null, 3, '이미지7');
+INSERT INTO product_image(image_id, product_id, image) VALUES (null, 1, 'https://image.idus.com/image/files/35a177d4f4064b7f96e89f55ac495d33_720.jpg');
+INSERT INTO product_image(image_id, product_id, image) VALUES (null, 1, 'https://image.idus.com/image/files/71759e1b9f8f4c469a0e0efef403c892_720.jpg');
+INSERT INTO product_image(image_id, product_id, image) VALUES (null, 1, 'https://image.idus.com/image/files/bebec784896d48dbb6ca0a417a5d679b_720.jpg');
+INSERT INTO product_image(image_id, product_id, image) VALUES (null, 2, 'https://image.idus.com/image/files/910a0bad1c264cea969409446c522b5b_720.jpg');
+INSERT INTO product_image(image_id, product_id, image) VALUES (null, 2, 'https://image.idus.com/image/files/0ad82b217bfb48279b13695ab767b576_720.jpg');
+INSERT INTO product_image(image_id, product_id, image) VALUES (null, 2, 'https://image.idus.com/image/files/e6b10690690f42ec9b8d37889803c1f7_720.jpg');
+INSERT INTO product_image(image_id, product_id, image) VALUES (null, 3, 'https://image.idus.com/image/files/17e8ad331baf4e3193f082ad51de68d6_720.png');
 
 
 INSERT INTO product_parent_option(product_parent_option_id, product_id, option_name) VALUES (null, 1, '1큰옵션1');

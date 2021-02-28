@@ -3,11 +3,11 @@
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.context.annotation.Bean;
 //import org.springframework.context.annotation.Configuration;
-//import ourdus.ourdusspring.repository.AddressRepository;
-//import ourdus.ourdusspring.repository.CategoryRepository;
-//import ourdus.ourdusspring.repository.ProductRepository;
-//import ourdus.ourdusspring.repository.UserRepository;
-//import ourdus.ourdusspring.service.UserService;
+//import ourdus.ourdusspring.repository.user.AddressRepository;
+//import ourdus.ourdusspring.repository.product.category.CategoryRepository;
+//import ourdus.ourdusspring.repository.product.ProductRepository;
+//import ourdus.ourdusspring.repository.user.UserRepository;
+//import ourdus.ourdusspring.service.user.UserService;
 //
 //@Configuration
 //public class SpringConfig {

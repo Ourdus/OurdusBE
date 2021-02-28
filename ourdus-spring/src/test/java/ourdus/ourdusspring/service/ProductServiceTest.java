@@ -6,9 +6,10 @@ import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-import ourdus.ourdusspring.domain.Product;
-import ourdus.ourdusspring.repository.ProductRepository;
-import ourdus.ourdusspring.repository.UserRepository;
+import ourdus.ourdusspring.domain.product.Product;
+import ourdus.ourdusspring.repository.product.ProductRepository;
+import ourdus.ourdusspring.repository.user.UserRepository;
+import ourdus.ourdusspring.service.product.ProductService;
 
 import java.util.NoSuchElementException;
 

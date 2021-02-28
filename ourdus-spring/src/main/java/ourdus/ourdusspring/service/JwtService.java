@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import ourdus.ourdusspring.domain.User;
+import ourdus.ourdusspring.domain.user.User;
 
 import java.util.Date;
 import java.util.Map;

@@ -7,7 +7,8 @@ import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-import ourdus.ourdusspring.domain.Cart;
+import ourdus.ourdusspring.domain.product.order.Cart;
+import ourdus.ourdusspring.service.product.order.CartService;
 
 import java.util.List;
 import java.util.Objects;

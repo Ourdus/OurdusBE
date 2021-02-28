@@ -1,0 +1,75 @@
+package ourdus.ourdusspring.controller.offlineclass.order;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import ourdus.ourdusspring.common.ApiResult;
+import ourdus.ourdusspring.domain.offlineclass.order.COrder;
+import ourdus.ourdusspring.dto.offlineclass.order.COrderDTO;
+import ourdus.ourdusspring.service.offlineclass.order.COrderService;
+import ourdus.ourdusspring.service.JwtService;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
+import static ourdus.ourdusspring.common.ApiResult.OK;
+
+@RestController
+@RequestMapping("api/t/c")
+public class COrderController {
+
+    @Autowired
+    private JwtService jwtService;
+
+    @Autowired
+    private COrderService cOrderService;
+
+    public COrderController(COrderService cOrderService)
+    {
+        this.cOrderService=cOrderService;
+    }
+
+    @GetMapping("order")
+    public ApiResult<List<COrderDTO>> viewOrderList(){
+        List<COrder> cOrderList=cOrderService.findAll();
+        List <COrderDTO> cOrderDTOList=new ArrayList<>();
+        if(cOrderList!=null)
+        {
+            cOrderList.stream().forEach(cOrder -> {
+                cOrderDTOList.add(new COrderDTO(cOrder));
+            });
+        }
+        return OK(cOrderDTOList);
+    }
+
+
+    @GetMapping("order/{user_id}")
+    public ApiResult<COrderDTO> viewUserOrder(@PathVariable("user_id") Long userId){
+        Optional<COrder> cOrder=cOrderService.findOne(userId);
+        cOrder.orElseThrow(()->new NoSuchElementException("해당되는 사용자의 아이디를 찾을 수 없습니다"));
+        return OK(new COrderDTO(cOrder.get()));
+    }
+
+
+
+    @PostMapping("order/new")
+    public ApiResult<String> save(HttpServletRequest req, @RequestBody COrderDTO cOrderDTO)
+    {
+        // Long authorId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId")));
+        Long authorId = 1L;
+        COrder cOrder= COrder
+                .builder()
+                .build();
+        return OK(cOrderService.save(cOrder,cOrderDTO.getUserId(),cOrderDTO.getBookingId(),cOrderDTO.getClassId()));
+    }
+
+    @PostMapping("order/{user_id}/delete")
+    public ApiResult<String> delete(HttpServletRequest req,@PathVariable("user_id") Long userId)
+    {
+        // Long authorId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId")));
+        Long authorId = 1L;
+        return OK(cOrderService.delete(userId));
+    }
+}
