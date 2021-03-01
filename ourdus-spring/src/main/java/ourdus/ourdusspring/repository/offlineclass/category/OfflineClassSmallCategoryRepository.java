@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface OfflineClassSmallCategoryRepository extends JpaRepository<OfflineClassSmallCategory,Long> {
 
-    Optional<OfflineClassSmallCategory> findById(Long Id);
+   // Optional<OfflineClassSmallCategory> findById(Long Id);
 }

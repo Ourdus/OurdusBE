@@ -3,6 +3,7 @@ package ourdus.ourdusspring.domain.offlineclass.category;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import ourdus.ourdusspring.domain.offlineclass.OfflineClass;
+import ourdus.ourdusspring.domain.offlineclass.order.CReservation;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -26,7 +27,8 @@ public class OfflineClassSmallCategory {
     @JoinColumn(name="BIG_CATEGORY_ID")
     private OfflineClassBigCategory offlineClassBigCategory;
 
-    @OneToMany(mappedBy = "offlineClassSmallCategory")
-    private List<OfflineClass> offlineClassesList= new ArrayList<>();
+    @OneToMany(mappedBy = "offlineClassSmallCategory",cascade = CascadeType.PERSIST)
+    private List<OfflineClass> offlineClassList= new ArrayList<>();
+
 
 }

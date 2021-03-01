@@ -25,7 +25,7 @@ public class COrderController {
     private COrderService cOrderService;
 
     @GetMapping("order")
-    public ApiResult<List<COrderDTO>> viewOrderList(){
+    public ApiResult<List<COrderDTO>> viewOCOrderList(){
         List<COrder> cOrderList=cOrderService.findAll();
         List <COrderDTO> cOrderDTOList=new ArrayList<>();
 

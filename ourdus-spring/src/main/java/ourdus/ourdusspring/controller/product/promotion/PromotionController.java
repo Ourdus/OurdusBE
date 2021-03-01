@@ -63,7 +63,7 @@ public class PromotionController {
         return OK(promotionService.update(promotionId,promotion));
     }
 
-    @DeleteMapping("/t/w/promotion/{promotion_id}")
+    @DeleteMapping("/t/w/promotion/{promotion_id}/delete")
     public ApiResult<String> deletePromotion(@PathVariable("promotion_id") Long promotionId){
         return OK(promotionService.deletePromotion(promotionId));
     }
@@ -78,7 +78,7 @@ public class PromotionController {
         return OK(new PromotionProductDTO(promotionProductService.save(pp,promotionId,productId)));
     }
 
-    @PostMapping("/t/w/promotion/{product_id}/delete")
+    @DeleteMapping("/t/w/promotion/{product_id}/delete")
     public ApiResult<String> delete(@PathVariable("product_id") Long promotion_id){
         return OK(promotionProductService.delete(promotion_id));
     }

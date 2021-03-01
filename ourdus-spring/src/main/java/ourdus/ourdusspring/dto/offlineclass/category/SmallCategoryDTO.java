@@ -7,6 +7,11 @@ import lombok.Setter;
 import ourdus.ourdusspring.domain.offlineclass.OfflineClass;
 import ourdus.ourdusspring.domain.offlineclass.category.OfflineClassBigCategory;
 import ourdus.ourdusspring.domain.offlineclass.category.OfflineClassSmallCategory;
+import ourdus.ourdusspring.domain.offlineclass.review.OfflineClassReview;
+import ourdus.ourdusspring.domain.product.ProductImage;
+import ourdus.ourdusspring.dto.offlineclass.OfflineClassDTO;
+import ourdus.ourdusspring.dto.offlineclass.OfflineClassRequest;
+import ourdus.ourdusspring.dto.offlineclass.review.OfflineClassReviewDTO;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -19,6 +24,8 @@ public class SmallCategoryDTO {
 
     private Long id;
     private String name;
+    private List<OfflineClassRequest> offlineClassList= new ArrayList<>();
+
 
 
     public Long getId() {
@@ -41,6 +48,10 @@ public class SmallCategoryDTO {
     {
         this.id=offlineClassSmallCategory.getId();
         this.name= offlineClassSmallCategory.getName();
+
+        for(OfflineClass oc: offlineClassSmallCategory.getOfflineClassList()){
+            this.offlineClassList.add(new OfflineClassRequest(oc));
+        }
     }
 
 }

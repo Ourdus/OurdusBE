@@ -67,7 +67,6 @@ public class OfflineClassController {
 
 
     @PostMapping("t/c/{class_id}/edit")
-
     public ApiResult<OfflineClassDTO> modify(HttpServletRequest req, @PathVariable("class_id") Long class_id, @RequestBody OfflineClassRequest offlineClassRequest)
     {
         // Long authorId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId")));

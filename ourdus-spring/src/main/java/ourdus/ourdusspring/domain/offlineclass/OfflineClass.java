@@ -96,6 +96,10 @@ public class OfflineClass {
     }
 
 
+    public OfflineClassSmallCategory getOfflineClassSmallCategory() {
+        return offlineClassSmallCategory;
+    }
+
     public void setName(String name) {
         this.name = name;
     }

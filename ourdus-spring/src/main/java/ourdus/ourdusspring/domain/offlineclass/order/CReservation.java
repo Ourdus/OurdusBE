@@ -6,6 +6,8 @@ import ourdus.ourdusspring.domain.offlineclass.OfflineClass;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -34,7 +36,7 @@ public class CReservation {
     @JoinColumn(name="CLASS_ID")
     private OfflineClass offlineClass;
 
-//    @OneToMany(mappedBy = "CReservation")
+//    @OneToMany(mappedBy = "creservation",cascade = CascadeType.PERSIST)
 //    private List<COrder> cOrderList=new ArrayList<>();
 
 }
