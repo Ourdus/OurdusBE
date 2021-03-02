@@ -103,9 +103,9 @@ INSERT INTO c_small_category(small_category_id,big_category_id,small_category_na
 INSERT INTO c_small_category(small_category_id,big_category_id,small_category_name) VALUES(null,2,'orange_juice');
 
 
-INSERT INTO offline_class(class_id,small_category_id,author_id,class_price,class_description,class_purchase,class_duration,class_level,class_place,user_max,class_like,class_name) VALUES(null,1,2,200000, '클래스 설명 1',55,3,'쉬움','서울 영등포구',30,15,'물 안줘도 되는! 스투키 캔들 만들기1');
-INSERT INTO offline_class(class_id,small_category_id,author_id,class_price,class_description,class_purchase,class_duration,class_level,class_place,user_max,class_like,class_name) VALUES(null,3,3,200000, '클래스 설명 2',55,3,'어려움','서울 강남구',30,15,'케익만들기');
-INSERT INTO offline_class(class_id,small_category_id,author_id,class_price,class_description,class_purchase,class_duration,class_level,class_place,user_max,class_like,class_name) VALUES(null,1,1,200000, '클래스 설명 3',55,3,'쉬움','서울 강동구',30,15,'빵만들기');
+INSERT INTO offline_class(class_id,small_category_id,author_id,class_price,class_description,class_purchase,class_duration,class_level,class_place,user_max,class_like,class_name) VALUES(null,1,2,200000, '클래스 설명 1',55,3,'쉬움','seoul gangnam',30,15,'물 안줘도 되는! 스투키 캔들 만들기1');
+INSERT INTO offline_class(class_id,small_category_id,author_id,class_price,class_description,class_purchase,class_duration,class_level,class_place,user_max,class_like,class_name) VALUES(null,3,3,200000, '클래스 설명 2',55,3,'어려움','seoul gangnams',30,15,'케익만들기');
+INSERT INTO offline_class(class_id,small_category_id,author_id,class_price,class_description,class_purchase,class_duration,class_level,class_place,user_max,class_like,class_name) VALUES(null,1,1,200000, '클래스 설명 3',55,3,'쉬움','busan hae',30,15,'빵만들기');
 
 INSERT INTO online_class_category(online_category_id, online_category_name) VALUES(null,'유화/아크릴화');
 INSERT INTO online_class_category(online_category_id, online_category_name) VALUES(null,'수채화');

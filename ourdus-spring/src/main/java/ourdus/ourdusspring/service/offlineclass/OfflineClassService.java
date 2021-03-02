@@ -83,5 +83,11 @@ public class OfflineClassService {
         return "comment delete success";
     }
 
+    public List<OfflineClass> findRegion(int regionId) {
+        OfflineClass offlineClass= new OfflineClass();
+        String region =offlineClass.regionChange(regionId);
+        return offlineClassRepository.findByPlaceIsContaining(region);
+    }
+
 
 }

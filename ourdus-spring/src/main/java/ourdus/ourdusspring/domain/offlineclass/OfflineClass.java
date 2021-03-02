@@ -152,6 +152,34 @@ public class OfflineClass {
         this.offlineClassSmallCategory = offlineClassSmallCategory;
     }
 
+    public String regionChange(int check)
+    {
+        if(check==1)
+            return "서울";
+        if(check==2)
+            return "경기";
+        if(check==3)
+            return "부산";
+        if(check==4)
+            return "인천";
+        if(check==5)
+            return "대구";
+        if(check==6)
+            return "광주";
+        if(check==7)
+            return "강원";
+        if(check==8)
+            return "세종";
+        if(check==9)
+            return "대전";
+        if(check==10)
+            return "충남";
+        if(check==11)
+            return "울산";
+
+        return "";
+    }
+
 
     //연관관계메소드
     public void addReview(OfflineClassReview review){

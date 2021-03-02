@@ -240,6 +240,7 @@ CREATE TABLE online_class
     online_class_like        int          NOT NULL DEFAULT 0,
     online_class_rate        int          NOT NULL DEFAULT 0,
     online_class_image       varchar(100) NULL,
+    online_class_video       varchar(100) NULL,
     PRIMARY KEY (online_class_id),
     FOREIGN KEY (author_id) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
     FOREIGN KEY (online_category_id) REFERENCES online_class_category (online_category_id) ON DELETE RESTRICT ON UPDATE RESTRICT
@@ -280,14 +281,6 @@ CREATE TABLE offlineclass_image
 );
 
 
-CREATE TABLE online_class_video
-(
-    online_class_video_id      bigint NOT NULL AUTO_INCREMENT,
-    online_class_id            bigint NOT NULL,
-    online_class_video_content varchar(100) NULL,
-    PRIMARY KEY (online_class_video_id),
-    FOREIGN KEY (online_class_id) REFERENCES online_class (online_class_id) ON DELETE RESTRICT ON UPDATE RESTRICT
-);
 
 CREATE TABLE preparation
 (

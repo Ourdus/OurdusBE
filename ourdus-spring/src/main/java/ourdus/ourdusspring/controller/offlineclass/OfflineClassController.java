@@ -95,4 +95,16 @@ public class OfflineClassController {
     public ApiResult<String> deleteAddress(@PathVariable("comment_id")Long commentId){
         return OK(offlineClassService.removeComment(commentId));
     }
+
+    @GetMapping("c/region/{region_id}")
+    public ApiResult<List<OfflineClassDTO>> viewRegionalOfflineClass(@PathVariable("region_id") int regionId){
+        List <OfflineClass> offlineClassList=offlineClassService.findRegion(regionId);
+        List <OfflineClassDTO> offlineClassDTOList=new ArrayList<>();
+        offlineClassList.stream()
+                .filter(offlineClass -> offlineClass != null)
+                .forEach(offlineClass -> {
+                    offlineClassDTOList.add(new OfflineClassDTO(offlineClass));
+                });
+        return OK(offlineClassDTOList);
+    }
 }

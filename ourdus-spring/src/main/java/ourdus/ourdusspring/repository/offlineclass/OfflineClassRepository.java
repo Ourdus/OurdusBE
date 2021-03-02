@@ -11,4 +11,5 @@ public interface OfflineClassRepository extends JpaRepository<OfflineClass,Long>
     Optional<OfflineClass> findById(Long Id);
     OfflineClass save(OfflineClass offlineClass);
     void deleteById(Long classId);
+    List<OfflineClass> findByPlaceIsContaining(String place);
 }
