@@ -158,7 +158,7 @@ create table promotion_product
 CREATE TABLE comment
 (
     comment_id      bigint      NOT NULL AUTO_INCREMENT,
-    comment_content varchar(50) NOT NULL,
+    comment_content MEDIUMTEXT  NOT NULL,
     product_id      bigint      NOT NULL,
     user_id         bigint      NOT NULL,
     PRIMARY KEY (comment_id),
@@ -271,7 +271,7 @@ CREATE TABLE c_order
     FOREIGN KEY(user_id) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 
-CREATE TABLE offlineclass_image
+CREATE TABLE offline_class_image
 (
     image_id   bigint       NOT NULL AUTO_INCREMENT,
     class_id bigint       NOT NULL,
@@ -300,7 +300,7 @@ CREATE TABLE preparation
 CREATE TABLE online_class_comment
 (
     online_comment_id      bigint      NOT NULL AUTO_INCREMENT,
-    online_comment_content varchar(50) NOT NULL,
+    online_comment_content MEDIUMTEXT NOT NULL,
     online_class_id      bigint      NOT NULL,
     user_id         bigint      NOT NULL,
     PRIMARY KEY (online_comment_id ),
@@ -311,7 +311,7 @@ CREATE TABLE online_class_comment
 CREATE TABLE offline_class_comment
 (
     offline_comment_id      bigint      NOT NULL AUTO_INCREMENT,
-    offline_comment_content varchar(50) NOT NULL,
+    offline_comment_content MEDIUMTEXT NOT NULL,
     class_id      bigint      NOT NULL,
     user_id         bigint      NOT NULL,
     PRIMARY KEY (offline_comment_id ),
@@ -325,9 +325,10 @@ CREATE TABLE online_class_review
     user_id         bigint       NOT NULL,
 --     online_order_detail_id bigint       NOT NULL,
     online_class_id      bigint       NOT NULL,
-    online_review_content  varchar(500) NOT NULL,
+    online_review_content  mediumtext NOT NULL,
     online_review_date     datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-    online_review_rate     int          NOT NULL DEFAULT 50,
+    online_review_rate     int
+              NOT NULL DEFAULT 50,
     PRIMARY KEY (online_review_id),
     FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
 --     FOREIGN KEY (online_order_detail_id) REFERENCES order_detail (order_detail_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
