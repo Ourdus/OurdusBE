@@ -1,9 +1,3 @@
-drop table if exists user;
-drop table if exists product_category;
-drop table if exists product;
-drop table if exists product_option;
-drop table if exists comment;
-
 CREATE TABLE user
 (
     user_id     bigint      NOT NULL AUTO_INCREMENT,
