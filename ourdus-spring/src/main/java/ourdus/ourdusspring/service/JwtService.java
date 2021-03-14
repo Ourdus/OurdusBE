@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import ourdus.ourdusspring.domain.user.User;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.Map;
 
@@ -64,7 +65,7 @@ public class JwtService {
         return claims.getBody();
     }
 
-    public Long getId(final String jwt){
-        return Long.valueOf(String.valueOf(get(jwt).get("UserId")));
+    public Long getId(final HttpServletRequest req){
+        return Long.valueOf(String.valueOf(get(req.getHeader("jwt-auth-token")).get("UserId")));
     }
 }

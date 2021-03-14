@@ -126,6 +126,14 @@ INSERT INTO c_order(order_id,user_id,booking_id,class_id) values (null,3,1,3);
 INSERT INTO c_order(order_id,user_id,booking_id,class_id) values (null,5,1,2);
 INSERT INTO c_order(order_id,user_id,booking_id,class_id) values (null,7,1,2);
 
+INSERT INTO online_class_order(online_order_id, online_class_id, user_id) VALUES(null, 1, 1);
+INSERT INTO online_class_order(online_order_id, online_class_id, user_id) VALUES(null, 2, 1);
+INSERT INTO online_class_order(online_order_id, online_class_id, user_id) VALUES(null, 3, 1);
+INSERT INTO online_class_order(online_order_id, online_class_id, user_id) VALUES(null, 1, 2);
+INSERT INTO online_class_order(online_order_id, online_class_id, user_id) VALUES(null, 4, 2);
+INSERT INTO online_class_order(online_order_id, online_class_id, user_id) VALUES(null, 1, 3);
+
+
 INSERT INTO online_class_comment(online_comment_id, online_comment_content, online_class_id,user_id) VALUES(null,'첫번째 온라인클래스 댓글1',1,1);
 INSERT INTO online_class_comment(online_comment_id, online_comment_content, online_class_id,user_id) VALUES(null,'첫번째 온라인클래스 댓글2',1,2);
 INSERT INTO online_class_comment(online_comment_id, online_comment_content, online_class_id,user_id) VALUES(null,'두번째 온라인클래스 댓글1',2,3);

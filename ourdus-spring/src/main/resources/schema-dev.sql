@@ -245,7 +245,7 @@ CREATE TABLE c_reservation
 (
     booking_id       bigint   NOT NULL auto_increment,
     class_id         bigint   NOT NULL,
-    class_times      datetime NOT NULL default current_timestamp(),
+    class_dates      datetime NOT NULL default current_timestamp(),
     class_user_no    int      NOT NULL DEFAULT 0,
     reservation_flag boolean  NOT NULL DEFAULT true,
     PRIMARY KEY (booking_id),
@@ -273,8 +273,6 @@ CREATE TABLE offline_class_image
     FOREIGN KEY (class_id) REFERENCES offline_class (class_id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 
-
-
 CREATE TABLE preparation
 (
     preparation_id    bigint NOT NULL AUTO_INCREMENT,
@@ -285,10 +283,15 @@ CREATE TABLE preparation
     FOREIGN KEY (online_class_id) REFERENCES online_class (online_class_id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 
--- CREATE TABLE class_order
--- (
---
--- );
+CREATE TABLE online_class_order
+(
+    online_order_id bigint NOT NULL AUTO_INCREMENT,
+    online_class_id bigint NOT NULL,
+    user_id         bigint NOT NULL,
+    PRIMARY KEY (online_order_id),
+    FOREIGN KEY (online_class_id) REFERENCES online_class (online_class_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
+    FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE RESTRICT
+);
 
 CREATE TABLE online_class_comment
 (

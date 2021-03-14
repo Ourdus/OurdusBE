@@ -41,7 +41,7 @@ import java.util.List;
 
 //import ourdus.ourdusspring.repository.SpringDataJpaUserRepository;
 
-@SpringBootTest
+@SpringBootTest(properties = "spring.profiles.active=dev")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @Transactional
 class UserServiceTest {
