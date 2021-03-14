@@ -27,9 +27,9 @@ CREATE TABLE address
 
 CREATE TABLE product_category
 (
-    category_id   bigint      NOT NULL AUTO_INCREMENT,
-    category_name varchar(20) NOT NULL,
-    category_image varchar(100) ,
+    category_id    bigint      NOT NULL AUTO_INCREMENT,
+    category_name  varchar(20) NOT NULL,
+    category_image varchar(100),
     PRIMARY KEY (category_id)
 );
 
@@ -151,10 +151,10 @@ create table promotion_product
 
 CREATE TABLE comment
 (
-    comment_id      bigint      NOT NULL AUTO_INCREMENT,
-    comment_content MEDIUMTEXT  NOT NULL,
-    product_id      bigint      NOT NULL,
-    user_id         bigint      NOT NULL,
+    comment_id      bigint     NOT NULL AUTO_INCREMENT,
+    comment_content MEDIUMTEXT NOT NULL,
+    product_id      bigint     NOT NULL,
+    user_id         bigint     NOT NULL,
     PRIMARY KEY (comment_id),
     FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
     FOREIGN KEY (product_id) REFERENCES product (product_id) ON DELETE RESTRICT ON UPDATE RESTRICT
@@ -243,33 +243,32 @@ CREATE TABLE online_class
 
 CREATE TABLE c_reservation
 (
-    booking_id  bigint NOT NULL auto_increment,
-    class_id bigint NOT NULL,
-    dates datetime NULL default current_timestamp(),
-    times datetime NULL default current_timestamp(),
-    user_no int NULL,
-    reservation_flag boolean NULL,
-    PRIMARY KEY(booking_id),
+    booking_id       bigint   NOT NULL auto_increment,
+    class_id         bigint   NOT NULL,
+    class_times      datetime NOT NULL default current_timestamp(),
+    class_user_no    int      NOT NULL DEFAULT 0,
+    reservation_flag boolean  NOT NULL DEFAULT true,
+    PRIMARY KEY (booking_id),
     FOREIGN KEY (class_id) REFERENCES offline_class (class_id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 
 CREATE TABLE c_order
 (
-    order_id  bigint NOT NULL auto_increment,
-    user_id  bigint  NOT NULL,
+    order_id   bigint NOT NULL auto_increment,
+    user_id    bigint NOT NULL,
     booking_id bigint NOT NULL,
-    class_id bigint NOT NULL,
-    PRIMARY KEY(order_id),
+    class_id   bigint NOT NULL,
+    PRIMARY KEY (order_id),
     FOREIGN KEY (booking_id) REFERENCES c_reservation (booking_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
     FOREIGN KEY (class_id) REFERENCES c_reservation (class_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
-    FOREIGN KEY(user_id) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE RESTRICT
+    FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 
 CREATE TABLE offline_class_image
 (
-    image_id   bigint       NOT NULL AUTO_INCREMENT,
+    image_id bigint       NOT NULL AUTO_INCREMENT,
     class_id bigint       NOT NULL,
-    image      varchar(100) NOT NULL,
+    image    varchar(100) NOT NULL,
     PRIMARY KEY (image_id),
     FOREIGN KEY (class_id) REFERENCES offline_class (class_id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
@@ -293,36 +292,36 @@ CREATE TABLE preparation
 
 CREATE TABLE online_class_comment
 (
-    online_comment_id      bigint      NOT NULL AUTO_INCREMENT,
+    online_comment_id      bigint     NOT NULL AUTO_INCREMENT,
     online_comment_content MEDIUMTEXT NOT NULL,
-    online_class_id      bigint      NOT NULL,
-    user_id         bigint      NOT NULL,
-    PRIMARY KEY (online_comment_id ),
+    online_class_id        bigint     NOT NULL,
+    user_id                bigint     NOT NULL,
+    PRIMARY KEY (online_comment_id),
     FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
     FOREIGN KEY (online_class_id) REFERENCES online_class (online_class_id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 
 CREATE TABLE offline_class_comment
 (
-    offline_comment_id      bigint      NOT NULL AUTO_INCREMENT,
+    offline_comment_id      bigint     NOT NULL AUTO_INCREMENT,
     offline_comment_content MEDIUMTEXT NOT NULL,
-    class_id      bigint      NOT NULL,
-    user_id         bigint      NOT NULL,
-    PRIMARY KEY (offline_comment_id ),
+    class_id                bigint     NOT NULL,
+    user_id                 bigint     NOT NULL,
+    PRIMARY KEY (offline_comment_id),
     FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
     FOREIGN KEY (class_id) REFERENCES offline_class (class_id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 
 CREATE TABLE online_class_review
 (
-    online_review_id       bigint       NOT NULL AUTO_INCREMENT,
-    user_id         bigint       NOT NULL,
+    online_review_id      bigint     NOT NULL AUTO_INCREMENT,
+    user_id               bigint     NOT NULL,
 --     online_order_detail_id bigint       NOT NULL,
-    online_class_id      bigint       NOT NULL,
-    online_review_content  mediumtext NOT NULL,
-    online_review_date     datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-    online_review_rate     int
-              NOT NULL DEFAULT 50,
+    online_class_id       bigint     NOT NULL,
+    online_review_content mediumtext NOT NULL,
+    online_review_date    datetime   NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+    online_review_rate    int
+                                     NOT NULL DEFAULT 50,
     PRIMARY KEY (online_review_id),
     FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
 --     FOREIGN KEY (online_order_detail_id) REFERENCES order_detail (order_detail_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
@@ -331,13 +330,13 @@ CREATE TABLE online_class_review
 
 CREATE TABLE offline_class_review
 (
-    offline_review_id       bigint       NOT NULL AUTO_INCREMENT,
-    user_id         bigint       NOT NULL,
+    offline_review_id      bigint       NOT NULL AUTO_INCREMENT,
+    user_id                bigint       NOT NULL,
 --     online_order_detail_id bigint       NOT NULL,
-    class_id      bigint       NOT NULL,
-    offline_review_content  varchar(500) NOT NULL,
-    offline_review_date     datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-    offline_review_rate     int          NOT NULL DEFAULT 50,
+    class_id               bigint       NOT NULL,
+    offline_review_content varchar(500) NOT NULL,
+    offline_review_date    datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+    offline_review_rate    int          NOT NULL DEFAULT 50,
     PRIMARY KEY (offline_review_id),
     FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
 --     FOREIGN KEY (offline_order_detail_id) REFERENCES offline_order_detail (offline_order_detail_id) ON DELETE RESTRICT ON UPDATE RESTRICT,

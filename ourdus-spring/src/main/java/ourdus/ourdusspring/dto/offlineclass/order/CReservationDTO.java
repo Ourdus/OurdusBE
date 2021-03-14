@@ -16,7 +16,6 @@ public class CReservationDTO {
 
     private Long id;
     private LocalDateTime date;
-    private LocalDateTime time;
     private int userNo;
     private Boolean reservationFlag;
 
@@ -34,14 +33,6 @@ public class CReservationDTO {
 
     public void setDate(LocalDateTime date) {
         this.date = date;
-    }
-
-    public LocalDateTime getTime() {
-        return time;
-    }
-
-    public void setTime(LocalDateTime time) {
-        this.time = time;
     }
 
     public int getUserNo() {
@@ -67,6 +58,5 @@ public class CReservationDTO {
         this.userNo= cReservation.getUserNo();
         this.reservationFlag=cReservation.getReservationFlag();
         this.date=cReservation.getDate();
-        this.time=cReservation.getTime();
     }
 }
