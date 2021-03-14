@@ -6,17 +6,16 @@ import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-import ourdus.ourdusspring.domain.Product;
-import ourdus.ourdusspring.repository.ProductRepository;
-import ourdus.ourdusspring.repository.UserRepository;
-
-import java.util.NoSuchElementException;
+import ourdus.ourdusspring.domain.product.Product;
+import ourdus.ourdusspring.repository.product.ProductRepository;
+import ourdus.ourdusspring.repository.user.UserRepository;
+import ourdus.ourdusspring.service.product.ProductService;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
-@SpringBootTest
+@SpringBootTest(properties = "spring.profiles.active=dev")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @Transactional
 class ProductServiceTest {
@@ -54,7 +53,7 @@ class ProductServiceTest {
     @Test
     void 특정_작품조회() {
         Long productId = 1L;
-        Product product = productService.findOne(productId).orElseThrow(() -> new NoSuchElementException("찾을 수 없는 작품입니다."));
+        Product product = productService.findOne(productId);
         assertThat(product.getId(), is(equalTo(productId)));
     }
 

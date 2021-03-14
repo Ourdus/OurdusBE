@@ -6,9 +6,10 @@ import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-import ourdus.ourdusspring.domain.ProductChildOption;
-import ourdus.ourdusspring.domain.ProductParentOption;
-import ourdus.ourdusspring.dto.ProductChildOptionRequest;
+import ourdus.ourdusspring.domain.product.option.ProductChildOption;
+import ourdus.ourdusspring.domain.product.option.ProductParentOption;
+import ourdus.ourdusspring.dto.product.option.ProductChildOptionRequest;
+import ourdus.ourdusspring.service.product.option.ProductOptonService;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -18,7 +19,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
-@SpringBootTest
+@SpringBootTest(properties = "spring.profiles.active=dev")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @Transactional
 class ProductOptionServiceTest {

@@ -5,7 +5,7 @@
 //import org.junit.jupiter.api.Test;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-//import ourdus.ourdusspring.repository.UserRepository;
+//import ourdus.ourdusspring.repository.user.UserRepository;
 //
 ////import ourdus.ourdusspring.repository.SpringDataJpaUserRepository;
 //
@@ -33,14 +33,15 @@ import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-import ourdus.ourdusspring.domain.Address;
-import ourdus.ourdusspring.repository.UserRepository;
+import ourdus.ourdusspring.domain.user.Address;
+import ourdus.ourdusspring.repository.user.UserRepository;
+import ourdus.ourdusspring.service.user.UserService;
 
 import java.util.List;
 
 //import ourdus.ourdusspring.repository.SpringDataJpaUserRepository;
 
-@SpringBootTest
+@SpringBootTest(properties = "spring.profiles.active=dev")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @Transactional
 class UserServiceTest {
