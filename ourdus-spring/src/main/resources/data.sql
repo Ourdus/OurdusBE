@@ -150,7 +150,7 @@ INSERT INTO offline_class_review(user_id, class_id, offline_review_content, offl
 INSERT INTO offline_class_review(user_id, class_id, offline_review_content, offline_review_rate) VALUES(2, 1, '별로야', 44);
 INSERT INTO offline_class_review(user_id, class_id, offline_review_content, offline_review_rate) VALUES(2, 3, '그냥저냥', 25);
 
-INSERT INTO offlineclass_image(class_id,image) VALUES(1,'https://image.idus.com/image/files/7d992ccb52d142618ca885d0c435b5d2_720.jpg');
-INSERT INTO offlineclass_image(class_id,image) VALUES(1,'https://image.idus.com/image/files/f89fddb344ea4f518566e50a1ff4b166_720.jpg');
-INSERT INTO offlineclass_image(class_id,image) VALUES(1,'https://image.idus.com/image/files/b035e738a1b540a0b90f729e481ec075_720.jpg');
+INSERT INTO offline_class_image(image_id,class_id,image) VALUES(null,1,'https://image.idus.com/image/files/7d992ccb52d142618ca885d0c435b5d2_720.jpg');
+INSERT INTO offline_class_image(image_id,class_id,image) VALUES(null,1,'https://image.idus.com/image/files/f89fddb344ea4f518566e50a1ff4b166_720.jpg');
+INSERT INTO offline_class_image(image_id,class_id,image) VALUES(null,1,'https://image.idus.com/image/files/b035e738a1b540a0b90f729e481ec075_720.jpg');
 
