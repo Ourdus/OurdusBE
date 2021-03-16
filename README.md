@@ -1,65 +1,94 @@
-# OurdusBE_통합#5
-
-- 통합 with front (API document를 중점으로)
-- Deploy  
-  : nginx, react, spring boot, docker
-    - CI/CD tool : travis
-- DB
-  : RDS(MySQL)
-  
----
-
-## 📙 프로모션(Promotiom) &프로모션 작품 (PromotionProduct) Entity 생성 및 조회 구현 
-### Table
-Promotion table, PromotionProduct table  
-![image](https://user-images.githubusercontent.com/55472510/108139955-7dd74580-7104-11eb-8e30-3b3c88886f25.png)  
-
-Promotion & PromotionProduct table 간의 관계 => 양방향  
-PromotionProduct & Product table 간의 관계 => 단방향  
- 
-<구현시 막혔던 부분> 
-1. @JoinColumn(name="PRODUCT_ID") 부분에서 insertable=false로 설정해두면 값을 넣었을 때 insert가 막혀있으므로 promotion_id 값이 null로 받아와 insert 가 동작되지 않는다.
-2. Data jpa의 update, delete issue: deleteById 함수를 이용해서 지우면 200이 나와도 db에서 지워지지 않는 경우발생 -> 예비로 query로 작성해서 동작하게 구현함
-
-API 명세서
-Ourdus 통합 페이지 [링크](https://github.com/Ourdus/Ourdus/wiki)  
-프로모션, 프로모션 별 작품 부분 참조   
- 
----
-
-## 📙 리뷰 (Review) Entity 생성 및 조회 구현  
-### Table
-
-Review table  
-![image](https://user-images.githubusercontent.com/55472510/108140896-05718400-7106-11eb-913a-f5e2e4c831c1.png)
-
-User& Review table 간의 관계 => 단방향  
-Product & Review table 간의 관계 => 양방향  
-Order_Detail & Review table 간의 관계 => 단방향  
-
-<구현시 막혔던 부분> 
+# Ourdus Backend
+> [Idus](https://www.idus.com/) 의 Clone Project입니다.
 
 
-API 명세서
-Ourdus 통합 페이지 [링크](https://github.com/Ourdus/Ourdus/wiki)  
-리뷰 부분 참조 
-
---- 
-
-## 📙 댓글 (Comment) Entity 생성 및 조회 구현  
-### Table
-
-Comment table   
-![image](https://user-images.githubusercontent.com/55472510/108141231-a9f3c600-7106-11eb-9671-fa82362b3d45.png)
-
-User& Comment table 간의 관계 => 단방향  
-Product & Comment table 간의 관계 => 양방향  
- 
-<구현시 막혔던 부분> 
+## Member
+| 김서연 | 우혜진 | 이화경 |
+| :----: | :----: | :----: |
+| [@ksy991018](https://github.com/ksy991018) | [@HJ-Woo](https://github.com/HJ-Woo) | [@HwaGyeong](https://github.com/HwaGyeong) |
 
 
-API 명세서
-Ourdus 통합 페이지 [링크](https://github.com/Ourdus/Ourdus/wiki)  
-리뷰 부분 참조   
+## Docuemnt
+**✔ ERD**  
+![image](https://user-images.githubusercontent.com/59992230/111411874-b297e600-871e-11eb-8072-397a86065a71.png)
+[ERD Cloud](https://www.erdcloud.com/d/3d3aooW9fSG2fyfQZ)
 
---- 
+**✔ API document**
+![image](https://user-images.githubusercontent.com/59992230/111412048-06a2ca80-871f-11eb-8fe5-a2133074d24e.png)
+[API Document WIKI](https://github.com/Ourdus/Ourdus/wiki)
+
+## 기술 스택
+- Java 11
+- Spring Boot 
+- JPA
+- AWS EC2, Docker
+- Travis CI
+- AWS RDS (MySQL) - Prod
+- H2 Database - Dev
+
+-> [왜 이런 기술 스택을 선택했는가?]()
+
+## 프로젝트 구조
+```
+(main)
+.
+├─ ourdus-spring(backend)
+│  ├─ src
+│  │  ├─ main
+│  │  │  └─ java.ourdus.ourdusspring
+│  │  │      ├─ common
+│  │  │      ├─ controller
+│  │  │      ├─ domain
+│  │  │      ├─ dto
+│  │  │      ├─ interceptor
+│  │  │      ├─ respository
+│  │  │      └─ service
+│  │  └─ test
+│  │     └─ java.ourdus.ourdusspring
+│  │
+│  ├─ build.gradle
+│  ├─ gradlew
+│  ├─ gradlew.bat
+│  └─ settings.gradle
+│
+│
+└── Dockerfile
+
+
+(document)
+.
+└─ document/crawling
+    ├─ crawling-code
+    │  
+    └─ crawling-csv
+
+```
+
+## 프로젝트 사용 방법
+
+1. use dockerfile
+```
+docker build -f Dockerfile.dev . -t name
+
+docker run -d -p 8080:8080 name 
+```
+
+2. console (window)
+```
+cd ourdus-spring
+
+gradlew build
+
+cd build/libs
+
+java -jar -Dspring.profiles.active=dev ourdus-spring-0.0.1-SNAPSHOT.jar
+```
+
+3. Intellij 설정
+```
+File>Settings>Gradle>Gradle JVM: version11
+
+File>Settings>Java Compiler>version: 11
+
+Run/Debug Configuration>Environment>VM Options: -Dspring.profiles.active=dev
+```
