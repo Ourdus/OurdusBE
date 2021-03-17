@@ -3,12 +3,19 @@ package ourdus.ourdusspring.controller.user;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import ourdus.ourdusspring.common.ApiResult;
 import ourdus.ourdusspring.domain.user.Address;
 import ourdus.ourdusspring.domain.user.User;
 import ourdus.ourdusspring.dto.user.AddressDTO;
+import ourdus.ourdusspring.dto.user.LoginRequest;
 import ourdus.ourdusspring.dto.user.UserDTO;
+import ourdus.ourdusspring.security.CustomUserDetailsService;
+import ourdus.ourdusspring.security.JwtUtil;
 import ourdus.ourdusspring.service.JwtService;
 import ourdus.ourdusspring.service.user.UserService;
 
@@ -29,6 +36,14 @@ public class UserController {
     @Autowired
     private JwtService jwtService;
 
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private CustomUserDetailsService userDetailService;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     private final UserService userService;
 
@@ -61,6 +76,26 @@ public class UserController {
             status = HttpStatus.INTERNAL_SERVER_ERROR;
         }
         return OK(resultMap);
+    }
+
+    @GetMapping("answer")
+    public ApiResult<?> hi() {
+        return OK("hi~~");
+    }
+
+    @PostMapping("t/test")
+    public ApiResult<?> hello(@RequestBody LoginRequest loginRequest) throws Exception {
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(loginRequest.getUserName(), loginRequest.getPassword())
+            );
+        } catch (BadCredentialsException e) {
+            throw new Exception("Incorrect username or passoword", e);
+        }
+        final UserDetails userDetails = userDetailService.loadUserByUsername(loginRequest.getUserName());
+        final String jwt = jwtUtil.generateToken(userDetails);
+
+        return OK(jwt);
     }
 
     @GetMapping("/t/user/info")
