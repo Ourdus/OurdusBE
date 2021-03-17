@@ -155,7 +155,7 @@ public class OfflineClass {
     public String regionChange(int check)
     {
         if(check==1)
-            return "서울";
+            return "seoul";
         if(check==2)
             return "경기";
         if(check==3)

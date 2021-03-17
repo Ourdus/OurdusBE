@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table(name="OFFLINECLASS_IMAGE")
+@Table(name="OFFLINE_CLASS_IMAGE")
 @Getter
 @NoArgsConstructor
 public class OfflineClassImage {

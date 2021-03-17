@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import ourdus.ourdusspring.common.ApiResult;
 import ourdus.ourdusspring.domain.offlineclass.OfflineClass;
 import ourdus.ourdusspring.domain.offlineclass.comment.OfflineClassComment;
+import ourdus.ourdusspring.dto.offlineclass.OfflineClassSimpleDTO;
 import ourdus.ourdusspring.dto.offlineclass.comment.OfflineClassCommentDTO;
 import ourdus.ourdusspring.dto.offlineclass.OfflineClassDTO;
 import ourdus.ourdusspring.dto.offlineclass.OfflineClassRequest;
@@ -28,13 +29,13 @@ public class OfflineClassController {
     private OfflineClassService offlineClassService;
 
     @GetMapping("c")
-    public ApiResult<List<OfflineClassDTO>> viewOfflineclassList(){
+    public ApiResult<List<OfflineClassSimpleDTO>> viewOfflineclassList(){
         List <OfflineClass> offlineClassList=offlineClassService.findAll();
-        List <OfflineClassDTO> offlineClassDTOList=new ArrayList<>();
+        List <OfflineClassSimpleDTO> offlineClassDTOList=new ArrayList<>();
         offlineClassList.stream()
                 .filter(offlineClass -> offlineClass != null)
                 .forEach(offlineClass -> {
-            offlineClassDTOList.add(new OfflineClassDTO(offlineClass));
+            offlineClassDTOList.add(new OfflineClassSimpleDTO(offlineClass));
         });
         return OK(offlineClassDTOList);
     }
