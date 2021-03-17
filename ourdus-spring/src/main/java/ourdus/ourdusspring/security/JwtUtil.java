@@ -11,16 +11,25 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import static ourdus.ourdusspring.util.StringUtils.isEmptyString;
+
 /*
  * referece : https://github.com/koushikkothagal/spring-security-jwt/blob/master/src/main/java/io/javabrains/springsecurityjwt/util/JwtUtil.java
  * */
 
 @Service
 public class JwtUtil {
+    private static final String INVALID_TOKEN = "토큰이 유효하지 않습니다.";
+    private static final String INVALID_TOKEN_LOGIN = "해당 토큰에 알맞는 사용자 정보가 없습니다.";
+
     private String SECRET_KEY = "secret";
 
     public String extractUsername(String token) {
-        return extractClaim(token, Claims::getSubject);
+        String username = extractClaim(token, Claims::getSubject);
+        if (isEmptyString(username)) {
+            throw new IllegalStateException(INVALID_TOKEN);
+        }
+        return username;
     }
 
     public Date extractExpiration(String token) {
@@ -51,9 +60,11 @@ public class JwtUtil {
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
     }
 
-    public Boolean validateToken(String token, UserDetails userDetails) {
+    public void validateToken(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+        if ((!username.equals(userDetails.getUsername()) || isTokenExpired(token))) {
+            throw new IllegalStateException(INVALID_TOKEN_LOGIN);
+        }
     }
 
 }

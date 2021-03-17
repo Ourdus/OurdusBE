@@ -78,12 +78,12 @@ public class UserController {
         return OK(resultMap);
     }
 
-    @GetMapping("answer")
+    @GetMapping("t/answer")
     public ApiResult<?> hi() {
         return OK("hi~~");
     }
 
-    @PostMapping("t/test")
+    @PostMapping("test")
     public ApiResult<?> hello(@RequestBody LoginRequest loginRequest) throws Exception {
         try {
             authenticationManager.authenticate(
