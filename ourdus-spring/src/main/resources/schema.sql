@@ -339,13 +339,13 @@ CREATE TABLE offline_class_review
 (
     offline_review_id       bigint       NOT NULL AUTO_INCREMENT,
     user_id         bigint       NOT NULL,
---     online_order_detail_id bigint       NOT NULL,
+   -- offline_order_detail_id bigint       NOT NULL,
     class_id      bigint       NOT NULL,
     offline_review_content  varchar(500) NOT NULL,
     offline_review_date     datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP(),
     offline_review_rate     int          NOT NULL DEFAULT 50,
     PRIMARY KEY (offline_review_id),
     FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
---     FOREIGN KEY (offline_order_detail_id) REFERENCES offline_order_detail (offline_order_detail_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
+	--FOREIGN KEY (offline_order_detail_id) REFERENCES c_order (order_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
     FOREIGN KEY (class_id) REFERENCES offline_class (class_id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
