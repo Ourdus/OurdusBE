@@ -109,14 +109,8 @@ public class UserService {
     }
 
     public User getUserInfo(Long id) {
-        Optional<User> findUser = userRepository.findById(id);
-        if(findUser.isPresent()){
-            User user = findUser.get();
-            return user;
-        }else{
-            throw new NoSuchElementException("No User Info");
-        }
-
+        User findUser = userRepository.findById(id).orElseThrow(() -> new NoSuchElementException("No User Info"));
+        return findUser;
     }
 
 

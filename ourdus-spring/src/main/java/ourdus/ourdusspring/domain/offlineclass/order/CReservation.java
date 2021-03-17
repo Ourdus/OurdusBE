@@ -2,12 +2,11 @@ package ourdus.ourdusspring.domain.offlineclass.order;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 import ourdus.ourdusspring.domain.offlineclass.OfflineClass;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -20,16 +19,15 @@ public class CReservation {
     @Column(name="BOOKING_ID")
     private Long id;
 
-    @Column(name="DATES")
+    @Column(name="CLASS_DATES")
     private LocalDateTime date;
 
-    @Column(name="TIMES")
-    private LocalDateTime time;
-
-    @Column(name="USER_NO")
+    @Column(name="CLASS_USER_NO")
+    @ColumnDefault("0")
     private int userNo;
 
     @Column(name="RESERVATION_FLAG")
+    @ColumnDefault("true")
     private Boolean reservationFlag;
 
     @ManyToOne(cascade = CascadeType.PERSIST)

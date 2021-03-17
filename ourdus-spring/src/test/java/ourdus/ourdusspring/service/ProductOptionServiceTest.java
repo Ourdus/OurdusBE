@@ -19,7 +19,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
-@SpringBootTest
+@SpringBootTest(properties = "spring.profiles.active=dev")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @Transactional
 class ProductOptionServiceTest {

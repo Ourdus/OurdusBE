@@ -1,14 +1,12 @@
 package ourdus.ourdusspring.domain.offlineclass.order;
 
 import lombok.Builder;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import ourdus.ourdusspring.domain.user.User;
 
 import javax.persistence.*;
 
 @Entity
-@Getter
 @NoArgsConstructor
 @Table(name="C_ORDER")
 public class COrder {
