@@ -17,7 +17,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.filter.OncePerRequestFilter;
 import ourdus.ourdusspring.security.JwtAuthenticationProvider;
 import ourdus.ourdusspring.security.JwtRequestFilter;
-import ourdus.ourdusspring.security.JwtUtil;
 import ourdus.ourdusspring.service.user.UserService;
 
 @Configuration
@@ -30,8 +29,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public JwtAuthenticationProvider jwtAuthenticationProvider(JwtUtil jwtUtil, UserService userService) {
-        return new JwtAuthenticationProvider(jwtUtil, userService);
+    public JwtAuthenticationProvider jwtAuthenticationProvider(UserService userService) {
+        return new JwtAuthenticationProvider(userService);
     }
 
     @Bean
@@ -59,7 +58,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                    .antMatchers("/api/test").permitAll()
                     .antMatchers("/api/t/**").authenticated()
                 .and()
                     .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

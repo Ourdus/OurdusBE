@@ -10,11 +10,14 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import ourdus.ourdusspring.domain.offlineclass.order.COrder;
 import ourdus.ourdusspring.dto.user.UserDTO;
+import ourdus.ourdusspring.security.JwtUtil;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import static ourdus.ourdusspring.util.CompareValueUtils.changeValue;
 
 @Entity
 @Getter
@@ -63,12 +66,21 @@ public class User {
         }
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void join(PasswordEncoder passwordEncoder) {
+        password = passwordEncoder.encode(password);
     }
 
-    public void setTel(String tel) {
-        this.tel = tel;
+    public String makeToken() {
+        return JwtUtil.createToken(email, role.toString());
+    }
+
+    public void changeInfo(User user) {
+        this.tel = changeValue(this.tel, user.tel);
+        this.name = changeValue(this.name, user.name);
+    }
+
+    public boolean isUser(String email) {
+        return this.email.equals(email);
     }
 
     @Builder
@@ -95,7 +107,6 @@ public class User {
         this.id = userdto.getId();
         this.email = userdto.getEmail();
         this.name = userdto.getName();
-        this.password = userdto.getPassword();
         this.tel = userdto.getTel();
         this.regDate = userdto.getRegDate();
         this.point = userdto.getPoint();

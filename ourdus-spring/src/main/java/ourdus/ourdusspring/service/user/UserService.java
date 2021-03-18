@@ -14,10 +14,7 @@ import java.util.Optional;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-//import ourdus.ourdusspring.repository.SpringDataJpaUserRepository;
-
 @Service
-@Transactional
 public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
@@ -29,97 +26,111 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User login2(User loginUser){
-        String email = loginUser.getEmail();
-        String password = loginUser.getPassword();
-        Optional<User> user1 = userRepository.findByEmail(email);
-        if(user1.isPresent()){
-            User result = user1.get();
-            if(result.getPassword().equals(password)){
-                return result;
-            }else{
-                throw new RuntimeException("비밀번호가 틀렸습니다.");
-            }
-        }
-        throw new RuntimeException("아이디가 존재하지 않습니다.");
-    }
-
     @Transactional
     public User login(String email, String password) {
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new NoSuchElementException("아이디가 없습니다"));
+        checkNotNull(password);
+        User user = findByEmail(email).orElseThrow(() -> new NoSuchElementException("아이디가 없습니다"));
         user.login(passwordEncoder, password);
         return user;
     }
 
-
-    public String join(User user){
-        Optional<User> result = userRepository.findByEmail(user.getEmail());
-        if(result.isPresent())  //email이 이미 존재하면 가입 실패
-             throw new RuntimeException("Join failed");
-        else {
-            userRepository.save(user);
-            return "join success";  //TODO token 생성 필요
-        }
+    @Transactional
+    public String join(User user) {
+        checkNotNull(user);
+        findByEmail(user.getEmail()).ifPresent(exist -> {
+            throw new IllegalStateException("이미 존재하는 아이디입니다.");
+        });
+        user.join(passwordEncoder);
+        userRepository.save(user);
+        return user.makeToken();
     }
 
-
     @Transactional
-    public String delete(Long id){
-        if(!userRepository.existsById(id)) new NoSuchElementException("delete failed");
+    public String delete(Long id) {
+        checkNotNull(id);
         userRepository.deleteById(id);
         return "delete success";
     }
 
     @Transactional
-    public String update(Long id,User user){
-        User findUser = userRepository.findById(id).orElseThrow(() -> new NoSuchElementException("no id"));
-        findUser.setTel(user.getTel());
-        findUser.setName(user.getName());
+    public String delete(String email) {
+        checkNotNull(email);
+        userRepository.deleteByEmail(email);
+        return "delete success";
+    }
+
+    @Transactional
+    public String update(String email, User user) {
+        checkNotNull(user);
+        User findUser = findByEmail(email).orElseThrow(() -> new NoSuchElementException("no id"));
+        findUser.changeInfo(user);
         return "update success";
     }
 
-    public String findUserId(String tel){
-        if(!userRepository.findByTel(tel).isPresent()) new NoSuchElementException("find Id failed");
-        User user=userRepository.findByTel(tel).get();
+    @Transactional(readOnly = true)
+    public String findUserId(String tel) {
+        checkNotNull(tel);
+        User user = userRepository.findByTel(tel).orElseThrow(() -> new NoSuchElementException("find Id failed"));
         return user.getEmail();
     }
 
-    public String findPW(String email, String tel){
-        if(!userRepository.findByEmailAndTel(email,tel).isPresent()) new NoSuchElementException("find pw failed");
-        User user=userRepository.findByEmailAndTel(email,tel).get();
+    @Transactional(readOnly = true)
+    public String findPW(String email, String tel) {
+        checkNotNull(email);
+        checkNotNull(tel);
+        User user = userRepository.findByEmailAndTel(email, tel)
+                .orElseThrow(() -> new NoSuchElementException("find Id failed"));
         return user.getPassword();
     }
 
     @Transactional
-    public Address AddAddress(Long userId,Address address) {
+    public Address AddAddress(Long userId, Address address) {
         User user = findById(userId).orElseThrow(() -> new NoSuchElementException("해당하는 유저가 없습니다."));
         address.setUser(user);
         addressRepository.save(address);
-        //user.addAddress(address);
-        //양방향 연관관계 저장시 연관관계의 주인은 '외래키가 있는 곳'인 address.user가 된다. 고로 주인에게만 설정해주어야한다.
         return address;
     }
 
-    public String deleteAddress(Long address_id) {
-        if(!addressRepository.existsById(address_id)) new NoSuchElementException("Address delete failed");
+    @Transactional
+    public Address AddAddress(String userEmail, Address address) {
+        User user = findByEmail(userEmail).orElseThrow(() -> new NoSuchElementException("해당하는 유저가 없습니다."));
+        address.setUser(user);
+        addressRepository.save(address);
+        return address;
+    }
+
+    @Transactional
+    public String deleteAddress(String userEmail, Long address_id) {
+        Address address = findAddressById(address_id).orElseThrow(() -> new NoSuchElementException("지우려는 주소가 없습니다."));
+        address.validOwner(userEmail);
         addressRepository.deleteById(address_id);
         return "Address delete success";
     }
 
     @Transactional
-    public Address editAddress(Long address_id,Address address) {
-        Address result  = addressRepository.findById(address_id).orElseThrow(() -> new NoSuchElementException("address update failed") );
-        result.setName(address.getName());
-        result.setPhone(address.getPhone());
-        result.setZipcode(address.getZipcode());
-        result.setAddressMain(address.getAddressMain());
-        result.setAddressSub(address.getAddressSub());
-        return result;
+    public Address editAddress(String userEmail, Long addressId, Address address) {
+        Address findAddress = findAddressById(addressId).orElseThrow(() -> new NoSuchElementException("address update failed"));
+        findAddress.validOwner(userEmail);
+        findAddress.changeAddress(address);
+        return findAddress;
+    }
+
+    @Transactional
+    public Address editAddress(Long addressId, Address address) {
+        Address findAddress = findAddressById(addressId).orElseThrow(() -> new NoSuchElementException("address update failed"));
+        findAddress.changeAddress(address);
+        return findAddress;
     }
 
     @Transactional(readOnly = true)
     public List<Address> getAddressList(Long userId) {
-        User user = findById(userId).orElse(null);
+        User user = findById(userId).orElseThrow(() -> new NoSuchElementException("No User Info"));
+        return user.getAddressList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<Address> getAddressList(String userEmail) {
+        User user = findByEmail(userEmail).orElseThrow(() -> new NoSuchElementException("No User Info"));
         return user.getAddressList();
     }
 
@@ -130,15 +141,26 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
+    public User getUserInfo(String userEmail) {
+        User findUser = findByEmail(userEmail).orElseThrow(() -> new NoSuchElementException("No User Info"));
+        return findUser;
+    }
+
+    @Transactional(readOnly = true)
     public Optional<User> findByEmail(String email) {
         checkNotNull(email);
         return userRepository.findByEmail(email);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Optional<User> findById(Long id) {
         checkNotNull(id);
         return userRepository.findById(id);
     }
 
+    @Transactional(readOnly = true)
+    public Optional<Address> findAddressById(Long id) {
+        checkNotNull(id);
+        return addressRepository.findById(id);
+    }
 }

@@ -2,7 +2,6 @@ package ourdus.ourdusspring.controller.user;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,14 +17,12 @@ import ourdus.ourdusspring.dto.user.UserDTO;
 import ourdus.ourdusspring.service.JwtService;
 import ourdus.ourdusspring.service.user.UserService;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.HashMap;
+import javax.validation.Valid;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 import static ourdus.ourdusspring.common.ApiResult.OK;
+import static ourdus.ourdusspring.security.SecurityInfo.getUserEmail;
 
 @RestController
 @RequestMapping("api")
@@ -45,30 +42,17 @@ public class UserController {
         this.userService = userService;
     }
 
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/user/login")
-    public ApiResult<Map<String,Object>> login(HttpServletResponse res, @RequestBody UserDTO userdto){
-        Map<String,Object> resultMap = new HashMap<>();
-        HttpStatus status = null;
-        try{
-            User loginUser = userService.login2(
-                    new User(userdto)
+    public ApiResult<?> login(@RequestBody LoginRequest loginRequest) throws Exception {
+        try {
+            Authentication authentication = manager.authenticate(
+                    new UsernamePasswordAuthenticationToken(loginRequest.getUserName(), loginRequest.getPassword())
             );
-            //로그인 성공했다면 토큰을 생성
-            String token = jwtService.create(loginUser);
-            //토큰 정보는 request헤더로 보내고 나머지는 Map에 담아둠.
-            res.setHeader("jwt-auth-token",token);
-
-            resultMap.put("status",true);
-            resultMap.put("user",new UserDTO(loginUser));
-            resultMap.put("data",token);
-            status = HttpStatus.ACCEPTED;
-        }catch(RuntimeException e){
-            log.error("로그인 실패",e);
-            resultMap.put("message",e.getMessage());
-            status = HttpStatus.INTERNAL_SERVER_ERROR;
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            return OK(authentication.getDetails());
+        } catch (BadCredentialsException e) {
+            throw new Exception("Incorrect username or passoword", e);
         }
-        return OK(resultMap);
     }
 
     @GetMapping("t/answer")
@@ -76,89 +60,64 @@ public class UserController {
         return OK("hi~~");
     }
 
-    @PostMapping("test")
-    public ApiResult<?> hello(@RequestBody LoginRequest loginRequest) throws Exception {
-        try {
-            Authentication authentication = manager.authenticate(
-                    new UsernamePasswordAuthenticationToken(loginRequest.getUserName(), loginRequest.getPassword())
-            );
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            Object test = authentication.getDetails();
-            System.out.println(test);
-            return OK(test);
-        } catch (BadCredentialsException e) {
-            throw new Exception("Incorrect username or passoword", e);
-        }
-    }
-
     @GetMapping("/t/user/info")
-    public ApiResult<UserDTO> getInfo(HttpServletRequest req){
-        Long id = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId")));
-        User user = userService.getUserInfo(id);
+    public ApiResult<UserDTO> getInfo() {
+        User user = userService.getUserInfo(getUserEmail());
         return OK(new UserDTO(user));
     }
 
     @PostMapping("/user/join")
-    public ApiResult<String> join(@RequestBody UserDTO userdto){
+    public ApiResult<String> join(@Valid @RequestBody UserDTO userdto) {
         return OK(userService.join(new User(userdto)));
     }
 
-
-    @DeleteMapping("/user/delete")
-    public ApiResult<String> delete(HttpServletRequest req){
-        Long id = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId"))); //id 받아오기
-        return OK(userService.delete(id));
+    @DeleteMapping("/t/user/delete")
+    public ApiResult<String> delete() {
+        return OK(userService.delete(getUserEmail()));
     }
 
     @PostMapping("/t/user/edit")
-    public ApiResult<String> update(HttpServletRequest req, @RequestBody UserDTO userdto){
-        Long id = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId"))); //id 받아오기
-        return OK(userService.update(id,new User(userdto)));
+    public ApiResult<String> update(@Valid @RequestBody UserDTO userdto) {
+        return OK(userService.update(getUserEmail(), new User(userdto)));
     }
 
     @PostMapping("/user/id-finding")
-    public ApiResult<String> findUserId(@RequestBody UserDTO userdto){
+    public ApiResult<String> findUserId(@Valid @RequestBody UserDTO userdto) {
         return OK(userService.findUserId(userdto.getTel()));
     }
 
     @PostMapping("/user/pw-finding")
-    public ApiResult<String> findPW(@RequestBody UserDTO userdto){
-        return OK(userService.findPW(userdto.getEmail(),userdto.getTel()));
+    public ApiResult<String> findPW(@Valid @RequestBody UserDTO userdto) {
+        return OK(userService.findPW(userdto.getEmail(), userdto.getTel()));
     }
 
     @PostMapping("/t/user/address")
-    public ApiResult<AddressDTO> addAddress(/*HttpServletRequest req,*/ @RequestBody AddressDTO addressDTO){
-//        Long userId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId"))); //id 받아오기
-        Long userId = 1L;
-        Address address = Address.createBuilder()
-                            .addressDTO(addressDTO)
-                            .build();
-        return OK(new AddressDTO(userService.AddAddress(userId, address)));
-    }
-
-
-    @DeleteMapping("/t/user/address/{address_id}")
-    public ApiResult<String> deleteAddress(@PathVariable("address_id") Long address_Id){
-        return OK(userService.deleteAddress(address_Id));
-    }
-
-    @PostMapping("/t/user/address/{address_id}")
-    public ApiResult<AddressDTO> editAddress(@PathVariable("address_id") Long address_Id,@RequestBody AddressDTO addressDTO){
+    public ApiResult<AddressDTO> addAddress(@Valid @RequestBody AddressDTO addressDTO) {
         Address address = Address.createBuilder()
                 .addressDTO(addressDTO)
                 .build();
-        return OK(new AddressDTO(userService.editAddress(address_Id,address)));
+        return OK(new AddressDTO(userService.AddAddress(getUserEmail(), address)));
+    }
+
+    @DeleteMapping("/t/user/address/{address_id}")
+    public ApiResult<String> deleteAddress(@PathVariable("address_id") Long address_Id) {
+        return OK(userService.deleteAddress(getUserEmail(), address_Id));
+    }
+
+    @PostMapping("/t/user/address/{address_id}")
+    public ApiResult<AddressDTO> editAddress(@PathVariable("address_id") Long address_Id, @Valid @RequestBody AddressDTO addressDTO) {
+        Address address = Address.createBuilder()
+                .addressDTO(addressDTO)
+                .build();
+        return OK(new AddressDTO(userService.editAddress(getUserEmail(), address_Id, address)));
     }
 
     @GetMapping("/t/user/address")
-    public ApiResult<List<AddressDTO>> getAddress(HttpServletRequest req){
-        Long userId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId"))); //id 받아오기
-        List<AddressDTO> addressDTOList = new ArrayList<>();
-        userService.getAddressList(userId).stream()
+    public ApiResult<List<AddressDTO>> getAddress() {
+        List<AddressDTO> addressDTOList = userService.getAddressList(getUserEmail()).stream()
                 .filter(address -> address != null)
-                .forEach(address -> {
-            addressDTOList.add(new AddressDTO(address));
-        });
+                .map(AddressDTO::new)
+                .collect(Collectors.toList());
         return OK(addressDTOList);
     }
 

@@ -14,11 +14,9 @@ import java.util.Collections;
 
 public class JwtAuthenticationProvider implements AuthenticationProvider {
 
-    private final JwtUtil jwtUtil;
     private final UserService userService;
 
-    public JwtAuthenticationProvider(JwtUtil jwtUtil, UserService userService) {
-        this.jwtUtil = jwtUtil;
+    public JwtAuthenticationProvider(UserService userService) {
         this.userService = userService;
     }
 
@@ -31,8 +29,8 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
         try {
             User user = userService.login(principal, credential);
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword(), Collections.singleton(user.getRole()));
-            String apiToken = jwtUtil.generateToken(UserPrincipal.of(user));
-            authentication.setDetails(new AuthenticationResult(apiToken, user));
+            String apiToken = user.makeToken();
+            authentication.setDetails(apiToken);
             return authentication;
         } catch (IllegalArgumentException e) {
             throw new BadCredentialsException(e.getMessage());

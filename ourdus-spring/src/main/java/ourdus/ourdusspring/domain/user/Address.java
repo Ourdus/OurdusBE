@@ -7,6 +7,8 @@ import ourdus.ourdusspring.dto.user.AddressDTO;
 
 import javax.persistence.*;
 
+import static ourdus.ourdusspring.util.CompareValueUtils.changeValue;
+
 @Entity
 @NoArgsConstructor
 @Getter
@@ -33,26 +35,6 @@ public class Address {
     @JoinColumn(name="USER_ID")
     private User user;
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public void setZipcode(String zipcode) {
-        this.zipcode = zipcode;
-    }
-
-    public void setAddressMain(String addressMain) {
-        this.addressMain = addressMain;
-    }
-
-    public void setAddressSub(String addressSub) {
-        this.addressSub = addressSub;
-    }
-
     //연관관계 매핑
     public void setUser(User user){
         if(this.user!=null){
@@ -60,6 +42,20 @@ public class Address {
         }
         this.user=user;
         user.getAddressList().add(this);
+    }
+
+    public void changeAddress(Address address) {
+        this.name = changeValue(this.name, address.name);
+        this.phone = changeValue(this.phone, address.phone);
+        this.zipcode = changeValue(this.zipcode, address.zipcode);
+        this.addressMain = changeValue(this.addressMain, address.addressMain);
+        this.addressSub = changeValue(this.addressSub, address.addressSub);
+    }
+
+    public void validOwner(String email) {
+        if (!user.isUser(email)) {
+            throw new IllegalStateException("삭제하려는 대상이 아닙니다. 다시 확인해주세요.");
+        }
     }
 
     @Builder(builderClassName = "createBuilder", builderMethodName = "createBuilder")
