@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import ourdus.ourdusspring.domain.offlineclass.order.COrder;
 import ourdus.ourdusspring.dto.user.UserDTO;
 
@@ -40,18 +43,25 @@ public class User {
     @ColumnDefault("false")
     private Boolean writerFlag;
 
-    @OneToMany(mappedBy = "user") //반대쪽 매핑이 Address.user라서
+    @Transient
+    private GrantedAuthority role = new SimpleGrantedAuthority("USER");
+
+    @OneToMany(mappedBy = "user")
     private List<Address> addressList = new ArrayList<Address>();
 
     @OneToMany(mappedBy = "user")
     private List<COrder> cOrderList=new ArrayList<>();
 
-    //연관관계 메서드
     public void addAddress(Address address){
         addressList.add(address);
         address.setUser(this);
     }
 
+    public void login(PasswordEncoder passwordEncoder, String password) {
+        if(!passwordEncoder.matches(password, this.password)) {
+            throw new IllegalStateException("잘못된 비밀번호입니다.");
+        }
+    }
 
     public void setName(String name) {
         this.name = name;

@@ -2,7 +2,7 @@ CREATE TABLE user
 (
     user_id     bigint      NOT NULL AUTO_INCREMENT,
     user_email  varchar(20) NOT NULL,
-    user_pw     varchar(20) NOT NULL,
+    user_pw     varchar(100) NOT NULL,
     user_name   varchar(20) NOT NULL,
     user_tel    varchar(20) NOT NULL,
     reg_date    datetime    NOT NULL DEFAULT NOW(),

@@ -88,7 +88,7 @@ class UserServiceTest {
 
 //
 ////    @Test
-////    void login() {
+////    void login2() {
 ////        //given
 ////        UserDTO user1 = new UserDTO();
 ////        user1.setPassword("0000");
@@ -99,10 +99,10 @@ class UserServiceTest {
 ////        user2.setPassword("1111");
 ////        user2.setEmail("000@naver.com");
 ////        //when
-////        userService.login(user2);
+////        userService.login2(user2);
 ////        //then
-////        String result = userService.login(user2);
-////        assertThat(result).isEqualTo("login failed");
+////        String result = userService.login2(user2);
+////        assertThat(result).isEqualTo("login2 failed");
 ////    }
 //
 //

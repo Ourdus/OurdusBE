@@ -1,5 +1,6 @@
 package ourdus.ourdusspring.service.user;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ourdus.ourdusspring.domain.user.Address;
@@ -11,21 +12,24 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 //import ourdus.ourdusspring.repository.SpringDataJpaUserRepository;
 
 @Service
 @Transactional
 public class UserService {
+    private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
-
     private final AddressRepository addressRepository;
 
-    public UserService(AddressRepository addressRepository,UserRepository userRepository ) {
+    public UserService(PasswordEncoder passwordEncoder, AddressRepository addressRepository, UserRepository userRepository) {
+        this.passwordEncoder = passwordEncoder;
         this.addressRepository = addressRepository;
         this.userRepository = userRepository;
     }
 
-    public User login(User loginUser){
+    public User login2(User loginUser){
         String email = loginUser.getEmail();
         String password = loginUser.getPassword();
         Optional<User> user1 = userRepository.findByEmail(email);
@@ -40,6 +44,14 @@ public class UserService {
         throw new RuntimeException("아이디가 존재하지 않습니다.");
     }
 
+    @Transactional
+    public User login(String email, String password) {
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new NoSuchElementException("아이디가 없습니다"));
+        user.login(passwordEncoder, password);
+        return user;
+    }
+
+
     public String join(User user){
         Optional<User> result = userRepository.findByEmail(user.getEmail());
         if(result.isPresent())  //email이 이미 존재하면 가입 실패
@@ -51,16 +63,16 @@ public class UserService {
     }
 
 
+    @Transactional
     public String delete(Long id){
         if(!userRepository.existsById(id)) new NoSuchElementException("delete failed");
         userRepository.deleteById(id);
         return "delete success";
     }
 
+    @Transactional
     public String update(Long id,User user){
-        Optional<User> result = userRepository.findById(id);
-        if(!result.isPresent()) new NoSuchElementException("update failed");
-        User findUser = result.get();
+        User findUser = userRepository.findById(id).orElseThrow(() -> new NoSuchElementException("no id"));
         findUser.setTel(user.getTel());
         findUser.setName(user.getName());
         return "update success";
@@ -78,8 +90,9 @@ public class UserService {
         return user.getPassword();
     }
 
+    @Transactional
     public Address AddAddress(Long userId,Address address) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchElementException("해당하는 유저가 없습니다."));
+        User user = findById(userId).orElseThrow(() -> new NoSuchElementException("해당하는 유저가 없습니다."));
         address.setUser(user);
         addressRepository.save(address);
         //user.addAddress(address);
@@ -93,6 +106,7 @@ public class UserService {
         return "Address delete success";
     }
 
+    @Transactional
     public Address editAddress(Long address_id,Address address) {
         Address result  = addressRepository.findById(address_id).orElseThrow(() -> new NoSuchElementException("address update failed") );
         result.setName(address.getName());
@@ -103,16 +117,28 @@ public class UserService {
         return result;
     }
 
+    @Transactional(readOnly = true)
     public List<Address> getAddressList(Long userId) {
-        User user = userRepository.findById(userId).orElse(null);
+        User user = findById(userId).orElse(null);
         return user.getAddressList();
     }
 
-    public User getUserInfo(Long id) {
-        User findUser = userRepository.findById(id).orElseThrow(() -> new NoSuchElementException("No User Info"));
+    @Transactional(readOnly = true)
+    public User getUserInfo(Long userId) {
+        User findUser = findById(userId).orElseThrow(() -> new NoSuchElementException("No User Info"));
         return findUser;
     }
 
+    @Transactional(readOnly = true)
+    public Optional<User> findByEmail(String email) {
+        checkNotNull(email);
+        return userRepository.findByEmail(email);
+    }
 
+    @Transactional
+    public Optional<User> findById(Long id) {
+        checkNotNull(id);
+        return userRepository.findById(id);
+    }
 
 }

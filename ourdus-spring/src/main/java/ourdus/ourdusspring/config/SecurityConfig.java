@@ -11,29 +11,45 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import ourdus.ourdusspring.security.CustomUserDetailsService;
+import org.springframework.web.filter.OncePerRequestFilter;
+import ourdus.ourdusspring.security.JwtAuthenticationProvider;
 import ourdus.ourdusspring.security.JwtRequestFilter;
+import ourdus.ourdusspring.security.JwtUtil;
+import ourdus.ourdusspring.service.user.UserService;
 
 @Configuration
 @EnableWebSecurity(debug = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private CustomUserDetailsService customUserDetailsService;
-
-    @Autowired
-    private JwtRequestFilter jwtRequestFilter;
-
-    @Override
-    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(customUserDetailsService);
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
+    @Bean
+    public JwtAuthenticationProvider jwtAuthenticationProvider(JwtUtil jwtUtil, UserService userService) {
+        return new JwtAuthenticationProvider(jwtUtil, userService);
+    }
 
-        @Override
+    @Bean
+    public OncePerRequestFilter jwtRequestFilter() {
+        return new JwtRequestFilter();
+    }
+
+    @Autowired
+    public void configure(AuthenticationManagerBuilder auth, JwtAuthenticationProvider jwtAuthenticationProvider) {
+        auth.authenticationProvider(jwtAuthenticationProvider);
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
+    @Override
     public void configure(WebSecurity web) {
         web.ignoring()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
@@ -44,26 +60,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests()
                     .antMatchers("/api/test").permitAll()
-                .antMatchers("/api/t/**").authenticated()
+                    .antMatchers("/api/t/**").authenticated()
                 .and()
                     .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                    .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+                    .addFilterBefore(jwtRequestFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
-    @Override
-    @Bean
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
-    }
-
-//    @Bean
-//    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
 }

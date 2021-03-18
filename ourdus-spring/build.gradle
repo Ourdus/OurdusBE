@@ -20,6 +20,7 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testCompileOnly 'org.projectlombok:lombok'
 	testAnnotationProcessor 'org.projectlombok:lombok'
+	implementation group: 'com.google.guava', name: 'guava', version: '30.1-jre'
 	// https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api
 	compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.2.4' // Java ver 9 이상에서 필요
 	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.0' //tostringbuilder 사용

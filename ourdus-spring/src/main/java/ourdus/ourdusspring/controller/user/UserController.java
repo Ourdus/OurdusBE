@@ -6,7 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import ourdus.ourdusspring.common.ApiResult;
 import ourdus.ourdusspring.domain.user.Address;
@@ -14,8 +15,6 @@ import ourdus.ourdusspring.domain.user.User;
 import ourdus.ourdusspring.dto.user.AddressDTO;
 import ourdus.ourdusspring.dto.user.LoginRequest;
 import ourdus.ourdusspring.dto.user.UserDTO;
-import ourdus.ourdusspring.security.CustomUserDetailsService;
-import ourdus.ourdusspring.security.JwtUtil;
 import ourdus.ourdusspring.service.JwtService;
 import ourdus.ourdusspring.service.user.UserService;
 
@@ -37,13 +36,7 @@ public class UserController {
     private JwtService jwtService;
 
     @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private CustomUserDetailsService userDetailService;
-
-    @Autowired
-    private JwtUtil jwtUtil;
+    private AuthenticationManager manager;
 
     private final UserService userService;
 
@@ -58,7 +51,7 @@ public class UserController {
         Map<String,Object> resultMap = new HashMap<>();
         HttpStatus status = null;
         try{
-            User loginUser = userService.login(
+            User loginUser = userService.login2(
                     new User(userdto)
             );
             //로그인 성공했다면 토큰을 생성
@@ -86,16 +79,16 @@ public class UserController {
     @PostMapping("test")
     public ApiResult<?> hello(@RequestBody LoginRequest loginRequest) throws Exception {
         try {
-            authenticationManager.authenticate(
+            Authentication authentication = manager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginRequest.getUserName(), loginRequest.getPassword())
             );
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            Object test = authentication.getDetails();
+            System.out.println(test);
+            return OK(test);
         } catch (BadCredentialsException e) {
             throw new Exception("Incorrect username or passoword", e);
         }
-        final UserDetails userDetails = userDetailService.loadUserByUsername(loginRequest.getUserName());
-        final String jwt = jwtUtil.generateToken(userDetails);
-
-        return OK(jwt);
     }
 
     @GetMapping("/t/user/info")

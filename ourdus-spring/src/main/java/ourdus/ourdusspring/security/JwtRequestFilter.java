@@ -3,7 +3,6 @@ package ourdus.ourdusspring.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
@@ -22,9 +21,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     private static final String INVALID_HEADER = "인증 토큰이 필요합니다.";
 
     @Autowired
-    private CustomUserDetailsService userDetailsService;
-
-    @Autowired
     private JwtUtil jwtUtil;
 
     @Override
@@ -38,13 +34,12 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         }
 
         final String jwt = authorizationHeader;
-        final String username = jwtUtil.extractUsername(jwt);
+        final String email = jwtUtil.extractEmail(jwt);
 
         if (SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-            jwtUtil.validateToken(jwt, userDetails);
+            jwtUtil.validateToken(jwt);
             UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-                    userDetails, null, userDetails.getAuthorities());
+                    email, null, jwtUtil.extractRole(jwt));
             usernamePasswordAuthenticationToken
                     .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
