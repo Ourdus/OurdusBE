@@ -14,11 +14,8 @@ import java.util.Map;
 @Service
 public class JwtService {
 
-    @Value("${jwt.salt}")
-    private String salt;
-
-    @Value("${jwt.expmin}")
-    private Long expireMin;
+    private String salt = "MYSALT";
+    private Long expireMin = 50L;
 
     public String create(final User user){
         final JwtBuilder builder = Jwts.builder();

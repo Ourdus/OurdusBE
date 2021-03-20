@@ -9,6 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import ourdus.ourdusspring.domain.offlineclass.order.COrder;
+import ourdus.ourdusspring.dto.user.JoinRequest;
 import ourdus.ourdusspring.dto.user.UserDTO;
 import ourdus.ourdusspring.security.JwtUtil;
 
@@ -43,8 +44,7 @@ public class User {
     @ColumnDefault("0")
     private int point;
     @Column(name="WRITER_FLAG")
-    @ColumnDefault("false")
-    private Boolean writerFlag;
+    private Boolean writerFlag = false;
 
     @Transient
     private GrantedAuthority role = new SimpleGrantedAuthority("USER");
@@ -111,6 +111,13 @@ public class User {
         this.regDate = userdto.getRegDate();
         this.point = userdto.getPoint();
         this.writerFlag = userdto.getWriterFlag();
+    }
+
+    public User(JoinRequest joinRequest) {
+        this.email = joinRequest.getEmail();
+        this.password = joinRequest.getPassword();
+        this.name = joinRequest.getName();
+        this.tel = joinRequest.getTel();
     }
 
 }
