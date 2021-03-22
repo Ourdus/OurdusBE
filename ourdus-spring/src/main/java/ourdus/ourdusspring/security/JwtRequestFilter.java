@@ -18,7 +18,7 @@ import static ourdus.ourdusspring.util.CompareValueUtils.isEmptyString;
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
     private static final String INVALID_HEADER = "인증 토큰이 필요합니다.";
-    public static final String TOKEN_HEADER = "jwt-auth-token";
+    public static final String TOKEN_HEADER = "Authorization";
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)

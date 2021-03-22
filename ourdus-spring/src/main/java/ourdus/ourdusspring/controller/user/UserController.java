@@ -92,20 +92,20 @@ public class UserController {
                 userService.AddAddress(getUserEmail(), new Address(addressDTO))));
     }
 
-    @ApiOperation(value = "주소 추가", notes = "토큰에 맞는 회원의 주소 정보를 제거한다.")
+    @ApiOperation(value = "주소 제거", notes = "토큰에 맞는 회원의 주소 정보를 제거한다.")
     @DeleteMapping("/t/user/address/{address_id}")
     public ApiResult<String> deleteAddress(@PathVariable("address_id") Long address_Id) {
         return OK(userService.deleteAddress(getUserEmail(), address_Id));
     }
 
-    @ApiOperation(value = "주소 추가", notes = "토큰에 맞는 회원의 주소 정보를 수정한다.")
+    @ApiOperation(value = "주소 수정", notes = "토큰에 맞는 회원의 주소 정보를 수정한다.")
     @PostMapping("/t/user/address/{address_id}")
     public ApiResult<AddressDTO> editAddress(@PathVariable("address_id") Long address_Id, @Valid @RequestBody AddressDTO addressDTO) {
         return OK(new AddressDTO(
                 userService.editAddress(getUserEmail(), address_Id, new Address(addressDTO))));
     }
 
-    @ApiOperation(value = "주소 추가", notes = "토큰에 맞는 회원의 주소 정보 리스트를 찾는다.")
+    @ApiOperation(value = "주소 목록 찾기", notes = "토큰에 맞는 회원의 주소 정보 리스트를 찾는다.")
     @GetMapping("/t/user/address")
     public ApiResult<List<AddressDTO>> getAddress() {
         List<AddressDTO> addressDTOList = userService.getAddressList(getUserEmail()).stream()

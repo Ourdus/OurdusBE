@@ -54,7 +54,7 @@ public class Address {
 
     public void validOwner(String email) {
         if (!user.isUser(email)) {
-            throw new IllegalStateException("삭제하려는 대상이 아닙니다. 다시 확인해주세요.");
+            throw new IllegalStateException("해당 회원의 주소정보가 아닙니다. 다시 확인해주세요.");
         }
     }
 
