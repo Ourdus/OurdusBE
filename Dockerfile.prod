@@ -1,0 +1,8 @@
+FROM openjdk:11-jre-slim
+EXPOSE 8080
+ARG DEPENDENCY=ourdus-spring/build/dependency
+COPY ${DEPENDENCY}/BOOT-INF/lib /app/lib
+COPY ${DEPENDENCY}/META-INF /app/META-INF
+COPY ${DEPENDENCY}/BOOT-INF/classes /app
+
+ENTRYPOINT ["java","-Djava.security.egd=ee:/dev/./urandom", "-Dspring.profiles.active=prod", "-cp","app:app/lib/*","com.docker.demo.DemoApplication"]

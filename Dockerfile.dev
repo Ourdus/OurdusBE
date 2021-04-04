@@ -1,11 +1,5 @@
-FROM gradle:6.8.3-jdk11 AS builder
-WORKDIR /app
-COPY --chown=gradle:gradle ./ourdus-spring ./
-RUN gradle build --no-daemon
-
-
 FROM openjdk:11-jre-slim
 EXPOSE 8080
-ARG JAR_FILES=/app/build/libs/*.jar
-COPY --from=builder ${JAR_FILES} Ourdus-springboot.jar
-ENTRYPOINT [ "java", "-Dspring.profiles.active=dev", "-jar", "Ourdus-springboot.jar" ]
+ARG JAR_FILES=ourdus-spring/build/libs/*.jar
+COPY ${JAR_FILES} Ourdus-springboot.jar
+ENTRYPOINT [ "java", "-Djava.security.egd=ee:/dev/./urandom", "-Dspring.profiles.active=dev", "-jar", "Ourdus-springboot.jar" ]

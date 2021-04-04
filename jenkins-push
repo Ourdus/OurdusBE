@@ -1,0 +1,32 @@
+pipeline {
+  environment {
+    registry = "hjwoou/ourdus-be"
+    registryCredential = 'docker-hub'
+    dockerImage = ''
+  }
+  stages {
+    stage('Build') {
+      withGradle {
+        sh '${WORKSPACE}/ourdus-spring/gradlew build'
+      }
+      cd ${WORKSPACE}/ourdus-spring
+      mkdir -p build/dependency && (cd build/dependency; jar -xf ../libs/*.jar)
+    }
+  }
+  
+  stages {
+    stage('Dokcer-image-build') {
+        dockerImage = docker.build(${env.registry} + ":$BUILD_NUMBER", "-f Dockerfile.prod")
+    }
+    stage('Docker-image-push') {
+      docker.withRegistry('https://registry.hub.docker.com', registryCredential) {
+        dockerImage.push()
+      }
+    }
+    stage('Docker-image-remove') {
+      steps{
+        sh "docker rmi ${env.registry}:$BUILD_NUMBER"
+      }
+    }
+  }
+}
