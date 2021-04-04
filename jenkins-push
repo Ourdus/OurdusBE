@@ -11,6 +11,7 @@ pipeline {
       }
       cd ${WORKSPACE}/ourdus-spring
       mkdir -p build/dependency && (cd build/dependency; jar -xf ../libs/*.jar)
+      cd ${WORKSPACE}
     }
   }
   
