@@ -6,7 +6,15 @@ pipeline {
     buildPath = "${env.WORKSPACE}/ourdus-spring/build"
   }
   
+  agent any
+
   stages {
+    stage('Clone-Git') {
+      steps {
+        git 'https://github.com/Ourdus/OurdusBE.git'
+      }
+    }
+
     stage('Build') {
       steps {
         withGradle {
@@ -20,13 +28,17 @@ pipeline {
   stages {
     stage('Dokcer-image-build') {
       steps{
-        dockerImage = docker.build(${env.registry} + ":$BUILD_NUMBER", "-f Dockerfile.prod")
+        script {
+          dockerImage = docker.build(${env.registry} + ":$BUILD_NUMBER", "-f Dockerfile.prod")
+        }
       }
     }
     stage('Docker-image-push') {
       steps {
-        docker.withRegistry('https://registry.hub.docker.com', registryCredential) {
-          dockerImage.push()
+        script {
+          docker.withRegistry('https://registry.hub.docker.com', registryCredential) {
+            dockerImage.push()
+          }
         }
       }
     }
