@@ -5,22 +5,29 @@ pipeline {
     dockerImage = ''
     buildPath = "${env.WORKSPACE}/ourdus-spring/build"
   }
+  
   stages {
     stage('Build') {
-      withGradle {
-        sh '${WORKSPACE}/ourdus-spring/gradlew build'
+      steps {
+        withGradle {
+          sh '${WORKSPACE}/ourdus-spring/gradlew build'
+        }
+        sh "mkdir -p ${env.buildPath}/dependency && (cd ${env.buildPath}/dependency; jar -xf ${env.buildPath}/libs/*.jar)"
       }
-      sh "mkdir -p ${env.buildPath}/dependency && (cd ${env.buildPath}/dependency; jar -xf ${env.buildPath}/libs/*.jar)"
     }
   }
   
   stages {
     stage('Dokcer-image-build') {
+      steps{
         dockerImage = docker.build(${env.registry} + ":$BUILD_NUMBER", "-f Dockerfile.prod")
+      }
     }
     stage('Docker-image-push') {
-      docker.withRegistry('https://registry.hub.docker.com', registryCredential) {
-        dockerImage.push()
+      steps {
+        docker.withRegistry('https://registry.hub.docker.com', registryCredential) {
+          dockerImage.push()
+        }
       }
     }
     stage('Docker-image-remove') {
