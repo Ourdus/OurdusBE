@@ -3,15 +3,14 @@ pipeline {
     registry = "hjwoou/ourdus-be"
     registryCredential = 'docker-hub'
     dockerImage = ''
+    buildPath = "${env.WORKSPACE}/ourdus-spring/build"
   }
   stages {
     stage('Build') {
       withGradle {
         sh '${WORKSPACE}/ourdus-spring/gradlew build'
       }
-      cd ${WORKSPACE}/ourdus-spring
-      mkdir -p build/dependency && (cd build/dependency; jar -xf ../libs/*.jar)
-      cd ${WORKSPACE}
+      sh "mkdir -p ${env.buildPath}/dependency && (cd ${env.buildPath}/dependency; jar -xf ${env.buildPath}/libs/*.jar)"
     }
   }
   
