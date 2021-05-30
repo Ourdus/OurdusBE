@@ -3,33 +3,32 @@ pipeline {
     registry = "hjwoou/ourdus-be"
     registryCredential = 'docker-hub'
     dockerImage = ''
-    buildPath = "${env.WORKSPACE}/ourdus-spring/build"
+    workdir = "${env.WORKSPACE}/ourdus-spring"
+    dockerfile = "Dockerfile.prod"
   }
   
   agent any
 
   stages {
-    stage('Clone-Git') {
+    stage('Build') {
       steps {
-        git 'https://github.com/Ourdus/OurdusBE.git'
+        dir("${env.workdir}") {
+          sh "chmod +x gradlew"
+          sh "./gradlew clean build"
+        }
+        sh "mkdir -p build/dependency"
+        dir("${env.workdir}/build/dependency") {
+          sh "jar -xf ../libs/*.jar"
+        }
       }
     }
 
-    stage('Build') {
-      steps {
-        withGradle {
-          sh '${WORKSPACE}/ourdus-spring/gradlew build'
-        }
-        sh "mkdir -p ${env.buildPath}/dependency && (cd ${env.buildPath}/dependency; jar -xf ${env.buildPath}/libs/*.jar)"
-      }
-    }
-  }
-  
-  stages {
     stage('Dokcer-image-build') {
       steps{
-        script {
-          dockerImage = docker.build(${env.registry} + ":$BUILD_NUMBER", "-f Dockerfile.prod")
+        dir("${env.WORKSPACE}") {
+          script {
+            dockerImage = docker.build("${env.registry}:${env.BUILD_NUMBER}", "-f ${env.dockerfile} .")
+          }
         }
       }
     }
@@ -38,13 +37,14 @@ pipeline {
         script {
           docker.withRegistry('https://registry.hub.docker.com', registryCredential) {
             dockerImage.push()
+            dockerImage.push("latest")
           }
         }
       }
     }
     stage('Docker-image-remove') {
       steps{
-        sh "docker rmi ${env.registry}:$BUILD_NUMBER"
+        sh "docker rmi ${env.registry}:${env.BUILD_NUMBER}"
       }
     }
   }
