@@ -3,7 +3,6 @@ package ourdus.ourdusspring.domain.onlineclass;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.annotations.ColumnDefault;
 import ourdus.ourdusspring.domain.onlineclass.category.OnlineClassCategory;
 import ourdus.ourdusspring.domain.onlineclass.comment.OnlineClassComment;
@@ -14,6 +13,8 @@ import ourdus.ourdusspring.dto.onlineclass.OnlineClassDTO;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import static ourdus.ourdusspring.util.CompareValueUtils.changeValue;
 
 @Entity
 @NoArgsConstructor
@@ -129,21 +130,27 @@ public class OnlineClass {
         this.image = image;
     }
 
-    @Builder(builderClassName = "defaultBuilder", builderMethodName = "defaultBuilder")
-    public OnlineClass(OnlineClass createOnlineClass, User author, OnlineClassCategory category) {
-        this.name = createOnlineClass.getName();
-        this.price = createOnlineClass.getPrice();
-        this.description = createOnlineClass.getDescription();
-        this.duration = createOnlineClass.getDuration();
-        this.level = createOnlineClass.getLevel();
-        this.startDate = createOnlineClass.getStartDate();
-        this.prepareFlag = createOnlineClass.isPrepareFlag();
-        this.image = createOnlineClass.getImage();
+    public void setAuthor(User author) {
         this.author = author;
-        this.category = category;
     }
 
-    @Builder(builderClassName = "createBuilder", builderMethodName = "createBuilder")
+    public void validOwner(Long authorId) {
+        if(!this.author.isUser(authorId)) {
+            throw new IllegalStateException("해당 온라인 클래스의 작가가 아닙니다.");
+        }
+    }
+
+    public void change(OnlineClass onlineClass) {
+        this.name = changeValue(this.name, onlineClass.name);
+        this.price = changeValue(this.price, onlineClass.price);
+        this.description = changeValue(this.description, onlineClass.description);
+        this.duration = changeValue(this.duration, onlineClass.duration);
+        this.level = changeValue(this.level, onlineClass.level);
+        this.startDate = changeValue(this.startDate, onlineClass.startDate);
+        this.image = changeValue(this.image, onlineClass.image);
+    }
+
+    @Builder
     public OnlineClass(OnlineClassDTO onlineClassDTO) {
         this.name = onlineClassDTO.getName();
         this.price = onlineClassDTO.getPrice();
@@ -155,26 +162,7 @@ public class OnlineClass {
         this.image = onlineClassDTO.getImage();
     }
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("id", id)
-                .append("name", name)
-                .append("price", price)
-                .append("description", description)
-                .append("duration", duration)
-                .append("level", level)
-                .append("startDate", startDate)
-                .append("prepareFlag", prepareFlag)
-                .append("hit", hit)
-                .append("purchase", purchase)
-                .append("like", like)
-                .append("rate", rate)
-                .append("image", image)
-                .append("author", author.getId())
-                .append("category", category.getId())
-                .toString();
-    }
+
 }
 
 

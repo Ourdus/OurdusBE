@@ -38,6 +38,12 @@ public class OnlineClassOrder {
         return user;
     }
 
+    public void validOwner(Long userId) {
+        if(!user.isUser(userId)) {
+            throw new IllegalStateException("해당 온라인 클래스를 구매한 유저 정보가 잘못되었습니다.");
+        }
+    }
+
     @Builder
     public OnlineClassOrder(OnlineClass onlineClass, User user) {
         this.onlineClass = onlineClass;

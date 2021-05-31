@@ -10,7 +10,6 @@ import ourdus.ourdusspring.service.onlineclass.OnlineClassService;
 import ourdus.ourdusspring.service.user.UserService;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 @Transactional
@@ -26,14 +25,20 @@ public class OnlineClassOrderService {
         this.onlineClassService = onlineClassService;
     }
 
+    @Transactional(readOnly = true)
     public List<OnlineClassOrder> findAllUserOrders(Long userId) {
         return orderRepository.findAllByUserId(userId);
     }
 
-    public OnlineClassOrder findOne(Long onlineOrderId) {
-        return orderRepository.findById(onlineOrderId).orElseThrow(() -> new NoSuchElementException("찾을 수 없는 온라인 주문번호입니다."));
+    @Transactional(readOnly = true)
+    public OnlineClassOrder findOne(Long onlineOrderId, Long userId) {
+        OnlineClassOrder order = orderRepository.findById(onlineOrderId)
+                .orElseThrow(() -> new IllegalArgumentException("찾을 수 없는 온라인 주문번호입니다."));
+        order.validOwner(userId);
+        return order;
     }
 
+    //TODO 온라인 클래스 구매 도메인 수정
     public OnlineClassOrder order(Long onlineClassId, Long userId) {
         OnlineClass onlineClass = onlineClassService.findOne(onlineClassId);
         User user = userService.findUser(userId);
@@ -43,10 +48,4 @@ public class OnlineClassOrderService {
                 .build();
         return orderRepository.save(onlineClassOrder);
     }
-
-    public void delete(Long onlineOrderId) {
-        orderRepository.deleteById(onlineOrderId);
-    }
-
-
 }

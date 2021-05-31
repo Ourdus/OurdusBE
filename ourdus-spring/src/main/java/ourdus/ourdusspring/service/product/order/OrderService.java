@@ -16,13 +16,19 @@ import java.util.List;
 
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class OrderService {
 
     private final OrderRepository orderRepository;
     private final OrderDetailRepository orderDetailRepository;
     private final ProductService productService;
     private final UserService userService;
+
+    public OrderService(OrderRepository orderRepository, OrderDetailRepository orderDetailRepository, ProductService productService, UserService userService) {
+        this.orderRepository = orderRepository;
+        this.orderDetailRepository = orderDetailRepository;
+        this.productService = productService;
+        this.userService = userService;
+    }
 
     public List<Order> findAllByUserId(Long userId){
         return orderRepository.findAllByUserId(userId);

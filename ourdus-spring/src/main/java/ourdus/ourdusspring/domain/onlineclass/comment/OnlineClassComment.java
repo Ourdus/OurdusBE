@@ -43,6 +43,12 @@ public class OnlineClassComment {
         this.onlineClass=onlineClass;
     }
 
+    public void validOwner(Long userId) {
+        if(!this.user.isUser(userId)) {
+            throw new IllegalStateException("댓글을 단 유저가 아닙니다.");
+        }
+    }
+
     @Builder(builderClassName = "createBuilder", builderMethodName = "createBuilder")
     public OnlineClassComment(String content){
         this.content=content;
@@ -59,4 +65,6 @@ public class OnlineClassComment {
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
+
+
 }

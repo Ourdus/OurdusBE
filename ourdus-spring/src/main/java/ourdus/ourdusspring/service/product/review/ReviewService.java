@@ -1,6 +1,5 @@
 package ourdus.ourdusspring.service.product.review;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -16,10 +15,16 @@ import java.util.NoSuchElementException;
 
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class ReviewService {
 
     private final ReviewRepository reviewRepository;
+
+    public ReviewService(ReviewRepository reviewRepository, UserService userService, OrderDetailRepository orderDetailRepository) {
+        this.reviewRepository = reviewRepository;
+        this.userService = userService;
+        this.orderDetailRepository = orderDetailRepository;
+    }
+
     private final UserService userService;
     private final OrderDetailRepository orderDetailRepository;
 
