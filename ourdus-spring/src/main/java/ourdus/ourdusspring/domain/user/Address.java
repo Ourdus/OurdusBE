@@ -52,8 +52,8 @@ public class Address {
         this.addressSub = changeValue(this.addressSub, address.addressSub);
     }
 
-    public void validOwner(String email) {
-        if (!user.isUser(email)) {
+    public void validOwner(Long id) {
+        if (!user.isUser(id)) {
             throw new IllegalStateException("해당 회원의 주소정보가 아닙니다. 다시 확인해주세요.");
         }
     }

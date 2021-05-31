@@ -71,7 +71,7 @@ public class User {
     }
 
     public String makeToken() {
-        return JwtUtil.createToken(email, role.toString());
+        return JwtUtil.createToken(String.valueOf(id), role.toString());
     }
 
     public void changeInfo(User user) {
@@ -79,8 +79,8 @@ public class User {
         this.name = changeValue(this.name, user.name);
     }
 
-    public boolean isUser(String email) {
-        return this.email.equals(email);
+    public boolean isUser(Long id) {
+        return this.id == id;
     }
 
     @Builder

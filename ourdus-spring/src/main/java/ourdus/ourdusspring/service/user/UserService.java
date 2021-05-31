@@ -60,9 +60,9 @@ public class UserService {
     }
 
     @Transactional
-    public String update(String email, User user) {
+    public String update(Long userId, User user) {
         checkNotNull(user);
-        User findUser = findByEmail(email).orElseThrow(() -> new NoSuchElementException("no id"));
+        User findUser = findById(userId).orElseThrow(() -> new NoSuchElementException("no id"));
         findUser.changeInfo(user);
         return "update success";
     }
@@ -92,25 +92,17 @@ public class UserService {
     }
 
     @Transactional
-    public Address AddAddress(String userEmail, Address address) {
-        User user = findByEmail(userEmail).orElseThrow(() -> new NoSuchElementException("해당하는 유저가 없습니다."));
-        address.setUser(user);
-        addressRepository.save(address);
-        return address;
-    }
-
-    @Transactional
-    public String deleteAddress(String userEmail, Long address_id) {
+    public String deleteAddress(Long userId, Long address_id) {
         Address address = findAddressById(address_id).orElseThrow(() -> new NoSuchElementException("지우려는 주소가 없습니다."));
-        address.validOwner(userEmail);
+        address.validOwner(userId);
         addressRepository.deleteById(address_id);
         return "Address delete success";
     }
 
     @Transactional
-    public Address editAddress(String userEmail, Long addressId, Address address) {
+    public Address editAddress(Long userId, Long addressId, Address address) {
         Address findAddress = findAddressById(addressId).orElseThrow(() -> new NoSuchElementException("address update failed"));
-        findAddress.validOwner(userEmail);
+        findAddress.validOwner(userId);
         findAddress.changeAddress(address);
         return findAddress;
     }
@@ -129,20 +121,8 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public List<Address> getAddressList(String userEmail) {
-        User user = findByEmail(userEmail).orElseThrow(() -> new NoSuchElementException("No User Info"));
-        return user.getAddressList();
-    }
-
-    @Transactional(readOnly = true)
     public User getUserInfo(Long userId) {
         User findUser = findById(userId).orElseThrow(() -> new NoSuchElementException("No User Info"));
-        return findUser;
-    }
-
-    @Transactional(readOnly = true)
-    public User getUserInfo(String userEmail) {
-        User findUser = findByEmail(userEmail).orElseThrow(() -> new NoSuchElementException("No User Info"));
         return findUser;
     }
 
