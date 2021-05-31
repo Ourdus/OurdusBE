@@ -36,7 +36,7 @@ public class OnlineClassOrderService {
 
     public OnlineClassOrder order(Long onlineClassId, Long userId) {
         OnlineClass onlineClass = onlineClassService.findOne(onlineClassId);
-        User user = userService.getUserInfo(userId);
+        User user = userService.findUser(userId);
         OnlineClassOrder onlineClassOrder = OnlineClassOrder.builder()
                 .onlineClass(onlineClass)
                 .user(user)

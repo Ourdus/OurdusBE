@@ -50,7 +50,7 @@ public class OrderService {
     }
 
     public Order order(Long userId, List<OrderForm> orderForms, Long addressId, Address address, int price, String orderAccount) { //TODO parameter의 orderform 수정하기
-        User user = userService.getUserInfo(userId);
+        User user = userService.findUser(userId);
         Address findAddress;
         if(addressId == null){
             findAddress = userService.AddAddress(userId, address);

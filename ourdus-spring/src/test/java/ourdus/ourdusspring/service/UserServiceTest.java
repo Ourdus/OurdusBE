@@ -132,7 +132,7 @@
 //
 //    @Test
 //    void 주소찾기를_테스트(){
-//        List<Address> list = userService.getAddressList(1L);
+//        List<Address> list = userService.findAddressList(1L);
 //        for(Address address : list){
 //            System.out.println(address);
 //        }

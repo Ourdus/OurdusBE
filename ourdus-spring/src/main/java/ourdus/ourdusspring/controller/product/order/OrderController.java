@@ -41,7 +41,7 @@ public class OrderController {
     public ApiResult<PaymentUserDTO> paymentUserInfo(/*HttpServletRequest req*/){
         //Long userId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId")));
         Long userId = 1L;
-        User user = userService.getUserInfo(userId);
+        User user = userService.findUser(userId);
         return OK(new PaymentUserDTO(user));
     }
 

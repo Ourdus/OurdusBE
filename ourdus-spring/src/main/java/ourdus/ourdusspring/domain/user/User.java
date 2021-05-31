@@ -83,6 +83,12 @@ public class User {
         return this.id == id;
     }
 
+    public void validAuthor() {
+        if(!this.writerFlag) {
+            throw new IllegalStateException("작가가 아닙니다.");
+        }
+    }
+
     @Builder
     public User(String email, String name, String password, String tel){
         this.email = email;

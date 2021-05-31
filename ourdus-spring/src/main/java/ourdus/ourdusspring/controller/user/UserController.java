@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static ourdus.ourdusspring.common.ApiResult.OK;
-import static ourdus.ourdusspring.security.SecurityInfo.getUserId;
+import static ourdus.ourdusspring.security.SecurityInfo.getAuthUserId;
 
 @RestController
 @RequestMapping("api")
@@ -51,7 +51,7 @@ public class UserController {
     @ApiOperation(value = "사용자 정보", notes = "토큰으로 사용자의 정보들을 반환한다.")
     @GetMapping("/t/user/info")
     public ApiResult<UserDTO> getInfo() {
-        User user = userService.getUserInfo(getUserId());
+        User user = userService.findUser(getAuthUserId());
         return OK(new UserDTO(user));
     }
 
@@ -64,13 +64,13 @@ public class UserController {
     @ApiOperation(value = "회원탈퇴", notes = "토큰으로 해당하는 유저 정보 회원을 탈퇴한다")
     @DeleteMapping("/t/user/delete")
     public ApiResult<String> delete() {
-        return OK(userService.delete(getUserId()));
+        return OK(userService.delete(getAuthUserId()));
     }
 
     @ApiOperation(value = "회원수정", notes = "토큰으로 해당하는 회원 정보를 수정한다")
     @PostMapping("/t/user/edit")
     public ApiResult<String> update(@Valid @RequestBody UserDTO userdto) {
-        return OK(userService.update(getUserId(), new User(userdto)));
+        return OK(userService.update(getAuthUserId(), new User(userdto)));
     }
 
     @ApiOperation(value = "아이디 찾기", notes = "연락처에 맞는 아이디 정보를 찾는다.")
@@ -89,26 +89,26 @@ public class UserController {
     @PostMapping("/t/user/address")
     public ApiResult<AddressDTO> addAddress(@Valid @RequestBody AddressDTO addressDTO) {
         return OK(new AddressDTO(
-                userService.AddAddress(getUserId(), new Address(addressDTO))));
+                userService.AddAddress(getAuthUserId(), new Address(addressDTO))));
     }
 
     @ApiOperation(value = "주소 제거", notes = "토큰에 맞는 회원의 주소 정보를 제거한다.")
     @DeleteMapping("/t/user/address/{address_id}")
     public ApiResult<String> deleteAddress(@PathVariable("address_id") Long address_Id) {
-        return OK(userService.deleteAddress(getUserId(), address_Id));
+        return OK(userService.deleteAddress(getAuthUserId(), address_Id));
     }
 
     @ApiOperation(value = "주소 수정", notes = "토큰에 맞는 회원의 주소 정보를 수정한다.")
     @PostMapping("/t/user/address/{address_id}")
     public ApiResult<AddressDTO> editAddress(@PathVariable("address_id") Long address_Id, @Valid @RequestBody AddressDTO addressDTO) {
         return OK(new AddressDTO(
-                userService.editAddress(getUserId(), address_Id, new Address(addressDTO))));
+                userService.editAddress(getAuthUserId(), address_Id, new Address(addressDTO))));
     }
 
     @ApiOperation(value = "주소 목록 찾기", notes = "토큰에 맞는 회원의 주소 정보 리스트를 찾는다.")
     @GetMapping("/t/user/address")
     public ApiResult<List<AddressDTO>> getAddress() {
-        List<AddressDTO> addressDTOList = userService.getAddressList(getUserId()).stream()
+        List<AddressDTO> addressDTOList = userService.findAddressList(getAuthUserId()).stream()
                 .filter(address -> address != null)
                 .map(AddressDTO::new)
                 .collect(Collectors.toList());

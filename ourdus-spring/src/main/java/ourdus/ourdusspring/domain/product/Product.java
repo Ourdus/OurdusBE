@@ -14,6 +14,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ourdus.ourdusspring.util.CompareValueUtils.changeValue;
+
 @Entity
 @Getter
 @NoArgsConstructor
@@ -23,13 +25,17 @@ public class Product {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="PRODUCT_ID")
     private Long id;
-    @Column(name="PRODUCT_NAME")
+
+    @Column(name="PRODUCT_NAME", nullable = false)
     private String name;
-    @Column(name="PRODUCT_PRICE")
+
+    @Column(name="PRODUCT_PRICE", nullable = false)
     private int price;
+
     @Column(name="PRODUCT_RATE")
     @ColumnDefault("0")
     private int rate;
+
     @Column(name="PRODUCT_REVIEW_NUM")
     @ColumnDefault("0")
     private int reviewNum;
@@ -37,10 +43,13 @@ public class Product {
     @Column(name="PRODUCT_HIT")
     @ColumnDefault("0")
     private int hit;
+
     @Column(name="PRODUCT_PURCHASE")
     @ColumnDefault("0")
     private int purchase;
+
     @Column(name="PRODUCT_OPTION_NUM")
+    @ColumnDefault("0")
     private int optionNum;
 
     @Column(name="PRODUCT_INFO")
@@ -72,63 +81,26 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Comment> commentList = new ArrayList<Comment>();
 
-
     public void changeHit() {
         this.hit++;
     }
 
-    public Long getId() {
-        return id;
+    public boolean isChangeCategory(Long categoryId) {
+        return categoryId != this.category.getId();
     }
 
-    public String getName() {
-        return name;
+    public void edit(Product product) {
+        this.name = changeValue(this.name, product.name);
+        this.price = changeValue(this.price, product.price);
+        this.optionNum = changeValue(this.optionNum, product.optionNum);
+        this.info = changeValue(this.info, product.info);
     }
 
-    public int getPrice() {
-        return price;
+    public void validAuthor(Long authorId) {
+        if(this.author.getId() != authorId) {
+            throw new IllegalStateException("해당 작품의 작가가 아닙니다.");
+        }
     }
-
-    public int getRate() {
-        return rate;
-    }
-
-    public int getReviewNum() {
-        return reviewNum;
-    }
-
-    public int getHit() {
-        return hit;
-    }
-
-    public int getPurchase() {
-        return purchase;
-    }
-
-    public int getOptionNum() {
-        return optionNum;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public User getAuthor() {
-        return author;
-    }
-
-//    public List<Review> getReviews() {
-//        return reviews;
-//    }
-
-    //    public List<ProductOption> getOptions() {
-//        return options;
-//    }
-
-    public List<Comment> getCommentList() {
-        return commentList;
-    }
-
 
     public void setName(String name) {
         this.name = name;
@@ -143,6 +115,10 @@ public class Product {
     }
 
     public void setCategory(Category category) { this.category = category; }
+
+    public void setAuthor(User author) {
+        this.author = author;
+    }
 
     public void setInfo(String info) {
         this.info = info;

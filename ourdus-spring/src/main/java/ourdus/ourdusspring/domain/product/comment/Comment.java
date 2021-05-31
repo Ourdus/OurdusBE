@@ -44,6 +44,12 @@ public class Comment {
         product.getCommentList().add(this);
     }
 
+    public void validOwner(Long userId) {
+        if(user.getId() != userId) {
+            throw new IllegalStateException("댓글 쓴 이가 아닙니다.");
+        }
+    }
+
 
     @Builder(builderClassName = "createBuilder", builderMethodName = "createBuilder")
     public Comment(String content){
