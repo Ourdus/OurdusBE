@@ -55,7 +55,7 @@ public class ProductController {
     @ApiOperation(value = "작품 상세 조회", notes = "작품의 상세 정보를 반환한다.")
     @GetMapping("/w/product/{product_id}")
     public ApiResult<ProductDTO> viewProduct(@PathVariable("product_id") Long productId) {
-        Product product = productService.findOne(productId);
+        Product product = productService.view(productId);
         return OK(new ProductDTO(product));
     }
 

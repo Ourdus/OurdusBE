@@ -92,8 +92,7 @@ public class UserService {
 
     @Transactional
     public String deleteAddress(Long userId, Long address_id) {
-        Address address = findAddressById(address_id)
-                .orElseThrow(() -> new IllegalArgumentException(NOT_FOUND_ADDRESS));
+        Address address = findAddressById(address_id);
         address.validOwner(userId);
         addressRepository.deleteById(address_id);
         return "Address delete success";
@@ -101,20 +100,12 @@ public class UserService {
 
     @Transactional
     public Address editAddress(Long userId, Long addressId, Address address) {
-        Address findAddress = findAddressById(addressId)
-                .orElseThrow(() -> new IllegalArgumentException(NOT_FOUND_ADDRESS));
+        Address findAddress = findAddressById(addressId);
         findAddress.validOwner(userId);
         findAddress.changeAddress(address);
         return findAddress;
     }
 
-    @Transactional
-    public Address editAddress(Long addressId, Address address) {
-        Address findAddress = findAddressById(addressId)
-                .orElseThrow(() -> new IllegalArgumentException(NOT_FOUND_ADDRESS));
-        findAddress.changeAddress(address);
-        return findAddress;
-    }
 
     @Transactional(readOnly = true)
     public List<Address> findAddressList(Long userId) {
@@ -143,8 +134,9 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<Address> findAddressById(Long id) {
+    public Address findAddressById(Long id) {
         checkNotNull(id);
-        return addressRepository.findById(id);
+        return addressRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException(NOT_FOUND_ADDRESS));
     }
 }

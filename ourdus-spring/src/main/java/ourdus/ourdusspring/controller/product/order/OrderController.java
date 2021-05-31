@@ -1,81 +1,56 @@
 package ourdus.ourdusspring.controller.product.order;
 
 
-import lombok.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 import ourdus.ourdusspring.common.ApiResult;
-import ourdus.ourdusspring.domain.user.Address;
 import ourdus.ourdusspring.domain.product.order.Order;
-import ourdus.ourdusspring.domain.user.User;
 import ourdus.ourdusspring.dto.product.order.OrderDTO;
 import ourdus.ourdusspring.dto.product.order.OrderRequest;
 import ourdus.ourdusspring.dto.product.order.OrderSimpleDTO;
-import ourdus.ourdusspring.dto.product.order.PaymentUserDTO;
-import ourdus.ourdusspring.service.JwtService;
 import ourdus.ourdusspring.service.product.order.OrderService;
-import ourdus.ourdusspring.service.user.UserService;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static ourdus.ourdusspring.common.ApiResult.OK;
+import static ourdus.ourdusspring.security.SecurityInfo.getAuthUserId;
 
 @RestController
 @RequestMapping("api")
-@RequiredArgsConstructor
+@Api(value = "작품 주문 관리")
 public class OrderController {
 
-    @Autowired
-    private JwtService jwtService;
+    private final OrderService orderService;
 
-    @Autowired
-    private OrderService orderService;
-
-    @Autowired
-    private UserService userService;
-
-
-
-    @GetMapping("/t/w/payment")
-    public ApiResult<PaymentUserDTO> paymentUserInfo(/*HttpServletRequest req*/){
-        //Long userId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId")));
-        Long userId = 1L;
-        User user = userService.findUser(userId);
-        return OK(new PaymentUserDTO(user));
+    public OrderController(OrderService orderService) {
+        this.orderService = orderService;
     }
 
+    @ApiOperation(value = "작품 주문", notes = "작품을 주문한다.")
     @PostMapping("/t/w/payment/order")
-    public ApiResult<OrderDTO> order(/*HttpServletRequest req,*/ @RequestBody OrderRequest orderRequest){
-        //Long userId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId")));
-        Long userId = 1L;
-        Address address = Address.createBuilder()
-                                    .addressDTO(orderRequest.getAddressDTO())
-                                    .build();
-        return OK(new OrderDTO(orderService.order(userId, orderRequest.getOrderForms(), orderRequest.getAddressDTO().getId(), address, orderRequest.getOrderPrice(), orderRequest.getOrderAccount())));
+    public ApiResult<OrderDTO> order(@RequestBody OrderRequest orderRequest){
+        return OK(new OrderDTO(
+                orderService.order(getAuthUserId(), orderRequest.getOrderForms(), orderRequest.getAddressDTO().getId(), new Order(orderRequest))));
     }
 
 
+    @ApiOperation(value = "작품 주문목록 조회", notes = "유저의 주문 목록을 조회한다.")
     @GetMapping("/t/w/me/order/payment")
-    public ApiResult<List<OrderSimpleDTO>> viewOrderList(/*HttpServletRequest req*/){
-        //Long userId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId")));
-        Long userId = 1L;
-        List<Order> orderList = orderService.findAllByUserId(userId);
-        List<OrderSimpleDTO> orderSimpleDTOS = new ArrayList<>();
-        orderList.stream()
+    public ApiResult<List<OrderSimpleDTO>> viewOrderList(){
+        List<OrderSimpleDTO> orderSimpleDTOS = orderService.findAllByUserId(getAuthUserId())
+                .stream()
                 .filter(order -> order != null)
-                .forEach(order -> {
-            orderSimpleDTOS.add(new OrderSimpleDTO(order));
-        });
+                .map(OrderSimpleDTO::new)
+                .collect(Collectors.toList());
         return OK(orderSimpleDTOS);
     }
 
+    @ApiOperation(value = "작품 주문 상세 조회", notes = "해당 주문의 상세 정보를 조회한다.")
     @GetMapping("/t/w/me/order/payment/detail/{order_id}")
-    public ApiResult<OrderDTO> viewOrderDetail(/*HttpServletRequest req,*/ @PathVariable("order_id") Long orderId){
-//        Long userId = Long.valueOf(String.valueOf(jwtService.get(req.getHeader("jwt-auth-token")).get("UserId")));
-//        if(orderService.userOrderCheck(userId, orderId))
-//            new ForbiddenException("주문한 유저가 아니므로 접근할 수 없습니다.");
-        return OK(new OrderDTO(orderService.findOne(orderId)));
+    public ApiResult<OrderDTO> viewOrderDetail(@PathVariable("order_id") Long orderId){
+        return OK(new OrderDTO(orderService.findOne(orderId, getAuthUserId())));
     }
 }
 

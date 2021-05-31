@@ -123,7 +123,6 @@ CREATE TABLE order_detail
     product_detail_price int    NOT NULL DEFAULT 0,
     PRIMARY KEY (order_detail_id),
     FOREIGN KEY (order_id) REFERENCES orders (order_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
-    FOREIGN KEY (author_id) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
     FOREIGN KEY (product_id) REFERENCES product (product_id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 

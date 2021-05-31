@@ -4,16 +4,15 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import ourdus.ourdusspring.dto.user.AddressDTO;
-
-import java.util.List;
+import ourdus.ourdusspring.domain.product.order.Cart;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class OrderRequest{
-    private List<OrderForm> orderForms;
-    private AddressDTO addressDTO;
-    private int orderPrice;
-    private String orderAccount;
+public class CartRequest {
+    private Long productId;
+    private String optionInfo;
+    private int productNum;
+    private int productDetailPrice;
+
 }

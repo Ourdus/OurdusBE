@@ -8,6 +8,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.annotations.CreationTimestamp;
 import ourdus.ourdusspring.domain.user.User;
 import ourdus.ourdusspring.domain.user.Address;
+import ourdus.ourdusspring.dto.product.order.OrderRequest;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -35,15 +36,15 @@ public class Order {
     @Column(name = "ORDER_DATE")
     @CreationTimestamp
     private LocalDateTime orderDate;
+
     @Column(name="ORDER_PRICE")
     private int price;
+
     @Column(name="ORDER_ACCOUNT")
     private String account;
 
-
     @OneToMany(mappedBy = "order")
     private List<OrderDetail> orderDetails = new ArrayList<>();
-
 
     //연관관계 메소드
     public void addOrderDetail(OrderDetail orderDetail){
@@ -51,12 +52,24 @@ public class Order {
         orderDetail.setOrder(this);
     }
 
+    public void validOwner(Long userId) {
+        if(!this.user.isUser(userId)) {
+            throw new IllegalStateException("해당 주문을 한 유저가 아닙니다");
+        }
+    }
+
+    @Builder
+    public Order(OrderRequest orderRequest) {
+        this.price = orderRequest.getOrderPrice();
+        this.account = orderRequest.getOrderAccount();
+    }
+
     @Builder(builderMethodName = "createBuilder", builderClassName = "createBuilder")
-    public Order(User user, Address address, int price, String account) {
+    public Order(User user, Address address, Order order) {
         this.user = user;
         this.address = address;
-        this.price = price;
-        this.account = account;
+        this.price = order.price;
+        this.account = order.account;
     }
 
     @Builder(builderMethodName = "defaultBuilder", builderClassName = "defaultBuilder")
@@ -75,4 +88,5 @@ public class Order {
         //JPA 연관관계 매핑시 toString()에서 StackOverFlow Error발생, 해결방법으로 ToStringBuilder 이용
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
+
 }

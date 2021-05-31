@@ -46,7 +46,7 @@ public class ProductService {
         return productRepository.findAll(pageable);
     }
 
-    public Product findOne(Long productId) {
+    public Product view(Long productId) {
         checkNotNull(productId);
         Product product = findById(productId);
         product.changeHit();

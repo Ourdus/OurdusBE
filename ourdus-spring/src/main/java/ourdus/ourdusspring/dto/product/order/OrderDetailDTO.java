@@ -89,7 +89,7 @@ public class OrderDetailDTO {
     public OrderDetailDTO(OrderDetail orderDetail) {
         this.id = orderDetail.getId();
         this.orderId = orderDetail.getOrder().getId();
-        this.authorId = orderDetail.getAuthorId();
+        this.authorId = orderDetail.getAuthor();
         this.authorName = orderDetail.getProduct().getAuthor().getName();
         this.productId = orderDetail.getProduct().getId();
         this.productName = orderDetail.getProduct().getName();

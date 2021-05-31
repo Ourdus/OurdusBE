@@ -59,7 +59,7 @@ class ReviewServiceTest {
 //        assertThat(review.getRate(), is(equalTo(rate)));
 //        assertThat(review.getOrderDetail().getId(), is(equalTo(orderDetailId)));
 //
-//        Review findReivew = reviewService.findOne(review.getId());
+//        Review findReivew = reviewService.view(review.getId());
 //        assertThat(findReivew.getContent(), is(equalTo(content)));
 //        assertThat(findReivew.getRate(), is(equalTo(rate)));
 //        assertThat(findReivew.getOrderDetail().getId(), is(equalTo(orderDetailId)));
@@ -76,7 +76,7 @@ class ReviewServiceTest {
 //        assertThat(updateReview.getId(), is(equalTo(review.getId())));
 //
 //        //저장 후 다시 찾기
-//        Review findReivew = reviewService.findOne(updateReview.getId());
+//        Review findReivew = reviewService.view(updateReview.getId());
 //        assertThat(findReivew.getContent(), is(equalTo(reCotent)));
 //        assertThat(findReivew.getRate(), is(equalTo(reRate)));
 //        assertThat(findReivew.getId(), is(equalTo(updateReview.getId())));
@@ -87,7 +87,7 @@ class ReviewServiceTest {
 //        Review review = reviewService.write(content, rate, orderDetailId);
 //        reviewService.delete(review.getId());
 //        Assertions.assertThrows(NoSuchElementException.class, () ->{
-//            Review findReivew = reviewService.findOne(review.getId());
+//            Review findReivew = reviewService.view(review.getId());
 //        });
 //    }
 //

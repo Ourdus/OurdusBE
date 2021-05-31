@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import ourdus.ourdusspring.domain.product.Product;
+import ourdus.ourdusspring.domain.user.User;
 import ourdus.ourdusspring.dto.product.order.OrderForm;
 
 import javax.persistence.*;
@@ -29,8 +30,9 @@ public class OrderDetail {
     @JoinColumn(name="PRODUCT_ID")
     private Product product;
 
-    @Column(name="AUTHOR_ID")
-    private Long authorId;
+    @ManyToOne
+    @JoinColumn(name="AUTHOR_ID")
+    private User author;
 
     @Column(name="OPTION_INFO")
     private String optionInfo;
@@ -50,11 +52,12 @@ public class OrderDetail {
         order.getOrderDetails().add(this);
     }
 
+
     @Builder(builderClassName = "defaultBuilder", builderMethodName = "defaultBuilder")
     public OrderDetail(Order order, Product product, String optionInfo, int productNum, int price) {
         this.order = order;
         this.product = product;
-        this.authorId = product.getAuthor().getId();
+        this.author = product.getAuthor();
         this.optionInfo = optionInfo;
         this.productNum = productNum;
         this.price = price;
@@ -63,7 +66,7 @@ public class OrderDetail {
     @Builder(builderClassName = "createBuilder", builderMethodName = "createBuilder")
     public OrderDetail(Product product, OrderForm orderform) {
         this.product = product;
-        this.authorId = product.getAuthor().getId();
+        this.author = product.getAuthor();
         this.optionInfo = orderform.getOptionInfo();
         this.productNum = orderform.getProductNum();
         this.price = orderform.getProductDetailPrice();

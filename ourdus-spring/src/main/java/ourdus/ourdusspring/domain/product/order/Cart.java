@@ -8,7 +8,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.annotations.CreationTimestamp;
 import ourdus.ourdusspring.domain.product.Product;
 import ourdus.ourdusspring.domain.user.User;
-import ourdus.ourdusspring.dto.product.order.CartDTO;
+import ourdus.ourdusspring.dto.product.order.CartRequest;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -34,10 +34,13 @@ public class Cart {
 
     @Column(name="AUTHOR_ID")
     private Long authorId;
+
     @Column(name="OPTION_INFO")
     private String optionInfo;
+
     @Column(name="product_num")
     private int productNum;
+
     @Column(name="PRODUCT_DETAIL_PRICE")
     private int price;
 
@@ -46,24 +49,29 @@ public class Cart {
     private LocalDateTime cartDate;
 
     @Builder(builderClassName = "createBuilder", builderMethodName = "createBuilder")
-    public Cart(CartDTO cartDTO) {
-        this.optionInfo = cartDTO.getOptionInfo();
-        this.productNum = cartDTO.getProductNum();
-        this.price = cartDTO.getProductDetailPrice();
+    public Cart(CartRequest cartRequest) {
+        this.optionInfo = cartRequest.getOptionInfo();
+        this.productNum = cartRequest.getProductNum();
+        this.price = cartRequest.getProductDetailPrice();
     }
 
-    @Builder(builderClassName = "defaultBuilder", builderMethodName = "defaultBuilder")
-    public Cart(User user, Product product, String optionInfo, int productNum, int price) {
+    public void validOwner(Long userId) {
+        if(!this.user.isUser(userId)) {
+            throw new IllegalStateException("해당 유저의 장바구니 정보가 아닙니다.");
+        }
+    }
+
+    public void setUser(User user) {
         this.user = user;
+    }
+
+    public void setProduct(Product product) {
         this.product = product;
-        this.authorId = product.getAuthor().getId();
-        this.optionInfo = optionInfo;
-        this.productNum = productNum;
-        this.price = price;
     }
 
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
+
 }

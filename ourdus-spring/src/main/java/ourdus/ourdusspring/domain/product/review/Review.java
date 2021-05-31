@@ -60,7 +60,7 @@ public class Review {
     }
 
     public void validOwner(Long userId) {
-        if(this.user.getId() != userId) {
+        if(!this.user.isUser(userId)) {
             throw new IllegalStateException("리뷰를 작성한 사람이 아닙니다.");
         }
     }

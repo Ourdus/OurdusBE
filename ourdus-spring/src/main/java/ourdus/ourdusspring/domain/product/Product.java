@@ -97,7 +97,7 @@ public class Product {
     }
 
     public void validAuthor(Long authorId) {
-        if(this.author.getId() != authorId) {
+        if(!this.author.isUser(authorId)) {
             throw new IllegalStateException("해당 작품의 작가가 아닙니다.");
         }
     }
@@ -106,22 +106,11 @@ public class Product {
         this.name = name;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
-    public void setOptionNum(int optionNum) {
-        this.optionNum = optionNum;
-    }
 
     public void setCategory(Category category) { this.category = category; }
 
     public void setAuthor(User author) {
         this.author = author;
-    }
-
-    public void setInfo(String info) {
-        this.info = info;
     }
 
     /* rate는 작품의 평균 별점을 의미하며, (쉽게 다루기위해 저장은 *10인 int값으로 해준다.)

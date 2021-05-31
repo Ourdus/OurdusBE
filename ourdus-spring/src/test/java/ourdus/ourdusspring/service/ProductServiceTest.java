@@ -53,7 +53,7 @@ class ProductServiceTest {
     @Test
     void 특정_작품조회() {
         Long productId = 1L;
-        Product product = productService.findOne(productId);
+        Product product = productService.view(productId);
         assertThat(product.getId(), is(equalTo(productId)));
     }
 
