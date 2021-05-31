@@ -1,6 +1,5 @@
 package ourdus.ourdusspring.service.product.order;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ourdus.ourdusspring.domain.product.Product;
@@ -53,11 +52,16 @@ public class OrderService {
         return order;
     }
 
-
     @Transactional(readOnly = true)
     public Order findById(Long orderId) {
         return orderRepository.findById(orderId)
                 .orElseThrow(() -> new IllegalArgumentException("찾을수 없는 주문입니다."));
+    }
+
+    @Transactional(readOnly = true)
+    public OrderDetail findDetailById(Long orderDetailId) {
+        return orderDetailRepository.findById(orderDetailId)
+                .orElseThrow(() -> new IllegalArgumentException("찾을수 없는 주문상세입니다."));
     }
 
     private void saveOrderDetails(Order order, List<OrderForm> orderForms) {

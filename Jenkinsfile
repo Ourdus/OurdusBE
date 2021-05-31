@@ -5,11 +5,18 @@ pipeline {
     dockerImage = ''
     workdir = "${env.WORKSPACE}/ourdus-spring"
     dockerfile = "Dockerfile.prod"
+    deployDockerPath = "/home/ec2-user/ourdus/Ourdus/docker-compose-prod.yml"
+    deployService = "OurdusBE-Spring"
   }
   
   agent any
 
   stages {
+    stage('Setting-prod') {
+      steps {
+        sh "cp /var/jenkins_home/files/application-prod.properties ${env.workdir}/src/main/resources"
+      }
+    }
     stage('Build') {
       steps {
         dir("${env.workdir}") {
@@ -47,5 +54,25 @@ pipeline {
         sh "docker rmi ${env.registry}:${env.BUILD_NUMBER}"
       }
     }
+
+    stage('Docker-compose-SSH-rebuild') {
+      steps([$class: 'BapSshPromotionPublisherPlugin']) {
+        sshPublisher(
+          continueOnError: false, failOnError: true,
+          publishers: [
+            sshPublisherDesc(
+              configName: "ourdus-ssh",
+              verbose: true,
+              transfers: [
+                sshTransfer(
+                    execCommand: "docker-compose -f ${env.deployDockerPath} up -d --no-deps --build ${env.deployService}"
+                    )
+              ]
+            )
+          ]
+        )
+      }
+    }
+
   }
 }

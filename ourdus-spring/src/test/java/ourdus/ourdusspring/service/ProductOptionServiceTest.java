@@ -24,42 +24,42 @@ import static org.hamcrest.Matchers.is;
 @Transactional
 class ProductOptionServiceTest {
 
-    @Autowired
-    private ProductOptonService productOptonService;
-    private Long productId;
-    private List<String> names = new LinkedList<>();
-    private LinkedList<ProductChildOptionRequest> childOptionRequests = new LinkedList<>();
-
-    @BeforeAll
-    void SetUp(){
-        productId = 1L;
-        for(Long i=1L; i<5; i++){
-            names.add(i+"번째 큰옵션");
-            childOptionRequests.add(new ProductChildOptionRequest(i, i+"번째 큰옵션의 작은옵션", Integer.parseInt(i*1000+"")));
-        }
-    }
-
-    @Test
-    void 조회테스트(){
-        Map<String, List<?>> result = productOptonService.findOptions(productId);
-        List<ProductParentOption> productParentOptions = (List<ProductParentOption>) result.get("parentOption");
-        List<ProductChildOption> productChildOptions = (List<ProductChildOption>) result.get("childOption");
-
-        for(ProductParentOption productParentOption : productParentOptions){
-            System.out.println(productParentOption);
-            assertThat(productParentOption.getProduct().getId(), is(equalTo(productId)));
-        }
-        for(ProductChildOption productChildOption : productChildOptions){
-            System.out.println(productChildOption);
-            assertThat(productChildOption.getProductId(), is(equalTo(productId)));
-        }
-    }
-
-    @Test
-    void 저장테스트(){
-        productOptonService.saveOption(productId, names, childOptionRequests);
-        조회테스트();
-    }
+//    @Autowired
+//    private ProductOptonService productOptonService;
+//    private Long productId;
+//    private List<String> names = new LinkedList<>();
+//    private LinkedList<ProductChildOptionRequest> childOptionRequests = new LinkedList<>();
+//
+//    @BeforeAll
+//    void SetUp(){
+//        productId = 1L;
+//        for(Long i=1L; i<5; i++){
+//            names.add(i+"번째 큰옵션");
+//            childOptionRequests.add(new ProductChildOptionRequest(i, i+"번째 큰옵션의 작은옵션", Integer.parseInt(i*1000+"")));
+//        }
+//    }
+//
+//    @Test
+//    void 조회테스트(){
+//        Map<String, List<?>> result = productOptonService.findOptions(productId);
+//        List<ProductParentOption> productParentOptions = (List<ProductParentOption>) result.get("parentOption");
+//        List<ProductChildOption> productChildOptions = (List<ProductChildOption>) result.get("childOption");
+//
+//        for(ProductParentOption productParentOption : productParentOptions){
+//            System.out.println(productParentOption);
+//            assertThat(productParentOption.getProduct().getId(), is(equalTo(productId)));
+//        }
+//        for(ProductChildOption productChildOption : productChildOptions){
+//            System.out.println(productChildOption);
+//            assertThat(productChildOption.getProductId(), is(equalTo(productId)));
+//        }
+//    }
+//
+//    @Test
+//    void 저장테스트(){
+//        productOptonService.saveOption(productId, names, childOptionRequests);
+//        조회테스트();
+//    }
 
 
 }

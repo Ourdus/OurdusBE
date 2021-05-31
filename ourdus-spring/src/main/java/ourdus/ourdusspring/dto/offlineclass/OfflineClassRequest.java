@@ -1,9 +1,6 @@
 package ourdus.ourdusspring.dto.offlineclass;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import ourdus.ourdusspring.domain.offlineclass.OfflineClass;
 import ourdus.ourdusspring.domain.offlineclass.OfflineClassImage;
 
@@ -11,8 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-@Setter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class OfflineClassRequest {
 
@@ -23,13 +19,10 @@ public class OfflineClassRequest {
     private String level;
     private String place;
     private int max;
-    private Long authorId;
     private Long categoryId;
     private List<String> imageList = new ArrayList<>();
 
-    public OfflineClassRequest(String name,String description,String level,String place, int price,int max, Long authorId, Long categoryId)
-    {
-        this.authorId=authorId;
+    public OfflineClassRequest(String name,String description,String level,String place, int price,int max, Long authorId, Long categoryId) {
         this.categoryId=categoryId;
         this.description=description;
         this.duration=duration;
@@ -44,7 +37,6 @@ public class OfflineClassRequest {
     {
         this.place=offlineClass.getPlace();
         this.name= offlineClass.getName();
-        this.authorId=offlineClass.getId();
         this.categoryId= offlineClass.getId();
         this.description=offlineClass.getDescription();
         this.level= offlineClass.getLevel();

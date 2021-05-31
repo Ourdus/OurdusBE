@@ -7,34 +7,31 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ourdus.ourdusspring.domain.product.order.OrderDetail;
 import ourdus.ourdusspring.domain.product.review.Review;
-import ourdus.ourdusspring.repository.product.order.OrderDetailRepository;
 import ourdus.ourdusspring.repository.product.review.ReviewRepository;
+import ourdus.ourdusspring.service.product.order.OrderService;
 import ourdus.ourdusspring.service.user.UserService;
 
-import java.util.NoSuchElementException;
 
 @Service
 @Transactional
 public class ReviewService {
 
     private final ReviewRepository reviewRepository;
+    private final UserService userService;
+    private final OrderService orderService;
 
-    public ReviewService(ReviewRepository reviewRepository, UserService userService, OrderDetailRepository orderDetailRepository) {
+    public ReviewService(ReviewRepository reviewRepository, UserService userService, OrderService orderService) {
         this.reviewRepository = reviewRepository;
         this.userService = userService;
-        this.orderDetailRepository = orderDetailRepository;
+        this.orderService = orderService;
     }
 
-    private final UserService userService;
-    private final OrderDetailRepository orderDetailRepository;
-
     public Review write(Review review, Long orderDetailId, Long userId){
-        OrderDetail orderDetail = orderDetailRepository.findById(orderDetailId)
-                .orElseThrow(() -> new NoSuchElementException("찾을수 없는 주문상세번호입니다."));
+        OrderDetail orderDetail = orderService.findDetailById(orderDetailId);
         review.setUser(userService.findUser(userId));
         review.setOrderDetail(orderDetail);
         review.setProduct(orderDetail.getProduct());
-        //TODO 주문정보와 리뷰를 작성하려는 유저정보가 일치하는지 확인해야함
+        orderDetail.validOwner(userId);
         reviewRepository.save(review);
         return review;
     }
