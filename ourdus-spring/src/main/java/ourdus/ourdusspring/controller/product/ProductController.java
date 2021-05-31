@@ -82,9 +82,9 @@ public class ProductController {
     @ApiOperation(value = "작품 댓글 달기", notes = "유저는 작품에 댓글을 달 수 있다.")
     @PostMapping("/t/w/product/{product_id}/comment")
     public ApiResult<CommentDTO> addComment(@PathVariable("product_id") Long productId,
-                                            @RequestBody CommentDTO commentDTO) {
+                                            @RequestBody String commentRequest) {
         Comment comment = Comment.createBuilder()
-                .content(commentDTO.getContent())
+                .content(commentRequest)
                 .build();
         return OK(new CommentDTO(productService.addComment(comment, productId, getAuthUserId())));
     }

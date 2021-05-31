@@ -17,7 +17,6 @@ public class ReviewDTO {
     private int rate;
     private Long productId;
     private Long orderDetailId;
-    private Long userId;
     private String userName;
 
     public ReviewDTO(Review review) {
@@ -27,7 +26,6 @@ public class ReviewDTO {
         this.rate = review.getRate();
         this.productId = review.getProduct().getId();
         this.orderDetailId = review.getOrderDetail().getId();
-        this.userId = review.getUserId();
         this.userName = review.getOrderDetail().getOrder().getUser().getName();
     }
 }

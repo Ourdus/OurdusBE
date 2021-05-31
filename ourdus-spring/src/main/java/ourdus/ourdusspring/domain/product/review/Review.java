@@ -8,6 +8,7 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import ourdus.ourdusspring.domain.product.Product;
 import ourdus.ourdusspring.domain.product.order.OrderDetail;
+import ourdus.ourdusspring.domain.user.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -38,8 +39,9 @@ public class Review {
     @JoinColumn(name="PRODUCT_ID")
     private Product product;
 
-    @Column(name="USER_ID")
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name="USER_ID")
+    private User user;
 
     public void setContent(String content) {
         this.content = content;
@@ -47,6 +49,20 @@ public class Review {
 
     public void setRate(int rate) {
         this.rate = rate;
+    }
+
+    public void setOrderDetail(OrderDetail orderDetail) {
+        this.orderDetail = orderDetail;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void validOwner(Long userId) {
+        if(this.user.getId() != userId) {
+            throw new IllegalStateException("리뷰를 작성한 사람이 아닙니다.");
+        }
     }
 
     //연관관계 메소드
@@ -59,16 +75,17 @@ public class Review {
         product.insertReview(this);
     }
 
-    @Builder(builderClassName = "defaultBuilder", builderMethodName = "defaultBuilder")
-    public Review(String content, int rate, OrderDetail orderDetail) {
+    @Builder
+    public Review(String content, int rate) {
         this.content = content;
         this.rate = rate;
-        this.orderDetail = orderDetail;
-        this.userId = orderDetail.getOrder().getUser().getId();
     }
+
 
     @Override
     public String toString() {
         return ReflectionToStringBuilder.toStringExclude(this, new String[] {"orderDetail", "product"});
     }
+
+
 }
