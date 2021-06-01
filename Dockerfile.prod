@@ -5,4 +5,4 @@ COPY ${DEPENDENCY}/BOOT-INF/lib /app/lib
 COPY ${DEPENDENCY}/META-INF /app/META-INF
 COPY ${DEPENDENCY}/BOOT-INF/classes /app
 
-ENTRYPOINT ["java","-Djava.security.egd=ee:/dev/./urandom", "-Dspring.profiles.active=prod", "-cp","app:app/lib/*","com.docker.demo.DemoApplication"]
+ENTRYPOINT ["java","-Djava.security.egd=ee:/dev/./urandom", "-Dspring.profiles.active=prod", "-cp","app:app/lib/*","ourdus.ourdusspring.OurdusSpringApplication"]
